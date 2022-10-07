@@ -7,7 +7,7 @@ This is currently just the framework, so if you want to work with it - you need 
 
 
 ### Experiences.
-Experiences is for functions that third-party scripts can make. So if you make a "robbery" script for example - and you want your customers to have a "api" for your script, you can use experiences.
+A method for uploading and getting a component from Spark
 
 #### Example of an experience.
 ```lua
