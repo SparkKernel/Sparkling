@@ -9,6 +9,4 @@ function myExtension:bob()
     print("bob is cool lol")
 end
 
-Extensions:Add('myExtensionName', myExtension)
-
-local Extension = Ex
+Extensions:Add('myExtensionName', myExtension) 
