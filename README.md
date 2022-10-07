@@ -1,42 +1,42 @@
 # Sparkling - A framework made by frackz
-Welcome to Sparkling, a currently open-source framework. Made by frackz, has features like experiences, inbuilt logging, events, etc.
+Welcome to Sparkling, a currently open-source framework. Made by frackz, has features like Extensions, inbuilt logging, events, etc.
 
 
 
-This is currently just the framework, so if you want to work with it - you need to have some experience.
+This is currently just the framework, so if you want to work with it - you need to have some Extension.
 
 
-### Experiences.
+### Extensions.
 A method for uploading and getting a component from Spark
 
-#### Example of an experience.
+#### Example of an Extension.
 ```lua
 local Sparkling = exports['sparkling']:Spark()
-local Experience = Sparking:Experience()
+local Extension = Sparking:Extensions()
 
-local MyExperience = Experience:New()
+local MyExtension = Extension:New()
 
-function MyExperience:Print(message)
+function MyExtension:Print(message)
    print(message)
 end
 
-Experience:Add('MyExperience', MyExperience)
+Extension:Add('MyExtension', MyExtension)
 ```
-#### Example of getting a experience.
+#### Example of getting a Extension.
 ```lua
 local Sparkling = exports['sparkling']:Spark()
-local Experience = Sparking:Experience()
+local Extension = Sparking:Extensions()
 
-local MyExperience = Experience:Get('MyExperience')
+local MyExtension = Extension:Get('MyExtension')
 
-MyExperience:Print("Welcome to Sparkling experiences.")
+MyExtension:Print("Welcome to Sparkling Extensions.")
 
 -- output:
-Welcome to Sparkling experiences.
+Welcome to Sparkling Extensions.
 ```
 
 ### Events
-Events is just like experiences, just for events - easy to setup. :)
+Events is just like Extensions, just for events - easy to setup. :)
 #### Example of creating and running a event
 ```lua
 local Sparkling = exports['sparkling']:Spark()
