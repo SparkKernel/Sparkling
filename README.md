@@ -1,5 +1,5 @@
 # Sparkling - A framework made by frackz
-Welcome to Sparkling, a currently closed-based framework. Made by frackz, has features like experiences, inbuilt logging, etc.
+Welcome to Sparkling, a currently open-source framework. Made by frackz, has features like experiences, inbuilt logging, events, etc.
 
 
 
