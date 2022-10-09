@@ -3,7 +3,7 @@ Welcome to Sparkling, a currently open-source framework. Made by frackz, has fea
 
 
 
-This is currently just the framework, so if you want to work with it - you need to have some Extension.
+This is currently just the framework, so if you want to work with it - you need to have some experience.
 
 
 ### Extensions.
