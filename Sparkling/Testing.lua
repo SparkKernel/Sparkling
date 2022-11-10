@@ -1,14 +1,16 @@
 local Sparkling = exports['Sparkling']:Spark()
-local Extensions = Sparkling:Extensions()
+local Extensions = Sparkling.Extensions
 
-local myExtension = Extensions:New()
+local myEx = Extensions:New('bob')
 
-myExtension.Value = "lol"
+myEx.Events:Add('123')
 
-function myExtension:bob()
-    print("bob is cool lol")
+myEx:Add(myEx)
+
+Extensions:Get('bob').Events:Handle('123', function() print("bob123") end)
+
+local Events = Extensions:Get('bob').Events
+
+if Events:Exist('123') then
+    Events:Get('123'):Run({"123"})
 end
-
-Extensions:Add('myExtensionName', myExtension)
-
-local Extension = Ex

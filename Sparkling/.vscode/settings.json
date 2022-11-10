@@ -1,0 +1,9 @@
+{
+    "Lua.diagnostics.globals": [
+        "exports",
+        "GetPlayerIdentifiers"
+    ],
+    "Lua.diagnostics.disable": [
+        "param-type-mismatch"
+    ]
+}

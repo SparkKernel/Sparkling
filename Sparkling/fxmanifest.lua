@@ -9,7 +9,13 @@ server_export 'Spark'
 
 server_scripts {
     'Sparkling.lua',
-    'Modules/Extension.lua',
+    'Utility/Error.lua',
+    
+    -- Extensions
+    'Modules/Extensions/Extensions.lua',
+    'Modules/Extensions/EventObject.lua',
+    'Modules/Extensions/New.lua',
+
     'Modules/Users.lua',
     'Modules/Events.lua',
     'Testing.lua'
