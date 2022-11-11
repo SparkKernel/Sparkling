@@ -12,7 +12,7 @@ server_scripts {
     'Utility/Error.lua',
     
     -- Extensions
-    'Modules/Extensions/Extensions.lua',
+    'Modules/Extensions/Handler.lua',
     'Modules/Extensions/EventObject.lua',
     'Modules/Extensions/New.lua',
 
