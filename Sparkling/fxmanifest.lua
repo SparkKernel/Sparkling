@@ -16,7 +16,16 @@ server_scripts {
     'Modules/Extensions/EventObject.lua',
     'Modules/Extensions/New.lua',
 
-    'Modules/Users.lua',
+
+    'Modules/Users/Objects/PlayerObject.lua',
+    'Modules/Users/Objects/AdminObject.lua',
+    'Modules/Users/Objects/CashObject.lua',
+    'Modules/Users/Objects/GroupObject.lua',
+    'Modules/Users/Objects/IdentityObject.lua',
+    'Modules/Users/Objects/InventoryObject.lua',
+    'Modules/Users/Objects/SurvivalObject.lua',
+    'Modules/Users/Handler.lua',
+
     'Modules/Events.lua',
     'Testing.lua'
 }

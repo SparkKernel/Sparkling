@@ -1,0 +1,3 @@
+InventoryObject = function(id)
+
+end

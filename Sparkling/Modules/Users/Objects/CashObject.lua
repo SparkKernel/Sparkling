@@ -1,0 +1,3 @@
+CashObject = function(id)
+
+end

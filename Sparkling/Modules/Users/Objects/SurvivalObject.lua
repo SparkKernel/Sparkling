@@ -1,0 +1,3 @@
+SurvivalObject = function(id)
+
+end

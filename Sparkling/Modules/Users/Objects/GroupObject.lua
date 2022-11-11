@@ -1,0 +1,3 @@
+GroupObject = function(id)
+
+end

@@ -1,0 +1,3 @@
+AdminObject = function(id)
+
+end
