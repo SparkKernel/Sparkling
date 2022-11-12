@@ -1,7 +1,6 @@
-PlayerObject = function()
-    self = {}
-
-    self.ID = '1'
+PlayerObject = function(id)
+    local self = {}
+    self.ID = id
     
     self.Identity = IdentityObject(self.ID)
     self.Group = GroupObject(self.ID)
@@ -9,6 +8,8 @@ PlayerObject = function()
     self.Survival = SurvivalObject(self.ID)
     self.Admin = AdminObject(self.ID)
     self.Inventory = InventoryObject(self.ID)
+
+    print("LOL")
 
     return self
 end

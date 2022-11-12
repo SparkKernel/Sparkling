@@ -25,7 +25,12 @@ server_scripts {
     'Modules/Users/Objects/InventoryObject.lua',
     'Modules/Users/Objects/SurvivalObject.lua',
     'Modules/Users/Handler.lua',
+    'Modules/Users/Utility.lua',
 
     'Modules/Events.lua',
     'Testing.lua'
+}
+
+client_scripts {
+    "Client/Spawned.lua"
 }

@@ -3,9 +3,8 @@ SQL = exports.oxmysql
 
 SQL:execute([[
     CREATE TABLE IF NOT EXISTS users(
-        id INT AUTO_INCREMENT primary key NOT NULL,
-        license varchar(255) NOT NULL,
-        steam varchar(255) NOT NULL
+        id varchar(255) NOT NULL,
+        data LONGTEXT NOT NULL
     );
 ]])
 
