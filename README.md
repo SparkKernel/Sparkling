@@ -20,7 +20,7 @@ function MyExtension:Print(message)
    print(message)
 end
 
-Extension:Add(MyExtension)
+MyExtension:Add(MyExtension)
 ```
 #### Example of getting a Extension.
 ```lua
