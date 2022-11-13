@@ -74,6 +74,28 @@ AdminObject = function(id)
                     ['query'] = 'UPDATE users SET data = ? WHERE id = ?'
                 }
             })
+        end,
+        ['is'] = function(type, callback, value)
+            local User = Get()
+
+        if User == nil then 
+            local resp = SQL:query(
+                'SELECT * FROM users WHERE id = ?', 
+                {id},
+                function(db)
+                    local data = json.decode(table.unpack(db)['data']) or nil
+                    if data[type] == value then
+                        return callback(false)
+                    end
+                    return callback(true)
+                end)
+            else
+                if type == 'whitelist' then
+                    return callback(User[type])
+                else 
+                    return callback(false)
+                end
+            end
         end
     }
 
@@ -120,6 +142,34 @@ AdminObject = function(id)
             'User is now unwhitelisted',
             'User is not whitelited',
             'Cannot find user in DB'
+        )
+    end
+
+    function self:Kick(reason)
+        local User = Get()
+
+        if User == nil then
+            return Error("User does not exist.")
+        end
+
+        DropPlayer(User['src'], reason)
+    end 
+
+    -- is
+
+    function self:IsBanned(callback)
+        helper.is(
+            'ban',
+            callback,
+            0
+        )
+    end
+
+    function self:isWhitelisted(callback)
+        helper.is(
+            'whitelist',
+            callback,
+            false
         )
     end
 
