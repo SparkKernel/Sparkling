@@ -1,14 +1,18 @@
 Users = {}
 Users.Funcs = {}
-Users.Players = {}
+Users.Players = {
+    
+}
 Users.Utility = {}
 
 local LoadDelay = 60
 
-local default = {
+default = {
     ['hp'] = 100,
+    ['src'] = 0,
     ['ban'] = 0,
-    ['cash'] = 69,
+    ['whitelist'] = false,
+    ['cash'] = 420,
     ['groups'] = {},
     ['inventory'] = {},
     ['survival'] = {},
@@ -21,9 +25,12 @@ local default = {
 -- local resp = SQL:query('SELECT * FROM users WHERE id = ?', {tostring(src)})
 
 Users.Funcs.Get = function(source)
-    local steam = Users.Utility.GetSteam(source)
-    if steam == '' then
-        return Error("Cannot find user")
+    local steam
+    if type(source) == "string" then 
+        steam=source 
+    else
+        steam = Users.Utility.GetSteam(source)
+        if steam == '' then return Error("Cannot find user") end
     end
 
     return PlayerObject(
@@ -76,26 +83,34 @@ Users.Funcs.Load = function(source, steam, db, def)
         ['connecting'] = true
     }
     if table.unpack(db) ~= nil then
-        db = table.unpack(db)['data']
-        for k,v in pairs(default) do
-            Debug("K: "..tostring(k).." V: "..tostring(v).." DB[K]: "..tostring(db[k]))
-            if db[k] == nil then
-                data[k] = v
-            else
-                data[k] = db[k]
+        if json.decode(table.unpack(db)['data']) ~= nil then
+            db = json.decode(table.unpack(db)['data'])
+            for k,v in pairs(default) do
+                --Debug("K: "..tostring(k).." V: "..tostring(v).." DB[K]: "..tostring(db[k]))
+                if db[k] == nil then
+                    data[k] = v
+                else
+                    data[k] = db[k]
+                end
             end
+        else
+            Debug("Default 2")
+            data = default
         end
     else
+        Debug("Default 1")
         data = default
     end
 
-    if data['ban'] ~= 0 then
+
+    if data['ban'] ~= nil and data['ban'] ~= 0 then
+        Debug("User tried to join, but is banned")
         return def.done(
-            "Whoops, you are banned - for the reason: "..data['ban']
+            "Whoops, you are banned - for the reason: "..tostring(data['ban'])
         )
     end
 
-    print(json.encode(data))
+    data['src'] = source
 
     Users.Players[steam] = data
 
@@ -138,6 +153,7 @@ Users.Funcs.Remove = function()
     local data = Users.Players[steam]
     data['connecting'] = nil
     data['id'] = nil
+    data['src'] = nil
 
     Debug("Saved: "..json.encode(data))
 

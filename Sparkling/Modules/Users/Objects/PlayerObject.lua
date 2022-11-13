@@ -9,7 +9,5 @@ PlayerObject = function(id)
     self.Admin = AdminObject(self.ID)
     self.Inventory = InventoryObject(self.ID)
 
-    print("LOL")
-
     return self
 end
