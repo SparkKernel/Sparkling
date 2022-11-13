@@ -14,7 +14,7 @@ AdminObject = function(id)
             local User = Get()
             if User ~= nil then
                 if User[type] == value then
-                    User[type] = change
+                    if type ~= "ban" then User[type] = change else User[type] = ban end
                     if type == 'ban' then DropPlayer(User["src"], "You've been banned - for the reason: "..ban) end
                     Debug("On event used!")
                 else
@@ -104,6 +104,9 @@ AdminObject = function(id)
     end
 
     function self:Ban(reason)
+        if reason == nil then
+            return
+        end
         helper.on(
             "ban",
             0,

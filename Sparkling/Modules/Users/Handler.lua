@@ -131,10 +131,6 @@ Users.Funcs.Spawned = function()
         return
     end
 
-    if Users.Players[steam]['connecting'] == false then
-        return DropPlayer(source, "Whoops, there was a bug, or you are trying to exploit the system, if - stop.")
-    end
-
     Users.Players[steam]['connecting'] = false
     Debug("Spawned")
     -- load all data
