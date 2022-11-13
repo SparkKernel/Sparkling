@@ -1,7 +1,5 @@
 # ✨ Sparkling - A framework made by frackz
-Welcome to Sparkling, a currently open-source framework. Made by frackz, has features like Extensions, inbuilt logging, events, etc.
-
-
+Welcome to Sparkling, a currently open-source framework.
 
 This is currently just the framework, so if you want to work with it - you need to have some experience.
 
