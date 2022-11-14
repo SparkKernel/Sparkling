@@ -7,9 +7,9 @@ This is currently just the framework, so if you want to work with it - you need 
 local info = {
    ['creator'] = 'frackz',
    ['status'] = 'not stable-beta',
+   ['discord'] = 'https://discord.gg/XUP5hywRHn',
    ['contributors'] = {
       'frackz' -- sad only me :(
-   },
-   ['discord'] = 'https://discord.gg/XUP5hywRHn'
+   }
 }
 ```
