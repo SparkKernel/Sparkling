@@ -21,7 +21,9 @@ Users.Funcs.Get = function(source)
         steam=source 
     else
         steam = Users.Utility.GetSteam(source)
-        if steam == '' then return Error("Cannot find user") end
+        if steam == '' then 
+            Error("Cannot find user")
+        end
     end
 
     return PlayerObject(
@@ -56,6 +58,8 @@ Users.Funcs.Create = function(_, _, def)
         end
         Users.Funcs.Load(source, steam, data, def)
     end)
+
+    def.done()
 end
 
 Users.Funcs.Load = function(source, steam, db, def)
