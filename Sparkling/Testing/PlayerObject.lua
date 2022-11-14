@@ -1,3 +1,6 @@
+-- This is a testing-file
+-- This is hard-coded asf (bc its for testing lol)
+
 local Sparkling = exports['Sparkling']:Spark()
 local Users = Sparkling.Users
 

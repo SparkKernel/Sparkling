@@ -5,24 +5,15 @@ Users.Players = {
 }
 Users.Utility = {}
 
-local LoadDelay = 60
+local cfg = Config:Get('Player')
 
-default = {
-    ['hp'] = 100,
-    ['src'] = 0,
-    ['ban'] = 0,
-    ['whitelist'] = false,
-    ['cash'] = 420,
-    ['groups'] = {},
-    ['inventory'] = {},
-    ['survival'] = {},
-    ['identity'] = {
-        ['first'] = 'Change',
-        ['last'] = "Your name"
-    }
-}
+local default = cfg:Get('Default')
 
--- local resp = SQL:query('SELECT * FROM users WHERE id = ?', {tostring(src)})
+local Errors = cfg:Get('Errors')
+
+local Messages = cfg:Get('Messages')
+
+local LoadDelay = cfg:Get('LoadDelay')
 
 Users.Funcs.Get = function(source)
     local steam
@@ -40,33 +31,26 @@ end
 
 Users.Funcs.Create = function(_, _, def)
     local source=source
-    local steam = Users.Utility.GetSteam(source)
+    local steam = Users.Utility.GetSteam(source) -- get steam
 
-    def.defer()
+    def.defer() -- defer
 
-    if steam == '' then
-        return def.done(
-            "Whoops, seems that you doesn't have steam open."
-        )
-    end
+    if steam == '' then return def.done(Errors['SteamError']) end
 
     Wait(0)
 
-    def.update(
-        "Checking your steam / data"
-    )
+    def.update(Messages['Checking'])
 
     local resp = SQL:query('SELECT * FROM users WHERE id = ?', {steam}, function(data)
         Debug("A user joined "..steam)
 
         if table.unpack(data) ~= nil then
-            def.update("You are already registered, loading in")
+            def.update(Messages['Registered'])
             Debug("User already registered")
-
         else
             Debug("Creating user "..steam)
 
-            def.update("Creating your user...")
+            def.update(Messages['Creating'])
 
             SQL:query('INSERT INTO users (id) VALUES (?)', {steam})
         end
@@ -106,7 +90,10 @@ Users.Funcs.Load = function(source, steam, db, def)
     if data['ban'] ~= nil and data['ban'] ~= 0 then
         Debug("User tried to join, but is banned")
         return def.done(
-            "Whoops, you are banned - for the reason: "..tostring(data['ban'])
+            Config:Format(Messages['Banned'], {
+                reason = tostring(data['ban']),
+                id = steam
+            })
         )
     end
 
@@ -119,7 +106,7 @@ Users.Funcs.Load = function(source, steam, db, def)
     Wait(LoadDelay*1000)
     if Users.Players[steam] then
         if Users.Players[steam]['connecting'] then
-            DropPlayer(source, 'A error occurred, please rejoin')
+            DropPlayer(source, Messages['LoadDelay'])
         end
     end
 end

@@ -9,6 +9,13 @@ server_export 'Spark'
 
 server_scripts {
     'Sparkling.lua',
+
+    -- Configs
+    'Config.lua',
+    'Config/Player.lua',
+    'Testing/Config.lua',
+
+    -- Utility
     'Utility/Error.lua',
     
     -- Extensions
@@ -16,19 +23,21 @@ server_scripts {
     'Modules/Extensions/EventObject.lua',
     'Modules/Extensions/New.lua',
 
-
+    -- PlayerObject
     'Modules/Users/Objects/PlayerObject.lua',
-    'Modules/Users/Objects/AdminObject.lua',
-    'Modules/Users/Objects/CashObject.lua',
-    'Modules/Users/Objects/GroupObject.lua',
-    'Modules/Users/Objects/IdentityObject.lua',
-    'Modules/Users/Objects/InventoryObject.lua',
-    'Modules/Users/Objects/SurvivalObject.lua',
-    'Modules/Users/Handler.lua',
-    'Modules/Users/Utility.lua',
 
-    'Modules/Events.lua',
-    'Testing.lua'
+    -- PlayerObject's objects?:
+        'Modules/Users/Objects/AdminObject.lua',
+        'Modules/Users/Objects/CashObject.lua',
+        'Modules/Users/Objects/GroupObject.lua',
+        'Modules/Users/Objects/IdentityObject.lua',
+        'Modules/Users/Objects/InventoryObject.lua',
+        'Modules/Users/Objects/SurvivalObject.lua',
+        'Modules/Users/Handler.lua',
+        'Modules/Users/Utility.lua',
+
+    -- Testing
+    'Testing/PlayerObject.lua'
 }
 
 client_scripts {
