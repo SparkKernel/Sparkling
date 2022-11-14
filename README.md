@@ -12,4 +12,6 @@ local info = {
       'frackz' -- sad only me :(
    }
 }
+
+print(json.encode(info)) -- print all the info
 ```
