@@ -1,4 +1,4 @@
-[SparklingCover](https://i.imgur.com/cEJpEag.png)
+![SparklingCover](https://i.imgur.com/cEJpEag.png)
 
 # ✨ Sparkling - A framework made by frackz
 Welcome to Sparkling, a currently open-source framework.
