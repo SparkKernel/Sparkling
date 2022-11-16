@@ -1,6 +1,5 @@
-![SparklingCover](https://i.imgur.com/cEJpEag.png)
-
 # ✨ Sparkling - A framework made by frackz
+![SparklingCover](https://i.imgur.com/cEJpEag.png)
 Welcome to Sparkling, a currently open-source framework.
 
 This is currently just the framework, so if you want to work with it - you need to have some experience.
