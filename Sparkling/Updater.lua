@@ -1,4 +1,4 @@
-local Url = 'https://raw.githubusercontent.com/SparkKernel/Spark/main/data.json'
+local Url = 'https://raw.githubusercontent.com/SparkKernel/Sparkling/main/data.json'
 
 local CurrentVersion = '1.0'
 
