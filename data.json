@@ -1,4 +1,6 @@
 {
   "version": "1.0",
-  "emergency": true
+  "emergincies": {
+    "1.1": true
+  }
 }
