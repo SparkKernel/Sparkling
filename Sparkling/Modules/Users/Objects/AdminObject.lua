@@ -78,11 +78,9 @@ AdminObject = function(id)
         ['is'] = function(type, callback, value)
             local User = Get()
 
-        if User == nil then 
-            local resp = SQL:query(
-                'SELECT * FROM users WHERE id = ?', 
-                {id},
-                function(db)
+            if User == nil then 
+                local resp = SQL:query('SELECT * FROM users WHERE id = ?', {id}, function(db)
+                    if table.unpack(db) == nil then return callback(false) end 
                     local data = json.decode(table.unpack(db)['data']) or nil
                     if data[type] == value then
                         return callback(false)

@@ -37,7 +37,10 @@ server_scripts {
         'Modules/Users/Utility.lua',
 
     -- Testing
-    'Testing/PlayerObject.lua'
+    'Testing/PlayerObject.lua',
+
+    -- Updater
+    'Updater.lua'
 }
 
 client_scripts {
