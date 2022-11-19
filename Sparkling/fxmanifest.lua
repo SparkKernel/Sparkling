@@ -8,6 +8,7 @@ version '1.0'
 server_export 'Spark'
 
 server_scripts {
+    '@oxmysql/lib/MySQL.lua',
     'Sparkling.lua',
 
     -- Configs

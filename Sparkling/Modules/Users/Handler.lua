@@ -43,33 +43,31 @@ Users.Funcs.Create = function(_, _, def)
 
     def.update(Messages['Checking'])
 
-    local resp = SQL:query('SELECT * FROM users WHERE id = ?', {steam}, function(data)
-        Debug("A user joined "..steam)
+    local resp = MySQL.query.await('SELECT * FROM users WHERE id = ?', {steam})
 
-        if table.unpack(data) ~= nil then
-            def.update(Messages['Registered'])
-            Debug("User already registered")
-        else
-            Debug("Creating user "..steam)
+    Debug("A user joined "..steam)
 
-            def.update(Messages['Creating'])
+    if table.unpack(resp) ~= nil then
+        def.update(Messages['Registered'])
+        Debug("User already registered")
+    else
+        Debug("Creating user "..steam)
 
-            SQL:query('INSERT INTO users (id) VALUES (?)', {steam})
-        end
-        Users.Funcs.Load(source, steam, data, def)
-    end)
+        def.update(Messages['Creating'])
+
+        SQL.query('INSERT INTO users (id) VALUES (?)', {steam})
+    end
+    Users.Funcs.Load(source, steam, resp, def)
+
 
     def.done()
 end
 
 Users.Funcs.Load = function(source, steam, db, def)
-    if Users.Players[steam] then
-        return Error("An error occurred, player with steam "..steam.." is already loaded?")
-    end
+    if Users.Players[steam] then return Error("An error occurred, player with steam "..steam.." is already loaded?") end
 
-    local data = {
-        ['connecting'] = true
-    }
+    local data = { connecting = true }
+
     if table.unpack(db) ~= nil then
         if json.decode(table.unpack(db)['data']) ~= nil then
             db = json.decode(table.unpack(db)['data'])
@@ -93,40 +91,42 @@ Users.Funcs.Load = function(source, steam, db, def)
 
     if data['ban'] ~= nil and data['ban'] ~= 0 then
         Debug("User tried to join, but is banned")
-        return def.done(
-            Config:Format(Messages['Banned'], {
-                reason = tostring(data['ban']),
-                id = steam
-            })
-        )
+        if def ~= true then 
+            def.done(
+                Config:Format(Messages['Banned'], {
+                    reason = tostring(data['ban']),
+                    id = steam
+                })
+            )
+        end
+        return
     end
 
     data['src'] = source
 
     Users.Players[steam] = data
 
-    def.done()
+    if def ~= true then def.done() end
 
-    Wait(LoadDelay*1000)
-    if Users.Players[steam] then
-        if Users.Players[steam]['connecting'] then
+    if def ~= true then
+        Wait(LoadDelay*1000)
+        if Users.Players[steam] and Users.Players[steam]['connecting'] == true then
             DropPlayer(source, Messages['LoadDelay'])
         end
+    else
+        Users.Funcs.Spawned(source)
     end
 end
 
-Users.Funcs.Spawned = function()
+Users.Funcs.Spawned = function(source)
     local source = source
     local steam = Users.Utility.GetSteam(source)
     if Users.Players[steam] == nil then
-        return
+        return Debug("User does not exist")
     end
 
     Users.Players[steam]['connecting'] = false
     Debug("Spawned")
-    -- load all data
-    local bob = Users.Funcs.Get(source)
-    print(bob.ID)
 end
 
 Users.Funcs.Remove = function()
@@ -144,7 +144,7 @@ Users.Funcs.Remove = function()
 
     Debug("Saved: "..json.encode(data))
 
-    SQL:query(
+    SQL.query(
         'UPDATE users SET data = ? WHERE id = ?', 
         {
             json.encode(data),

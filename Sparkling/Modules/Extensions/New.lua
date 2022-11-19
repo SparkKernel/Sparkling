@@ -1,6 +1,7 @@
 function Extension.Funcs:New(name)
     local ret = {}
     local events = {}
+    local ignore = true
 
     -- Events
     ret.Events = {}
@@ -15,7 +16,7 @@ function Extension.Funcs:New(name)
     -- End Events
 
     function ret:Add(ext)
-        if Extension.Registered[name] ~= nil then return Error("Tried to add a extension, but there is already a extension with that name! (name="..name..")") end
+        if Extension.Registered[name] ~= nil and not ignore then return Error("Tried to add a extension, but there is already a extension with that name! (name="..name..")") end
 
         if not ext["Events"] then return end
 

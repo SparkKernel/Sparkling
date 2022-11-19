@@ -1,7 +1,6 @@
 Sparks = {}
-SQL = exports.oxmysql
 
-SQL:execute([[
+MySQL.execute([[
     CREATE TABLE IF NOT EXISTS users(
         id varchar(255) NOT NULL,
         data LONGTEXT NOT NULL

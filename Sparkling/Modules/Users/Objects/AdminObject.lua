@@ -1,7 +1,9 @@
 AdminObject = function(id)
     local self = {}
 
-    local helper = {
+    function Get() return Users.Players[id] or nil end
+
+    local service = {
         ['on'] = function(
             type, -- Type
             value, -- If it is value change
@@ -75,59 +77,39 @@ AdminObject = function(id)
                 }
             })
         end,
-        ['is'] = function(type, callback, value)
+        ['is'] = function(type, value)
             local User = Get()
 
             if User == nil then 
-                local resp = SQL:query('SELECT * FROM users WHERE id = ?', {id}, function(db)
-                    if table.unpack(db) == nil then return callback(false) end 
-                    local data = json.decode(table.unpack(db)['data']) or nil
-                    if data[type] == value then
-                        return callback(false)
-                    end
-                    return callback(true)
-                end)
+                local resp = MySQL.query.await('SELECT * FROM users WHERE id = ?', {id})
+
+                local unpacked = table.unpack(resp)
+                if unpacked == nil then return false end 
+                local data = json.decode(unpacked['data']) or nil
+
+                if data[type] == value then return false end
+                return true
             else
                 if type == 'whitelist' then
-                    return callback(User[type])
-                else 
-                    return callback(false)
+                    return User[type]
+                else
+                    return false
                 end
             end
         end
     }
 
-    function Get()
-        return Users.Players[id] or nil
-    end
-
     function self:Ban(reason)
-        if reason == nil then
-            return
-        end
-        helper.on(
-            "ban",
-            0,
-            reason,
-            "User is already banned",
-            "User is now banned",
-            reason
-        )
+        reason = reason or ''
+        service.on("ban",0,reason,"User is already banned","User is now banned",reason)
     end
 
     function self:Unban()
-        helper.off(
-            'ban',
-            0,
-            'User is now unbanned',
-            'User is not banned',
-            'Cannot find user in DB',
-            false
-        )
+        service.off('ban',0,'User is now unbanned','User is not banned','Cannot find user in DB',false)
     end
 
     function self:Whitelist()
-        helper.on(
+        service.on(
             "whitelist",
             false,
             true,
@@ -137,41 +119,23 @@ AdminObject = function(id)
     end
 
     function self:Unwhitelist()
-        helper.off(
-            'whitelist',
-            false,
-            'User is now unwhitelisted',
-            'User is not whitelited',
-            'Cannot find user in DB'
-        )
+        service.off('whitelist',false,'User is now unwhitelisted','User is not whitelited','Cannot find user in DB')
     end
 
     function self:Kick(reason)
         local User = Get()
-
-        if User == nil then
-            return Error("User does not exist.")
-        end
-
+        if User == nil then return Error("User does not exist.") end
         DropPlayer(User['src'], reason)
     end 
 
     -- is
 
-    function self:IsBanned(callback)
-        helper.is(
-            'ban',
-            callback,
-            0
-        )
+    function self:IsBanned() 
+        return service.is('ban',0)
     end
 
-    function self:isWhitelisted(callback)
-        helper.is(
-            'whitelist',
-            callback,
-            false
-        )
+    function self:isWhitelisted() 
+        return service.is('whitelist',false) 
     end
 
     return self

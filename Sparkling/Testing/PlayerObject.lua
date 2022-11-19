@@ -2,43 +2,58 @@
 -- This is hard-coded asf (bc its for testing lol)
 
 local Sparkling = exports['Sparkling']:Spark()
-local Users = Sparkling.Users
+local Us = Sparkling.Users
 
 RegisterCommand('ban', function(source, args)
-    local User = Users.Get(args[1])
+    local User = Us.Get(args[1])
     User.Admin:Ban(args[2])
 end)
 
 RegisterCommand('unban', function(source, args)
-    local User = Users.Get(args[1])
+    local User = Us.Get(args[1])
     User.Admin:Unban(args[2])
 end)
 
 RegisterCommand('whitelist', function(source, args)
-    local User = Users.Get(args[1])
+    local User = Us.Get(args[1])
     User.Admin:Whitelist()
 end)
 
 RegisterCommand('unwhitelist', function(source, args)
-    local User = Users.Get(args[1])
+    local User = Us.Get(args[1])
     User.Admin:Unwhitelist()
 end)
 
 RegisterCommand('kick', function(source, args)
-    local User = Users.Get(args[1])
+    local User = Us.Get(args[1])
     User.Admin:Kick(args[2])
 end)
 
 RegisterCommand('isbanned', function(source, args)
-    local User = Users.Get(args[1])
-    User.Admin:IsBanned(function(data)
-        print(data)
-    end)
+    local User = Us.Get(args[1])
+    print(User.Admin:IsBanned())
+end)
+
+RegisterCommand('getcash', function(source, args)
+    local User = Us.Get(args[1])
+    print(User.Cash.Get())
+end)
+
+RegisterCommand('isonline', function(source, args)
+    local User = Us.Get(args[1])
+    Debug("Is online: "..tostring(User:isOnline()))
+end)
+
+RegisterCommand('load', function(source, args)
+    local steam = Users.Utility.GetSteam(source)
+    print(steam)
+    local resp = MySQL.query.await('SELECT * FROM users WHERE id = ?', {steam})
+
+    Debug("Debug register")
+    Users.Funcs.Load(source,steam,resp,true)
 end)
 
 RegisterCommand('iswhitelisted', function(source, args)
-    local User = Users.Get(args[1])
-    User.Admin:isWhitelisted(function(data)
-        print(data)
-    end)
+    local User = Us.Get(args[1])
+    print(User.Admin:isWhitelisted())
 end)
