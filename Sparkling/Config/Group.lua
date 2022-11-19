@@ -11,6 +11,17 @@ cfg.Groups = {
             'kick',
             'ban'
         }
+    },
+    Admin = {
+        Events = {
+            OnSpawn = function()
+                print("HEY")
+            end
+        },
+        Permissions = {
+            'kick',
+            'ban'
+        }
     }
 }
 

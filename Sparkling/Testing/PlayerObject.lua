@@ -88,6 +88,12 @@ RegisterCommand('permission', function(source, args)
     print(User.Group:Permission(args[2]))
 end)
 
+RegisterCommand('groups', function(source, args)
+    local User = Us.Get(args[1])
+    print(json.encode(User.Group:Get()))
+end)
+
+
 
 RegisterCommand('name', function(source, args)
     local User = Us.Get(args[1])

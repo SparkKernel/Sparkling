@@ -7,10 +7,49 @@ GroupObject = function(id)
 
     function Get() return Users.Players[id] or nil end
 
+    function GRP()
+        local resp = MySQL.query.await('SELECT * FROM users WHERE id = ?', {id})
+        if table.unpack(resp) == nil then return false end
+        local data = json.decode(table.unpack(resp)['data'])
+        if not data then return false end
+        return data
+    end
+
+    function Service(dataFunc)
+        Users.Utility:GetUpdate({
+            get = {
+                query = 'SELECT * FROM users WHERE id = ?', args = {id},
+                callback = function(data, update)
+                    local unpack = data.unpack
+                    if unpack == nil then return Error("Cannot find user in DB") end
+                    local data = json.decode(unpack['data'])
+                    if not data then return Warn("User has no data") end
+
+                    dataFunc(data)
+
+                    update({json.encode(data), id})
+                    Debug("Success adding or removing group through db")
+                end
+            },
+            update = {
+                query = 'UPDATE users SET data = ? WHERE id = ?'
+            }
+        })    
+    end
+
     function self:Has(group)
         local User = Get()
 
-        if User == nil then Debug("Cannot find user") return false end
+        if User == nil then
+            local data = GRP()
+            if data == false then
+                return false
+            end
+
+            for _,v in pairs(data['groups']) do if v == group then return true end end
+
+            return false
+        end
 
         for _,v in pairs(User['groups']) do
             if v == group then
@@ -23,19 +62,27 @@ GroupObject = function(id)
 
     function self:Get()
         local User = Get()
-        if User == nil then Debug("Cannot find user") return false end
-
+        if User == nil then 
+            local data = GRP()
+            if data == false then return {} end
+            return data.groups
+        end
+        
         return User.groups
     end
 
     function self:Add(group)
         local User = Get()
-        if User == nil then return Debug("Cannot find user") end
-
+        if Groups[group] == nil then Debug("Invalid group") return false end
         local Has = self:Has(group)
-        if Has == true then return false end
+        if Has == true then Debug("User already has group") return false end
 
-        if Groups[group] == nil then return false end
+        if User == nil then 
+            return Service(function(data)
+                table.insert(data.groups, group)
+                return data
+            end)
+        end
 
         table.insert(Users.Players[id].groups, group)
 
@@ -44,7 +91,16 @@ GroupObject = function(id)
 
     function self:Remove(group)
         local User = Get()
-        if User == nil then return Debug("Cannot find user") end
+        if User == nil then 
+            return Service(function(data)
+                for i,v in pairs(data['groups']) do
+                    if v == group then
+                        table.remove(data.groups, i)
+                    end
+                end
+                return data
+            end)
+        end
 
         local Has = self:Has(group)
         if Has == false then return false end
@@ -60,8 +116,15 @@ GroupObject = function(id)
 
     function self:Permission(perm)
         local User = Get()
-        if User == nil then return Debug("Cannot find user") end
-        print(json.encode(User))
+        if User == nil then
+            local data = GRP()
+            if data == false then
+                return false
+            end
+
+            User = data
+        end
+
         for i,v in pairs(User['groups']) do
             if Groups[v] == nil then return Error("User has group that doesn't exist. (group="..v..")") end
             local perms = Groups[v].Permissions
@@ -74,16 +137,6 @@ GroupObject = function(id)
 
         return false
     end 
-
-    function self:Permissions(perms)
-        for _, perm in pairs(perms) do
-            if not self:Permission(perm) then
-                return false
-            end
-        end
-        
-        return true
-    end
 
     return self
 end
