@@ -21,13 +21,12 @@ function Users.Utility:GetUpdate(
         SQL:query(update['query'], args)
     end
 
-    local resp = SQL:query(get['query'], get['args'], function(db)
+    local resp = MySQL.query.await(get['query'], get['args'])
 
-        local data = {
-            ['raw'] = db,
-            ['unpack'] = table.unpack(db)
-        }
+    local data = {
+        ['raw'] = resp,
+        ['unpack'] = table.unpack(resp)
+    }
 
-        get['callback'](data, call)
-    end)
+    get['callback'](data, call)
 end

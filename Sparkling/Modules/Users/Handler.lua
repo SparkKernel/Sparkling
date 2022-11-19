@@ -55,7 +55,7 @@ Users.Funcs.Create = function(_, _, def)
 
         def.update(Messages['Creating'])
 
-        SQL.query('INSERT INTO users (id) VALUES (?)', {steam})
+        MySQL.query.await('INSERT INTO users (id) VALUES (?)', {steam})
     end
     Users.Funcs.Load(source, steam, resp, def)
 
@@ -66,7 +66,9 @@ end
 Users.Funcs.Load = function(source, steam, db, def)
     if Users.Players[steam] then return Error("An error occurred, player with steam "..steam.." is already loaded?") end
 
-    local data = { connecting = true }
+    local data = {
+        ['connecting'] = true
+    }
 
     if table.unpack(db) ~= nil then
         if json.decode(table.unpack(db)['data']) ~= nil then
@@ -105,6 +107,7 @@ Users.Funcs.Load = function(source, steam, db, def)
     data['src'] = source
 
     Users.Players[steam] = data
+    print("HEY")
 
     if def ~= true then def.done() end
 
@@ -114,13 +117,14 @@ Users.Funcs.Load = function(source, steam, db, def)
             DropPlayer(source, Messages['LoadDelay'])
         end
     else
-        Users.Funcs.Spawned(source)
+        Users.Players[steam]['connecting'] = false
     end
 end
 
-Users.Funcs.Spawned = function(source)
+Users.Funcs.Spawned = function()
     local source = source
     local steam = Users.Utility.GetSteam(source)
+    print(steam)
     if Users.Players[steam] == nil then
         return Debug("User does not exist")
     end
@@ -132,6 +136,7 @@ end
 Users.Funcs.Remove = function()
     local source = source
     local steam = Users.Utility.GetSteam(source)
+    print(steam)
     
     if Users.Players[steam] == nil then
         return Warn("A user left the server, but was not registered? Please check this out.")
@@ -144,7 +149,7 @@ Users.Funcs.Remove = function()
 
     Debug("Saved: "..json.encode(data))
 
-    SQL.query(
+    MySQL.query.await(
         'UPDATE users SET data = ? WHERE id = ?', 
         {
             json.encode(data),

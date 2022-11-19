@@ -1,6 +1,6 @@
 PlayerObject = function(id)
     local self = {}
-    self.ID = id
+    self.id = id
 
     -- endpoint
     if Users.Players[id] then
@@ -13,12 +13,12 @@ PlayerObject = function(id)
         if Users.Players[id] == nil then return false else return true end
     end
 
-    self.Identity = IdentityObject(self.ID)
-    self.Group = GroupObject(self.ID)
-    self.Cash = CashObject(self.ID)
-    self.Survival = SurvivalObject(self.ID)
-    self.Admin = AdminObject(self.ID)
-    self.Inventory = InventoryObject(self.ID)
+    self.Identity = IdentityObject(self.id)
+    self.Group = GroupObject(self.id)
+    self.Cash = CashObject(self.id)
+    self.Survival = SurvivalObject(self.id)
+    self.Admin = AdminObject(self.id)
+    self.Inventory = InventoryObject(self.id)
 
     return self
 end
