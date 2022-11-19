@@ -45,9 +45,7 @@ GroupObject = function(id)
             if data == false then
                 return false
             end
-
             for _,v in pairs(data['groups']) do if v == group then return true end end
-
             return false
         end
 
@@ -93,11 +91,7 @@ GroupObject = function(id)
         local User = Get()
         if User == nil then 
             return Service(function(data)
-                for i,v in pairs(data['groups']) do
-                    if v == group then
-                        table.remove(data.groups, i)
-                    end
-                end
+                for i,v in pairs(data['groups']) do if v == group then table.remove(data.groups, i) end end
                 return data
             end)
         end
@@ -105,11 +99,7 @@ GroupObject = function(id)
         local Has = self:Has(group)
         if Has == false then return false end
 
-        for i,v in pairs(User['groups']) do
-            if v == group then
-                table.remove(Users.Players[id].groups, i)
-            end
-        end
+        for i,v in pairs(User['groups']) do if v == group then table.remove(Users.Players[id].groups, i) end end
 
         Debug("Success")
     end
@@ -117,22 +107,15 @@ GroupObject = function(id)
     function self:Permission(perm)
         local User = Get()
         if User == nil then
-            local data = GRP()
-            if data == false then
-                return false
-            end
-
+            local data = GRP() --grab data
+            if data == false then return false end
             User = data
         end
 
         for i,v in pairs(User['groups']) do
             if Groups[v] == nil then return Error("User has group that doesn't exist. (group="..v..")") end
             local perms = Groups[v].Permissions
-            for i,v in pairs(perms) do
-                if v == perm then
-                    return true
-                end
-            end
+            for i,v in pairs(perms) do if v == perm then return true end end
         end
 
         return false
