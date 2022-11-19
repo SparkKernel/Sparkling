@@ -16,25 +16,18 @@ GroupObject = function(id)
     end
 
     function Service(dataFunc)
-        Users.Utility:GetUpdate({
-            get = {
-                query = 'SELECT * FROM users WHERE id = ?', args = {id},
-                callback = function(data, update)
-                    local unpack = data.unpack
-                    if unpack == nil then return Error("Cannot find user in DB") end
-                    local data = json.decode(unpack['data'])
-                    if not data then return Warn("User has no data") end
+        local data = MySQL.query.await('SELECT * FROM users WHERE id = ?', {id})
 
-                    dataFunc(data)
+        local unpack = table.unpack(data)
+        if unpack == nil then return Error("Cannot find user in DB") end
+        local data = json.decode(unpack['data'])
+        if not data then return Warn("User has no data") end
 
-                    update({json.encode(data), id})
-                    Debug("Success adding or removing group through db")
-                end
-            },
-            update = {
-                query = 'UPDATE users SET data = ? WHERE id = ?'
-            }
-        })    
+        dataFunc(data)
+
+        MySQL.query.await('UPDATE users SET data = ? WHERE id = ?', {json.encode(data), id})
+        
+        Debug("Success adding or removing group through db")
     end
 
     function self:Has(group)
@@ -42,18 +35,13 @@ GroupObject = function(id)
 
         if User == nil then
             local data = GRP()
-            if data == false then
-                return false
+            if data ~= false then
+                for _,v in pairs(data['groups']) do if v == group then return true end end
             end
-            for _,v in pairs(data['groups']) do if v == group then return true end end
             return false
         end
 
-        for _,v in pairs(User['groups']) do
-            if v == group then
-                return true
-            end
-        end
+        for _,v in pairs(User['groups']) do if v == group then return true end end
 
         return false
     end
@@ -72,6 +60,7 @@ GroupObject = function(id)
     function self:Add(group)
         local User = Get()
         if Groups[group] == nil then Debug("Invalid group") return false end
+        
         local Has = self:Has(group)
         if Has == true then Debug("User already has group") return false end
 

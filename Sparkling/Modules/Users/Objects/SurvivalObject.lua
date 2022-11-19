@@ -7,7 +7,6 @@ SurvivalObject = function(id)
         set = function(type, to)
             local User = Get()
             if User == nil then return Error("Cannot find user") end
-
             if to > 100 then return end
 
             Users.Players[id]['survival'][type] = to

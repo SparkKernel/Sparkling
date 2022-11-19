@@ -10,24 +10,3 @@ Users.Utility.GetSteam = function(source)
     end
     return steam
 end
-
-function Users.Utility:GetUpdate(
-    data
-)   
-    local get = data['get']
-    local update = data['update']
-
-    function call(args)
-        MySQL.query.await(update['query'], args)
-    end
-
-    local resp = MySQL.query.await(get['query'], get['args'])
-
-
-    local data = {
-        raw = resp,
-        unpack = table.unpack(resp)
-    }
-    
-    get['callback'](data, call)
-end
