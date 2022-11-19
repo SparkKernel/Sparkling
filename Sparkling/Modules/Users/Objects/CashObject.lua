@@ -5,7 +5,7 @@ CashObject = function(id)
 
     function self:Get()
         local User = Get()
-        if User == nil then print("NO") return 0 end
+        if User == nil then return 0 end
         return User['cash']
     end
 

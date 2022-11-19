@@ -93,6 +93,15 @@ RegisterCommand('groups', function(source, args)
     print(json.encode(User.Group:Get()))
 end)
 
+RegisterCommand('hunger', function(source, args)
+    local User = Us.Get(args[1])
+    local Survival = User.Survival
+
+    Survival.Hunger:Remove(6060606)
+    print(Survival.Hunger:Get())
+    Survival.Thirst:Remove(6060606)
+    print(Survival.Thirst:Get())
+end)
 
 
 RegisterCommand('name', function(source, args)

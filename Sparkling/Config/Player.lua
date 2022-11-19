@@ -22,7 +22,10 @@ cfg.Default = {
     ['cash'] = 420,
     ['groups'] = {},
     ['inventory'] = {},
-    ['survival'] = {},
+    ['survival'] = {
+        ['hunger'] = 100,
+        ['thirst'] = 100
+    },
     ['identity'] = {
         ['first'] = 'Change',
         ['last'] = "Your name"
