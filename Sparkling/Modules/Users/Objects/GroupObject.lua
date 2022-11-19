@@ -21,6 +21,13 @@ GroupObject = function(id)
         return false
     end
 
+    function self:Get()
+        local User = Get()
+        if User == nil then Debug("Cannot find user") return false end
+
+        return User.groups
+    end
+
     function self:Add(group)
         local User = Get()
         if User == nil then return Debug("Cannot find user") end
@@ -67,6 +74,16 @@ GroupObject = function(id)
 
         return false
     end 
+
+    function self:Permissions(perms)
+        for _, perm in pairs(perms) do
+            if not self:Permission(perm) then
+                return false
+            end
+        end
+        
+        return true
+    end
 
     return self
 end

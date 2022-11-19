@@ -58,17 +58,14 @@ AdminObject = function(id)
                     ['query'] = 'SELECT * FROM users WHERE id = ?',
                     ['args'] = {id},
                     ['callback'] = function(data, update)
-                        print("HEY")
                         local unpack = data['unpack']
                         if not unpack then 
-                            print("ASD")
                             return Error(find) 
                         end
     
                         local data = json.decode(unpack['data'])
     
                         if not data then 
-                            print("BOB")
                             return Warn(nut) 
                         end
 

@@ -88,3 +88,13 @@ RegisterCommand('permission', function(source, args)
     print(User.Group:Permission(args[2]))
 end)
 
+
+RegisterCommand('name', function(source, args)
+    local User = Us.Get(args[1])
+    User.Identity.Last:Change('bo123b')
+    local name = User.Identity:GetName()
+    if name then
+        print(name.string)
+        
+    end
+end)

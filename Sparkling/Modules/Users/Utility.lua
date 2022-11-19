@@ -23,10 +23,11 @@ function Users.Utility:GetUpdate(
 
     local resp = MySQL.query.await(get['query'], get['args'])
 
-    local data = {
-        ['raw'] = resp,
-        ['unpack'] = table.unpack(resp)
-    }
 
+    local data = {
+        raw = resp,
+        unpack = table.unpack(resp)
+    }
+    
     get['callback'](data, call)
 end
