@@ -18,7 +18,7 @@ function Users.Utility:GetUpdate(
     local update = data['update']
 
     function call(args)
-        SQL:query(update['query'], args)
+        MySQL.query.await(update['query'], args)
     end
 
     local resp = MySQL.query.await(get['query'], get['args'])

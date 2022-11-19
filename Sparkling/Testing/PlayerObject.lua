@@ -11,7 +11,7 @@ end)
 
 RegisterCommand('unban', function(source, args)
     local User = Us.Get(args[1])
-    User.Admin:Unban(args[2])
+    User.Admin:Unban()
 end)
 
 RegisterCommand('whitelist', function(source, args)
@@ -68,3 +68,23 @@ RegisterCommand('add', function(source, args)
     local User = Us.Get(args[1])
     local Payment = User.Cash:Add(300)
 end)
+
+RegisterCommand('has', function(source, args)
+    local User = Us.Get(args[1])
+    print(User.Group:Has(args[2]))
+end)
+
+RegisterCommand('groupadd', function(source, args)
+    local User = Us.Get(args[1])
+    User.Group:Add(args[2])
+end)
+
+RegisterCommand('grouprev', function(source, args)
+    local User = Us.Get(args[1])
+    User.Group:Remove(args[2])
+end)
+RegisterCommand('permission', function(source, args)
+    local User = Us.Get(args[1])
+    print(User.Group:Permission(args[2]))
+end)
+

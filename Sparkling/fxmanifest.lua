@@ -14,6 +14,7 @@ server_scripts {
     -- Configs
     'Config.lua',
     'Config/Player.lua',
+    'Config/Group.lua',
     'Testing/Config.lua',
 
     -- Utility
