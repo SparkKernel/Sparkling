@@ -8,7 +8,7 @@ GroupObject = function(id)
     function Get() return Users.Players[id] or nil end
 
     function GRP()
-        local resp = MySQL.query.await('SELECT * FROM users WHERE id = ?', {id})
+        local resp = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
         if table.unpack(resp) == nil then return false end
         local data = json.decode(table.unpack(resp)['data'])
         if not data then return false end
@@ -16,7 +16,7 @@ GroupObject = function(id)
     end
 
     function Service(dataFunc)
-        local data = MySQL.query.await('SELECT * FROM users WHERE id = ?', {id})
+        local data = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
 
         local unpack = table.unpack(data)
         if unpack == nil then return Error("Cannot find user in DB") end
@@ -25,7 +25,7 @@ GroupObject = function(id)
 
         dataFunc(data)
 
-        MySQL.query.await('UPDATE users SET data = ? WHERE id = ?', {json.encode(data), id})
+        MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data), id})
         
         Debug("Success adding or removing group through db")
     end

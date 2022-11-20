@@ -9,7 +9,7 @@ IdentityObject = function(id)
 
             if User ~= nil then Users.Players[id].identity[type] = value end
 
-            local data = MySQL.query.await('SELECT * FROM users WHERE id = ?', {id})
+            local data = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
 
             local unpack = table.unpack(data)
             if unpack == nil then return Error("Cannot find user in DB") end
@@ -19,7 +19,7 @@ IdentityObject = function(id)
 
             data['identity'][type] = value
 
-            MySQL.query.await('UPDATE users SET data = ? WHERE id = ?', {json.encode(data), id})
+            MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data), id})
             
             Debug("Success changing name through db")
         end,
@@ -27,11 +27,9 @@ IdentityObject = function(id)
         get = function(type)
             local User = Get()
 
-            if User ~= nil then
-                return User.identity[type]
-            end
+            if User ~= nil then return User.identity[type] end
 
-            local resp = MySQL.query.await('SELECT * FROM users WHERE id = ?', {id})
+            local resp = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
             local unpack = table.unpack(resp)
 
             if unpack == nil then return false end

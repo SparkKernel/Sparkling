@@ -47,7 +47,7 @@ end)
 RegisterCommand('load', function(source, args)
     local steam = Users.Utility.GetSteam(source)
     print(steam)
-    local resp = MySQL.query.await('SELECT * FROM users WHERE id = ?', {steam})
+    local resp = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {steam})
 
     Debug("Debug register")
     Users.Funcs.Load(source,steam,resp,true)
@@ -112,4 +112,9 @@ RegisterCommand('name', function(source, args)
         print(name.string)
         
     end
+end)
+
+RegisterCommand('kickid', function(source, args)
+    local User = Us.Get(args[1])
+    User.Admin:Kick('bob')
 end)

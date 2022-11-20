@@ -2,8 +2,9 @@ Sparks = {}
 
 MySQL.execute([[
     CREATE TABLE IF NOT EXISTS users(
-        id varchar(255) NOT NULL,
-        data LONGTEXT NOT NULL
+        id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+        steam varchar(255) NOT NULL,
+        data LONGTEXT DEFAULT NULL
     );
 ]])
 

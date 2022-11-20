@@ -1,8 +1,7 @@
 Users = {}
 Users.Funcs = {}
-Users.Players = {
-    
-}
+Users.Players = {}
+Users.FromId = {} -- (id:) (steam hex)
 Users.Utility = {}
 
 local cfg = Config:Get('Player')
@@ -18,17 +17,16 @@ local LoadDelay = cfg:Get('LoadDelay')
 Users.Funcs.Get = function(source)
     local steam
     if type(source) == "string" then 
-        steam=source 
+        steam=source
+        if tonumber(source) then
+            steam = Users.FromId[source]
+        end
     else
         steam = Users.Utility.GetSteam(source)
-        if steam == '' then 
-            Error("Cannot find user")
-        end
+        if steam == '' then Warn("Cannot find user") end
     end
 
-    return PlayerObject(
-        steam
-    )
+    return PlayerObject(steam)
 end
 
 Users.Funcs.Create = function(_, _, def)
@@ -43,9 +41,10 @@ Users.Funcs.Create = function(_, _, def)
 
     def.update(Messages['Checking'])
 
-    local resp = MySQL.query.await('SELECT * FROM users WHERE id = ?', {steam})
+    local resp = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {steam})
 
     Debug("A user joined "..steam)
+    print(json.encode(resp))
 
     if table.unpack(resp) ~= nil then
         def.update(Messages['Registered'])
@@ -55,10 +54,11 @@ Users.Funcs.Create = function(_, _, def)
 
         def.update(Messages['Creating'])
 
-        MySQL.query.await('INSERT INTO users (id) VALUES (?)', {steam})
+        MySQL.query.await('INSERT INTO users (steam) VALUES (?)', {steam})
+        resp = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {steam})
+        print(json.encode(resp))
     end
     Users.Funcs.Load(source, steam, resp, def)
-
 
     def.done()
 end
@@ -69,45 +69,38 @@ Users.Funcs.Load = function(source, steam, db, def)
     local data = {
         ['connecting'] = true
     }
+    
+    local ordb = db
 
     if table.unpack(db) ~= nil then
-        if json.decode(table.unpack(db)['data']) ~= nil then
-            db = json.decode(table.unpack(db)['data'])
-            for k,v in pairs(default) do
-                --Debug("K: "..tostring(k).." V: "..tostring(v).." DB[K]: "..tostring(db[k]))
-                if db[k] == nil then
-                    data[k] = v
-                else
-                    data[k] = db[k]
-                end
-            end
-        else
-            Debug("Default 2")
+        if json.decode(table.unpack(db)['data']) == nil then
             data = default
         end
-    else
-        Debug("Default 1")
-        data = default
-    end
+        db = json.decode(table.unpack(db)['data'])
+        for k,v in pairs(default) do
+            if db[k] == nil then
+                data[k] = v
+            else
+                data[k] = db[k]
+            end
+        end
+    else data = default end
 
 
     if data['ban'] ~= nil and data['ban'] ~= 0 then
         Debug("User tried to join, but is banned")
-        if def ~= true then 
-            def.done(
-                Config:Format(Messages['Banned'], {
-                    reason = tostring(data['ban']),
-                    id = steam
-                })
-            )
-        end
+        if def ~= true then def.done(Config:Format(Messages['Banned'], {reason = tostring(data['ban']),id = steam})) end
         return
     end
 
     data['src'] = source
 
-    Users.Players[steam] = data
-    print("HEY")
+    local idd = tostring(table.unpack(ordb)['id'])
+
+    data['id'] = idd
+
+    Users.Players[steam] = data 
+    Users.FromId[idd] = steam
 
     if def ~= true then def.done() end
 
@@ -125,9 +118,7 @@ Users.Funcs.Spawned = function()
     local source = source
     local steam = Users.Utility.GetSteam(source)
     print(steam)
-    if Users.Players[steam] == nil then
-        return Debug("User does not exist")
-    end
+    if Users.Players[steam] == nil then return Warn("User does not exist") end
 
     Users.Players[steam]['connecting'] = false
     Debug("Spawned")
@@ -144,21 +135,20 @@ Users.Funcs.Remove = function()
 
     local data = Users.Players[steam]
     data['connecting'] = nil
-    data['id'] = nil
+    data['steam'] = nil
     data['src'] = nil
+
+    Users.FromId[data.id] = nil
+    data['id'] = nil
 
     Debug("Saved: "..json.encode(data))
 
-    MySQL.query.await(
-        'UPDATE users SET data = ? WHERE id = ?', 
-        {
-            json.encode(data),
-            steam
-        }
-    )
+    MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data),steam})
+
     Users.Players[steam] = nil
 end
 
+-- events
 AddEventHandler('playerDropped', Users.Funcs.Remove)
 AddEventHandler("playerConnecting", Users.Funcs.Create)
 RegisterNetEvent("Sparkling:Spawned", Users.Funcs.Spawned)

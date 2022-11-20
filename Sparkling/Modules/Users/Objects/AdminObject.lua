@@ -6,7 +6,7 @@ AdminObject = function(id)
     local service = {
         on = function(type,value,isnot,change,now,ban)
             local User = Get()
-            if User ~= nil then -- user is online
+            if User ~= nil then 
                 if User[type] ~= value then Warn(isnot) end
                 if type ~= "ban" then 
                     User[type] = change 
@@ -14,8 +14,8 @@ AdminObject = function(id)
                 else 
                     User[type] = ban
                 end
-            else -- user is offline
-                local data = MySQL.query.await('SELECT * FROM users WHERE id = ?', {id})
+            else
+                local data = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
 
                 local unpack = table.unpack(data)
                 if not unpack then return Error("Cannot find user in DB") end
@@ -23,7 +23,7 @@ AdminObject = function(id)
 
                 data[type] = change
 
-                MySQL.query.await('UPDATE users SET data = ? WHERE id = ?', {json.encode(data), id})
+                MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data), id})
 
                 Debug(now)
             end
@@ -31,7 +31,7 @@ AdminObject = function(id)
         off = function(type,value,now,nut,find)
             if Get() ~= nil then Users.Players[id].whitelist = true end
 
-            local data = MySQL.query.await('SELECT * FROM users WHERE id = ?', {id})
+            local data = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
 
             local unpack = table.unpack(data)
             if not unpack then return Error(find) end
@@ -41,7 +41,7 @@ AdminObject = function(id)
 
             data[type] = value
 
-            MySQL.query.await('UPDATE users SET data = ? WHERE id = ?', {json.encode(data), id})
+            MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data), id})
             
             Debug(now)
         end,
@@ -56,7 +56,7 @@ AdminObject = function(id)
                 end 
             end
 
-            local resp = MySQL.query.await('SELECT * FROM users WHERE id = ?', {id})
+            local resp = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
 
             local unpacked = table.unpack(resp)
             if unpacked == nil then return false end 
@@ -69,19 +69,19 @@ AdminObject = function(id)
 
     function self:Ban(reason)
         reason = reason or ''
-        service.on("ban",0,reason,"User is already banned","User is now banned",reason)
+        service.on("ban", 0, reason, "User is already banned", "User is now banned", reason)
     end
 
     function self:Unban()
-        service.off('ban',0,'User is now unbanned','User is not banned','Cannot find user in DB',false)
+        service.off('ban', 0, 'User is now unbanned', 'User is not banned', 'Cannot find user in DB', false)
     end
 
     function self:Whitelist()
-        service.on("whitelist",false,true,"User is already whitelistet","User is now whitelisted")
+        service.on("whitelist", false, true, "User is already whitelistet", "User is now whitelisted")
     end
 
     function self:Unwhitelist()
-        service.off('whitelist',false,'User is now unwhitelisted','User is not whitelited','Cannot find user in DB')
+        service.off('whitelist', false, 'User is now unwhitelisted', 'User is not whitelited', 'Cannot find user in DB')
     end
 
     function self:Kick(reason)
@@ -91,11 +91,11 @@ AdminObject = function(id)
     end 
 
     function self:IsBanned() 
-        return service.is('ban',0)
+        return service.is('ban', 0)
     end
 
     function self:isWhitelisted() 
-        return service.is('whitelist',false) 
+        return service.is('whitelist', false) 
     end
 
     return self
