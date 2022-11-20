@@ -113,8 +113,3 @@ RegisterCommand('name', function(source, args)
         
     end
 end)
-
-RegisterCommand('kickid', function(source, args)
-    local User = Us.Get(args[1])
-    User.Admin:Kick('bob')
-end)
