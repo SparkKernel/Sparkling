@@ -73,15 +73,13 @@ Users.Funcs.Load = function(source, steam, db, def)
     local ordb = db
 
     if table.unpack(db) ~= nil then
-        if json.decode(table.unpack(db)['data']) == nil then
-            data = default
-        end
-        db = json.decode(table.unpack(db)['data'])
+        local CurrentData = json.decode(table.unpack(db)['data'])
+        if CurrentData == nil then data = default end
         for k,v in pairs(default) do
-            if db[k] == nil then
+            if CurrentData[k] == nil then
                 data[k] = v
             else
-                data[k] = db[k]
+                data[k] = CurrentData[k]
             end
         end
     else data = default end

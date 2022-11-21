@@ -113,3 +113,7 @@ RegisterCommand('name', function(source, args)
         
     end
 end)
+
+RegisterCommand('me', function(source, args)
+    local User = Us.Get(source)
+end)

@@ -1,3 +1,5 @@
+-- This handles new updates, and if the new update is a emergency, it will warn the user for good.
+
 local Url = 'https://raw.githubusercontent.com/SparkKernel/Sparkling/main/data.json'
 
 local CurrentVersion = '1.0'
