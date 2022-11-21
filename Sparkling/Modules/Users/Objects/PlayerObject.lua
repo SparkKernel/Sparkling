@@ -9,8 +9,9 @@ PlayerObject = function(steam)
         local resp = table.unpack(MySQL.query.await('SELECT * FROM users WHERE steam = ?', {steam}))
         if resp == nil then
             self.id = nil
+        else
+            self.id = table.unpack(resp)['id']
         end
-        self.id = table.unpack(resp)['id']
     end
 
     -- endpoint

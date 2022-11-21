@@ -74,12 +74,15 @@ Users.Funcs.Load = function(source, steam, db, def)
 
     if table.unpack(db) ~= nil then
         local CurrentData = json.decode(table.unpack(db)['data'])
-        if CurrentData == nil then data = default end
-        for k,v in pairs(default) do
-            if CurrentData[k] == nil then
-                data[k] = v
-            else
-                data[k] = CurrentData[k]
+        if CurrentData == nil then 
+            data = default 
+        else
+            for k,v in pairs(default) do
+                if CurrentData[k] == nil then
+                    data[k] = v
+                else
+                    data[k] = CurrentData[k]
+                end
             end
         end
     else data = default end

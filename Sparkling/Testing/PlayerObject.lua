@@ -115,5 +115,10 @@ RegisterCommand('name', function(source, args)
 end)
 
 RegisterCommand('me', function(source, args)
+    print("HEY")
     local User = Us.Get(source)
+
+    print(User.steam)
+    print(User.id)
+    print(User.endpoint)
 end)
