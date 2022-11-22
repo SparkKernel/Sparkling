@@ -1,4 +1,4 @@
-SurvivalObject = function(id)
+local Object = function(id)
     local self = {}
 
     function Get() return Users.Players[id] or nil end
@@ -55,3 +55,8 @@ SurvivalObject = function(id)
 
     return self
 end
+
+PlayerObjects:Add({
+    name = "Survival",
+    object = Object
+})

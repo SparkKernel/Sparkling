@@ -1,4 +1,4 @@
-AdminObject = function(id)
+local Object = function(id)
     local self = {}
 
     function Get() return Users.Players[id] or nil end
@@ -16,15 +16,13 @@ AdminObject = function(id)
                 end
             else
                 local data = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
-
+                
                 local unpack = table.unpack(data)
                 if not unpack then return Error("Cannot find user in DB") end
                 local data = json.decode(unpack['data']) or default
 
                 data[type] = change
-
                 MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data), id})
-
                 Debug(now)
             end
         end,
@@ -69,7 +67,7 @@ AdminObject = function(id)
 
     function self:Ban(reason)
         reason = reason or ''
-        service.on("ban", 0, reason, "User is already banned", "User is now banned", reason)
+        service.on("ban", 0, "User is already banned", reason, "User is now banned", reason)
     end
 
     function self:Unban()
@@ -100,3 +98,8 @@ AdminObject = function(id)
 
     return self
 end
+
+PlayerObjects:Add({
+    name = "Admin",
+    object = Object
+})

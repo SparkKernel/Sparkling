@@ -1,4 +1,4 @@
-CashObject = function(id)
+local Object = function(id)
     local self = {}
 
     function Get() return Users.Players[id] or nil end
@@ -29,3 +29,8 @@ CashObject = function(id)
 
     return self
 end
+
+PlayerObjects:Add({
+    name = "Cash",
+    object = Object
+})

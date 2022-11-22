@@ -2,7 +2,7 @@ local cfg = Config:Get('Group')
 
 local Groups = cfg:Get('Groups')
 
-GroupObject = function(id)
+local Object = function(id)
     local self = {}
 
     function Get() return Users.Players[id] or nil end
@@ -112,3 +112,8 @@ GroupObject = function(id)
 
     return self
 end
+
+PlayerObjects:Add({
+    name = "Group",
+    object = Object
+})

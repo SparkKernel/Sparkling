@@ -14,7 +14,7 @@ cfg.Messages = {
     LoadDelay = "A error occurred, you wasn't loaded after delay"
 }
 
-cfg.NonSaving = {
+cfg.NonSaving = { -- ignore (if you don't know what you're doing)
     'connecting',
     'src',
     'id'

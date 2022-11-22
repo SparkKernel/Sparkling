@@ -1,4 +1,4 @@
-IdentityObject = function(id)
+local Object = function(id)
     local self = {}
 
     function Get() return Users.Players[id] or nil end
@@ -66,3 +66,8 @@ IdentityObject = function(id)
 
     return self
 end 
+
+PlayerObjects:Add({
+    name = "Identity",
+    object = Object
+})
