@@ -14,6 +14,12 @@ cfg.Messages = {
     LoadDelay = "A error occurred, you wasn't loaded after delay"
 }
 
+cfg.NonSaving = {
+    'connecting',
+    'src',
+    'id'
+}
+
 cfg.Default = {
     ['hp'] = 100,
     ['src'] = 0,
