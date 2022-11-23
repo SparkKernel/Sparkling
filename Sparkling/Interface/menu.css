@@ -1,20 +1,34 @@
 .menu {
     border-radius: 15px;
-    position: fixed;
+    position: absolute;
     width: 18%;
     
-    left: 0.5%;
-    top: 30%;
-    height: 30%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    
+    left: 10%;
+    height: 25vh;
+
     background-color: #141821;
     display:none;
+}
+
+.buttons {
+    color:white;
+    position: relative;
+    top: 23%;
+    width: 100%;
+    background-color: #1E2431;
+    border: none;
+    border-radius: 15px;
+    text-align: center;
 }
 
 .header {
     position: absolute;
     left:0;
     width: 100%;
-    top: -7px; /*i know this bad*/
+    top: -7px;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
@@ -29,22 +43,6 @@
     top:0;
     width: 100%;
     height: 10%;
-}
-
-.buttons {
-    font-size:20px;
-    font-family: Fredoka;
-    text-shadow: 0 3px 0 #2d2349;
-    color:white;
-    position: absolute;
-    top: 23%;
-    width: 100%;
-    height: 100%;
-    background-color: #1E2431;
-    border: none;
-    border-radius: 15px;
-    overflow: hidden;
-    text-align: center;
 }
 
 
