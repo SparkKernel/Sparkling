@@ -5,6 +5,7 @@ function PlayerObjects:Add(tb) table.insert(Registered, tb) end
 
 PlayerObject = function(steam)
     local self = {}
+    
     self.steam = steam
 
     -- user id
@@ -28,9 +29,7 @@ PlayerObject = function(steam)
         return Users.Players[steam] ~= nil -- should work (not tested)
     end
 
-    for i,v in pairs(Registered) do
-        self[v['name']] = v['object'](steam)
-    end
+    for i,v in pairs(Registered) do self[v['name']] = v['object'](steam) end -- make all objects
 
     return self
 end

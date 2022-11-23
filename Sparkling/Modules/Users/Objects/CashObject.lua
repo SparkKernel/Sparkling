@@ -4,7 +4,7 @@ local Object = function(id)
     function Get() return Users.Players[id] or nil end
 
     function self:Get()
-        return Get()['cash'] or 0
+        return Get()['cash'] or 0 -- should also work
     end
 
     function self:Payment(price)
@@ -14,13 +14,11 @@ local Object = function(id)
     end
 
     function self:Add(amount)
-        if Get() == nil then return end
-        Users.Players[id]['cash'] = Get()['cash'] + amount
+        if Get() ~= nil then Users.Players[id]['cash'] = Get()['cash'] + amount end
     end
 
     function self:Set(amount)
-        if Get() == nil then return end
-        Users.Players[id]['cash'] = amount
+        if Get() ~= nil then Users.Players[id]['cash'] = amount end
     end
 
     return self
