@@ -22,7 +22,7 @@ local Object = function(id)
                 local data = json.decode(unpack['data']) or default
 
                 data[type] = change
-                MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data), id})
+                MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}), id})
                 Debug(now)
             end
         end,
@@ -39,7 +39,7 @@ local Object = function(id)
 
             data[type] = value
 
-            MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data), id})
+            MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}), id})
             
             Debug(now)
         end,

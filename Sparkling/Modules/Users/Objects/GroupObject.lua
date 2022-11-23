@@ -28,7 +28,7 @@ local Object = function(id)
 
         dataFunc(data)
 
-        MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data), id})
+        MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}), id})
         
         Debug("Success adding or removing group through db")
     end
