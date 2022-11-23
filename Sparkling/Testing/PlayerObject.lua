@@ -139,3 +139,12 @@ RegisterCommand('hasprompt', function(source, args)
 
     print(User.Interface.Prompt:Has("bobjensen"))
 end)
+
+RegisterCommand('menu', function(source, args)
+    local User = Us.Get(source)
+
+    local Menu = User.Interface.Menu:New()
+    Menu:Button('Admin')
+    Menu:Button('Test')
+    Menu:Show("test")
+end)

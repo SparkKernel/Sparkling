@@ -5,7 +5,7 @@ end
 
 RegisterNetEvent("Sparkling:UI:Prompt:Show", function(text)
     SetNuiFocus(true, true)
-    SendNUIMessage({show = true, text=text})
+    SendNUIMessage({show = true, text=text, object="prompt"})
 end)
 
 RegisterNUICallback('cancel', function(data, cb)

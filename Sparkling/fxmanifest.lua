@@ -7,13 +7,15 @@ version '1.0'
 
 server_export 'Spark'
 
-ui_page 'Interface/Prompt/index.html'
+ui_page 'Interface/index.html'
 files {
-    'Interface/Prompt/font.otf',
-    'Interface/Prompt/text.ttf',
-    'Interface/Prompt/index.html',
-    'Interface/Prompt/index.js',
-    'Interface/Prompt/index.css'
+    'Interface/font.otf',
+    'Interface/text.ttf',
+    'Interface/index.html',
+    'Interface/index.js',
+    'Interface/menu.js',
+    'Interface/index.css',
+    'Interface/menu.css',
 }
 
 server_scripts {
@@ -55,5 +57,6 @@ server_scripts {
 
 client_scripts {
     "Client/Spawned.lua",
-    'Client/UI/Prompt.lua'
+    'Client/UI/Prompt.lua',
+    'Client/UI/Menu.lua'
 }

@@ -21,7 +21,7 @@ body {
     height: 100vh;
 }
 
-.OurDiv {
+.prompt {
     border-radius: 15px;
     position: fixed;
     width: 30%;
