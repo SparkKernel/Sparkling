@@ -25,7 +25,7 @@ Users.Funcs.Get = function(source)
 end
 
 Users.Funcs.Create = function(_, _, def)
-    local source=source
+    local source = source
     local steam = Users.Utility.GetSteam(source) -- get steam
 
     def.defer()
@@ -45,7 +45,6 @@ Users.Funcs.Create = function(_, _, def)
         Debug("User already registered")
     else
         Debug("Creating user "..steam)
-
         def.update(Messages['Creating'])
 
         MySQL.query.await('INSERT INTO users (steam) VALUES (?)', {steam}) --  insert
@@ -115,17 +114,12 @@ Users.Funcs.Remove = function()
     
     Debug("User removed: "..steam)
     
-    if Users.Players[steam] == nil then
-        return Warn("A user left the server, but was not registered? Please check this out.")
-    end
+    if Users.Players[steam] == nil then return Warn("A user left the server, but was not registered? Please check this out.") end
 
     local data = Users.Players[steam]
     Users.FromId[data.id] = nil
 
-    for i,v in pairs(NonSaving) do
-        if data[v] == nil then Warn("Cannot find "..v) end
-        data[v] = nil
-    end
+    for i,v in pairs(NonSaving) do data[v] = nil end
 
     Debug("Saved data from user ("..steam.."): "..json.encode(data))
 
