@@ -6,14 +6,14 @@ local Object = function(id)
     local services = {
         set = function(type, to)
             local User = Get()
-            if User ~= nil then return Error("Cannot find user") end
+            if User == nil then return Error("Cannot find user") end
             if to > 100 then return end
 
             Users.Players[id]['survival'][type] = to
         end,
         get = function(type)
             local User = Get()
-            if User == nil then return Users.Players[id]['survival'][type] end
+            if User == nil then return Error("Cannot find user") end
 
             return Users.Players[id]['survival'][type]
         end,
