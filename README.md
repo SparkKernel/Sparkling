@@ -2,10 +2,10 @@
 
 ```lua
 local info = {
-   ['creator'] = 'frackz',
-   ['status'] = 'not stable-beta',
-   ['discord'] = 'https://discord.gg/XUP5hywRHn',
-   ['contributors'] = {
+   creator = 'frackz',
+   status = 'not stable-beta',
+   discord = 'https://discord.gg/XUP5hywRHn',
+   contributors = {
       'frackz' -- sad only me :(
    }
 }
