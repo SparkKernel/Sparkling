@@ -1,0 +1,102 @@
+@font-face {
+    font-family: Rubik Mono One;
+    font-weight: 500;
+    font-style: normal;
+    src: url("./font.otf");
+    text-shadow: 0px 2px 0px #000000b6;
+}
+
+@font-face {
+    font-family: Fredoka;
+    font-weight: 500;
+    font-style: normal;
+    src: url("./text.ttf");
+    text-shadow: 0px 2px 0px #000000b6;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+    width: 100vw;
+    height: 100vh;
+}
+
+.OurDiv {
+    border-radius: 15px;
+    position: fixed;
+    width: 30%;
+    
+    left: 35%;
+    top: 30%;
+    height: 30%;
+    background-color: #141821;
+    display: none;
+}
+
+.header {
+    position: absolute;
+    left:0;
+    width: 100%;
+    top: -7px; /*i know this bad*/
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: white;
+    top: -15px;
+    font-size: 2.4rem;
+}
+
+.head {
+    position: absolute;
+    border-radius: 15px;
+    top:0;
+    width: 100%;
+    height: 20%;
+}
+.input:focus{
+    outline: none;
+}
+.input {
+    text-align: center;
+    font-size:20px;
+    font-family: Fredoka;
+    text-shadow: 0 3px 0 #2d2349;
+    color:white;
+    position: absolute;
+    top: 25%;
+    width: 100%;
+    height: 50%;
+    background-color: #1E2431;
+    border: none;
+    border-radius: 15px;
+}
+
+.cancel, .submit {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 3px 0 #2d2349;
+    position: absolute;
+    top: 78%;
+
+    width: 250px;
+    height: 50px;
+    text-shadow: 0 2px 0 #234449;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 2.4rem;
+    color: white;
+}
+
+.cancel, .submit:hover {
+    cursor: pointer;
+}
+
+.cancel {
+    background-color: rgb(255, 68, 90);
+    left: 20px;
+}
+
+.submit {
+    background-color: #28A745;
+    right: 20px;
+}

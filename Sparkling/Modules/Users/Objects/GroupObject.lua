@@ -10,8 +10,10 @@ local Object = function(id)
     function GRP()
         local resp = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
         if table.unpack(resp) == nil then return false end
+
         local data = json.decode(table.unpack(resp)['data'])
         if not data then return false end
+
         return data
     end
 
@@ -20,6 +22,7 @@ local Object = function(id)
 
         local unpack = table.unpack(data)
         if unpack == nil then return Error("Cannot find user in DB") end
+        
         local data = json.decode(unpack['data'])
         if not data then return Warn("User has no data") end
 
