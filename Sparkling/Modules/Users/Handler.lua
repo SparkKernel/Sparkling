@@ -59,7 +59,8 @@ Users.Funcs.Load = function(source, steam, db, def)
     if Users.Players[steam] then return Error("An error occurred, player with steam "..steam.." is already loaded?") end
 
     local data = {
-        ['connecting'] = true
+        ['connecting'] = true,
+        ['interface'] = {}
     }
 
     db = table.unpack(db) -- change it

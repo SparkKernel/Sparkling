@@ -17,7 +17,8 @@ cfg.Messages = {
 cfg.NonSaving = { -- ignore (if you don't know what you're doing)
     'connecting',
     'src',
-    'id'
+    'id',
+    'interface'
 }
 
 cfg.Default = {

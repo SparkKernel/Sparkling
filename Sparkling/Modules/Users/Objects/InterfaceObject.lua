@@ -1,15 +1,13 @@
-local Interfaces = {}
-
 RegisterNetEvent('Sparkling:UI:Prompt:Status', function(status, data)
     local source = source
     
     local id = Users.Utility.GetSteam(source)
     
-    if Interfaces[id] == nil then return end -- user has no ongoing prompt
+    if Users.Players[id] == nil or Users.Players[id].interface.prompt == nil then return end -- user has no ongoing prompt
 
-    Interfaces[id](status, data)
-
-    Interfaces[id] = nil
+    local func = Users.Players[id].interface.prompt
+    Users.Players[id].interface.prompt = nil
+    func(status, data)
 end)
 
 local Object = function(id)
@@ -18,15 +16,20 @@ local Object = function(id)
     function Get() return Users.Players[id] or nil end
 
     self.Prompt = {}
+    function self.Prompt:Has()
+        return Users.Players[id].interface ~= nil
+    end
     function self.Prompt:Show(text, update)
         if Get() == nil then
+            Warn("Cannot find user (prompt)")
             return false
         end
-        if Interfaces[id] ~= nil then
+        if Get()['interface']['prompt'] ~= nil then
+            Warn("User is already in a prompt")
             return false
         end
 
-        Interfaces[id] = update
+        Users.Players[id].interface.prompt = update
 
         TriggerClientEvent('Sparkling:UI:Prompt:Show', Get()['src'], text)
     end

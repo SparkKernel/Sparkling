@@ -21,7 +21,7 @@ $(document).ready(() => {
         callback('submit', {
             text: $('.input').val()
         }).then((data) => {
-            console.log(data)
+            $('.input').val('')
             $('.OurDiv').hide()
         })
     })
