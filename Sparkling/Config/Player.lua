@@ -1,3 +1,5 @@
+Config = Config or {}
+
 Config.LoadDelay = 60 -- If user is not loaded after this, they will be kicked (to make sure exploiters wont bypass load)
 
 Config.Errors = {

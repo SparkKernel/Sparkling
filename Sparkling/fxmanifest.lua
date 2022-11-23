@@ -12,9 +12,7 @@ server_scripts {
     'Sparkling.lua',
 
     -- Configs
-    'Config.lua',
-    'Config/Player.lua',
-    'Config/Group.lua',
+    'Config/*.lua',
     'Testing/Config.lua',
 
     -- Utility
