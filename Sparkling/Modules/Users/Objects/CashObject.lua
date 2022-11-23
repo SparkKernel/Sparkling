@@ -4,17 +4,13 @@ local Object = function(id)
     function Get() return Users.Players[id] or nil end
 
     function self:Get()
-        local User = Get() or {cash = 0}
-        return User['cash']
+        return Get()['cash'] or 0
     end
 
     function self:Payment(price)
-        if Get() == nil then return false end
-        if self:Get() >= price then
-            Users.Players[id]['cash'] = self:Get() - price
-            return true
-        end
-        return false
+        if Get() == nil or self:Get() <= price then return false end
+        Users.Players[id]['cash'] = self:Get() - price
+        return true
     end
 
     function self:Add(amount)
