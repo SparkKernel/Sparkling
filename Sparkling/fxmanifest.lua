@@ -7,6 +7,15 @@ version '1.0'
 
 server_export 'Spark'
 
+ui_page 'Interface/Prompt/index.html'
+files {
+    'Interface/Prompt/font.otf',
+    'Interface/Prompt/text.ttf',
+    'Interface/Prompt/index.html',
+    'Interface/Prompt/index.js',
+    'Interface/Prompt/index.css'
+}
+
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'Sparkling.lua',
@@ -34,6 +43,7 @@ server_scripts {
         'Modules/Users/Objects/GroupObject.lua',
         'Modules/Users/Objects/IdentityObject.lua',
         'Modules/Users/Objects/InventoryObject.lua',
+        'Modules/Users/Objects/InterfaceObject.lua',
         'Modules/Users/Objects/SurvivalObject.lua',
         'Modules/Users/Handler.lua',
         'Modules/Users/Utility.lua',
@@ -46,5 +56,6 @@ server_scripts {
 }
 
 client_scripts {
-    "Client/Spawned.lua"
+    "Client/Spawned.lua",
+    'Client/UI/Prompt.lua'
 }

@@ -122,3 +122,11 @@ RegisterCommand('me', function(source, args)
     print(User.id)
     print(User.endpoint)
 end)
+
+RegisterCommand('prompt', function(source, args)
+    local User = Us.Get(source)
+
+    User.Interface.Prompt:Show("bobjensen", function(status, text)
+        print(status, text)
+    end)
+end)
