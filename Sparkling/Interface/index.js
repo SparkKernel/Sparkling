@@ -13,7 +13,7 @@ $(document).ready(() => {
     $('.cancel').click(() => {
         callback('cancel', {}).then((data) => {
             console.log("TRUE, FALSE: "+data)
-            $('.OurDiv').hide()
+            $('.prompt').hide()
         })
     })
 
@@ -22,7 +22,7 @@ $(document).ready(() => {
             text: $('.input').val()
         }).then((data) => {
             $('.input').val('')
-            $('.OurDiv').hide()
+            $('.prompt').hide()
         })
     })
 })
@@ -30,9 +30,19 @@ $(document).ready(() => {
 window.addEventListener('message', function(event) {
     var item = event.data;
     if (item.show) {
-        $('.OurDiv').show();
+        console.log("CHANGEA>S")
+        $('.'+item.object).show();
         $('.header').text(item.text)
+        console.log(JSON.stringify(item))
+        if (item.list) {
+            $('.buttons').empty()
+            var currentIndex = item.list.length
+            item.list.forEach(element => {
+                currentIndex -= 1
+                $('<div id="'+new String(currentIndex)+'" class="button">'+element+'</div>').appendTo('.buttons');
+            });
+        }
     } else {
-        $('.OurDiv').hide();
+        $('.'+item.object).hide();
     }
 });
