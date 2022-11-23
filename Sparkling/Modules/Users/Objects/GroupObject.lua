@@ -1,6 +1,6 @@
-local cfg = Config:Get('Group')
+local cfg = Config.Group
 
-local Groups = cfg:Get('Groups')
+local Groups = Config.Groups
 
 local Object = function(id)
     local self = {}

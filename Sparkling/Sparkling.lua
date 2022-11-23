@@ -12,4 +12,9 @@ MySQL.execute([[
 
 print("[Sparkling] Loaded main module!")
 
-function Spark() return Sparks end
+exports('Spark', function()
+    return Sparks
+end)
+exports('GetConfig', function()
+    return Config
+end)

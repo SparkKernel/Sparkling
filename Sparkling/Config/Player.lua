@@ -1,12 +1,10 @@
-local cfg = {} -- ignore
+Config.LoadDelay = 60 -- If user is not loaded after this, they will be kicked (to make sure exploiters wont bypass load)
 
-cfg.LoadDelay = 60 -- If user is not loaded after this, they will be kicked (to make sure exploiters wont bypass load)
-
-cfg.Errors = {
+Config.Errors = {
     SteamError = "Whoops, seems that you doesn't have steam open."-- Error if user doesn't have a steam-identifier
 }
 
-cfg.Messages = {
+Config.Messages = {
     Checking = "Checking your steam / data", -- This will show when its checking their data
     Registered = "You are already registered, loading in", -- This will show when a registered user is logging in
     Creating = "Creating your user...", -- This will show when its creating their user
@@ -14,13 +12,13 @@ cfg.Messages = {
     LoadDelay = "A error occurred, you wasn't loaded after delay"
 }
 
-cfg.NonSaving = { -- ignore (if you don't know what you're doing)
+Config.NonSaving = { -- ignore (if you don't know what you're doing)
     'connecting',
     'src',
     'id'
 }
 
-cfg.Default = {
+Config.Default = {
     ['hp'] = 100,
     ['src'] = 0,
     ['ban'] = 0,
@@ -37,5 +35,3 @@ cfg.Default = {
         ['last'] = "Your name"
     }
 }
-
-Config:Add('Player', cfg) -- ignore

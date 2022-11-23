@@ -1,4 +1,4 @@
-Sparkling = Spark()
+Sparkling = exports['Sparkling']:Spark()
 
 Extension = {}
 Extension.Funcs = {}

@@ -4,12 +4,12 @@ Users.Players = {}
 Users.FromId = {} -- (id:) (steam hex)
 Users.Utility = {}
 
-local cfg = Config:Get('Player')
-local default = cfg:Get('Default')
-local Errors = cfg:Get('Errors')
-local Messages = cfg:Get('Messages')
-local LoadDelay = cfg:Get('LoadDelay')
-local NonSaving = cfg:Get('NonSaving')
+local cfg = Config.Player
+local default = Config.Default
+local Errors = Config.Errors
+local Messages = Config.Messages
+local LoadDelay = Config.LoadDelay
+local NonSaving = Config.NonSaving
 
 Users.Funcs.Get = function(source)
     local steam

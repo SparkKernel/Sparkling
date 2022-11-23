@@ -1,6 +1,4 @@
-local cfg = {} -- ignore
-
-cfg.Groups = {
+Config.Groups = {
     Owner = {
         Events = {
             OnSpawn = function()
@@ -24,5 +22,3 @@ cfg.Groups = {
         }
     }
 }
-
-Config:Add('Group', cfg) -- ignore
