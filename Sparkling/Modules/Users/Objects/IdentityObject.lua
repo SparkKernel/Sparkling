@@ -19,7 +19,7 @@ local Object = function(id)
 
             data['identity'][type] = value
 
-            MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data), id})
+            MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}), id})
             
             Debug("Success changing name through db")
         end,

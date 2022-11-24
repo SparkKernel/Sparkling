@@ -124,7 +124,7 @@ Users.Funcs.Remove = function()
 
     Debug("Saved data from user ("..steam.."): "..json.encode(data))
 
-    MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data),steam})
+    MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}),steam})
 
     Users.Players[steam] = nil -- removes the user for good
 end
