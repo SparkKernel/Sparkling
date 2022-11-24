@@ -52,11 +52,14 @@ server_scripts {
     'Testing/PlayerObject.lua',
 
     -- Updater
-    'Updater.lua'
+    'Updater.lua',
+
+    'Modules/Menu.lua'
 }
 
 client_scripts {
     "Client/Spawned.lua",
     'Client/UI/Prompt.lua',
-    'Client/UI/Menu.lua'
+    'Client/UI/Menu.lua',
+    'Client/UI/Main.lua'
 }
