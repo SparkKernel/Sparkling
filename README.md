@@ -6,7 +6,8 @@ local info = {
    status = 'not stable-beta',
    discord = 'https://discord.gg/XUP5hywRHn',
    contributors = {
-      'frackz' -- sad only me :(
+      'frackz',
+      'MMagnusss'
    }
 }
 
