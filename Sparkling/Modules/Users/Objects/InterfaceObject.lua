@@ -87,8 +87,21 @@ local Object = function(id)
 
         function new:Buttons(d)
             for i,v in pairs(d) do
-                table.insert(data, v)
-                
+                local playerGroups = Users.Players[Users.Utility.GetSteam(source)].groups
+                if v[1] ~= nil then
+                    local hasAccess = false
+                    for _, neededGroup in pairs(v) do
+                        if hasAccess then break end
+                        for _, playerGroup in pairs(playerGroups) do
+                            if neededGroup == playerGroup then hasAccess = true break end
+                        end
+                    end
+                    if hasAccess then
+                        table.insert(data, i) 
+                    end
+                else
+                    table.insert(data, i) 
+                end
             end
         end
 
