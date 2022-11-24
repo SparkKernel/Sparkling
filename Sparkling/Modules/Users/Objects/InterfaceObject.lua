@@ -10,8 +10,11 @@ RegisterNetEvent('Sparkling:UI:Prompt:Status', function(status, data)
     func(status, data)
 end)
 
-RegisterNetEvent('Sparkling:UI:Menu:TryClose', function()
+local function close(src)
     local source = source
+    if src ~= nil then
+        source=src
+    end
     local id = Users.Utility.GetSteam(source)
 
     if Users.Players[id] == nil or Users.Players[id].interface.menu == nil then return print("no menu open") end
@@ -19,7 +22,32 @@ RegisterNetEvent('Sparkling:UI:Menu:TryClose', function()
     Users.Players[id].interface.menu = nil
 
     TriggerClientEvent("Sparkling:UI:Menu:Close", source)
+end
+
+RegisterNetEvent('Sparkling:UI:Menu:TryClose', close)
+
+RegisterNetEvent('Sparkling:UI:Menu:Click', function(button)
+    local source = source
+    local id = Users.Utility.GetSteam(source)
+
+    if Users.Players[id] == nil or Users.Players[id].interface.menu == nil then return print("no menu open") end
+
+    local menu = Users.Players[id].interface.menu
+
+    local found = false
+
+    for i,v in pairs(menu.data) do
+        if v == button then
+            found = true
+            break
+        end
+    end
+
+    if not found then return print("cannot find button") end
+
+    menu.click(button)
 end)
+
 
 local Object = function(id)
     local self = {}
@@ -57,7 +85,14 @@ local Object = function(id)
             table.insert(data, name)
         end
 
-        function new:Show(text)
+        function new:Buttons(d)
+            for i,v in pairs(d) do
+                table.insert(data, v)
+                
+            end
+        end
+
+        function new:Show(text, click)
             if Get() == nil then
                 Warn("Cannot find user (menu)")
                 return false
@@ -67,10 +102,17 @@ local Object = function(id)
                 return false
             end
     
-            Users.Players[id].interface.menu = true
+            Users.Players[id].interface.menu = {data=data, click=click}
     
             TriggerClientEvent('Sparkling:UI:Menu:Show', Get()['src'], text, data)
         end    
+
+        function new:Close()
+            local User = Get()
+            if User == nil then return print("Cannot find user") end
+
+            close(User['src'])
+        end
 
         return new
     end

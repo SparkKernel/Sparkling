@@ -30,9 +30,15 @@ $(document).ready(() => {
 window.addEventListener('message', function(event) {
     var item = event.data;
     if (item.show) {
-        console.log("CHANGEA>S")
-        $('.'+item.object).show();
-        $('.header').text(item.text)
+        if (item.object != "menu") {
+            $('.'+item.object).show();
+            $('.header').text(item.text)
+        } else {
+            $('.'+item.object).css({
+                'display': 'flex'
+            })
+            $('.header2').text(item.text)
+        }
         console.log(JSON.stringify(item))
         if (item.list) {
             $('.buttons').empty()
@@ -43,6 +49,12 @@ window.addEventListener('message', function(event) {
             });
         }
     } else {
-        $('.'+item.object).hide();
+        if (item.object != "menu") {
+            $('.'+item.object).show();
+        } else {
+            $('.'+item.object).css({
+                'display': 'none'
+            })
+        }
     }
 });
