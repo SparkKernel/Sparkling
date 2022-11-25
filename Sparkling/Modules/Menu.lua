@@ -2,11 +2,11 @@ local Sparkling = exports['Sparkling']:Spark()
 local Menus = {
     Admin = {
         Data = {
-            ["Ban"] = {"Owner"},
-            ["Unban"] = {"Owner"},
-            ["Kick"] = {"Admin", "Owner"},
-            ["Whitelist"] = {"Admin", "Owner"},
-            ["Unwhitelist"] = {"Admin", "Owner"}
+            Ban = {"Owner"},
+            Unban = {"Owner"},
+            Kick = {"Admin", "Owner"},
+            Whitelist = {"Admin", "Owner"},
+            Unwhitelist = {"Admin", "Owner"}
         },
         Funcs = {
             Ban = function(User)

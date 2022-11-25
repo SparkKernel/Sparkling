@@ -39,7 +39,7 @@ Citizen.CreateThread(function()
                     Move('teleport', old)
                 end
                 
-            elseif IsControlJustPressed(1, 18) then -- Pressed
+            elseif IsControlJustPressed(1, 191) then -- Pressed
                 local PressedIndex = Data[#Data-CurrentIndex+1]
                 TriggerServerEvent("Sparkling:UI:Menu:Click", PressedIndex)
             end

@@ -132,7 +132,7 @@ local Object = function(id)
     
             Users.Players[id].interface.menu = {data=data, click=callbacks['press'], close=callbacks['close']}
     
-            TriggerClientEvent('Sparkling:UI:Menu:Show', Get()['src'], text, data)
+            TriggerClientEvent('Sparkling:UI:Menu:Show', Get()['src'], title, data)
         end    
 
         function new:Close()
