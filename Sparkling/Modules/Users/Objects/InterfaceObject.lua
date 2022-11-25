@@ -93,23 +93,40 @@ local Object = function(id)
         function new:Title(t) title = t end
         function new:Callback(press, close) callbacks['press'] = press callbacks['close'] = close end
 
-        function new:Buttons(d)
+        function new:Buttons(d, isMainMenu)
             if Get() == nil then return Error("User is not registered.") end
             for i,v in pairs(d) do
                 local playerGroups = Get().groups
-                if v[1] ~= nil then
-                    local hasAccess = false
-                    for _, neededGroup in pairs(v) do
-                        if hasAccess then break end
-                        for _, playerGroup in pairs(playerGroups) do
-                            if neededGroup == playerGroup then hasAccess = true break end
+                if isMainMenu then
+                    if v[1] ~= nil then
+                        local hasAccess = false
+                        for _, neededGroup in pairs(v) do
+                            if hasAccess then break end
+                            for _, playerGroup in pairs(playerGroups) do
+                                if neededGroup == playerGroup then hasAccess = true break end
+                            end
                         end
-                    end
-                    if hasAccess then
+                        if hasAccess then
+                            table.insert(data, i) 
+                        end
+                    else
                         table.insert(data, i) 
                     end
                 else
-                    table.insert(data, i) 
+                    if v.perms ~= nil then
+                        local hasAccess = false
+                        for _, neededGroup in pairs(v.perms) do
+                            if hasAccess then break end
+                            for _, playerGroup in pairs(playerGroups) do
+                                if neededGroup == playerGroup then hasAccess = true break end
+                            end
+                        end
+                        if hasAccess then
+                            table.insert(data, v.buttonName) 
+                        end
+                    else
+                        table.insert(data, v.buttonName) 
+                    end
                 end
             end
         end

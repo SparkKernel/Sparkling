@@ -2,11 +2,11 @@ local Sparkling = exports['Sparkling']:Spark()
 local Menus = {
     Admin = {
         Data = {
-            Ban = {"Owner"},
-            Unban = {"Owner"},
-            Kick = {"Admin", "Owner"},
-            Whitelist = {"Admin", "Owner"},
-            Unwhitelist = {"Admin", "Owner"}
+            [1] = {buttonName = "Ban", perms = {"Owner"}},
+            [2] = {buttonName = "Unban", perms = {"Owner"}},
+            [3] = {buttonName = "Kick", perms = {"Admin", "Owner"}},
+            [4] = {buttonName = "Whitelist", perms = {"Admin", "Owner"}},
+            [5] = {buttonName = "Unwhitelist", perms = {"Admin", "Owner"}}
         },
         Funcs = {
             Ban = function(User)
@@ -51,13 +51,13 @@ RegisterNetEvent('Sparkling:UI:Menu:Open:Main', function()
         Menu:Buttons({
             ['Admin'] = {"Admin", "Owner"},
             ['Inventory'] = {}
-        })
+        }, true)
         Menu:Title("Main Menu")
 
         Menu:Callback(function(button)
             if Menus[button] == nil then return Warn("Cannot find menu") end
             local NewMenu = User.Interface.Menu:New()
-            NewMenu:Buttons(Menus[button].Data)
+            NewMenu:Buttons(Menus[button].Data, false)
 
             Menu:Close()
 
