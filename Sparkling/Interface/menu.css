@@ -9,7 +9,7 @@ body {
     transform: translate(-50%, -50%);    
     
     position: absolute;
-    display: flex;
+    display: none;
     flex-direction: column;
 }
 
@@ -34,7 +34,7 @@ body {
     font-weight: bold;
     color: white;
     top: -15px;
-    font-size: 2.4rem;
+    font-size: 6vh;
 }
 
 .head {
