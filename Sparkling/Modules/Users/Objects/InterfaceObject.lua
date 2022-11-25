@@ -19,9 +19,15 @@ local function close(src)
 
     if Users.Players[id] == nil or Users.Players[id].interface.menu == nil then return print("no menu open") end
 
+    local menu = Users.Players[id].interface.menu
+
     Users.Players[id].interface.menu = nil
 
     TriggerClientEvent("Sparkling:UI:Menu:Close", source)
+
+    if menu.close ~= nil then
+        menu.close()
+    end
 end
 
 RegisterNetEvent('Sparkling:UI:Menu:TryClose', close)
@@ -43,7 +49,7 @@ RegisterNetEvent('Sparkling:UI:Menu:Click', function(button)
         end
     end
 
-    if not found then return print("cannot find button") end
+    if not found then return print("Cannot find button") end
 
     menu.click(button)
 end)
@@ -75,19 +81,22 @@ local Object = function(id)
 
     self.Menu = {}
     function self.Menu:Has()
+        if Get() == nil then return false end
         return Users.Players[id].interface.menu ~= nil
     end
     function self.Menu:New()
         local new = {}
+        local title = 'Basic'
+        local callbacks = {}
         local data = {}
 
-        function new:Button(name)
-            table.insert(data, name)
-        end
+        function new:Title(t) title = t end
+        function new:Callback(press, close) callbacks['press'] = press callbacks['close'] = close end
 
         function new:Buttons(d)
+            if Get() == nil then return Error("User is not registered.") end
             for i,v in pairs(d) do
-                local playerGroups = Users.Players[Users.Utility.GetSteam(source)].groups
+                local playerGroups = Get().groups
                 if v[1] ~= nil then
                     local hasAccess = false
                     for _, neededGroup in pairs(v) do
@@ -105,7 +114,7 @@ local Object = function(id)
             end
         end
 
-        function new:Show(text, click)
+        function new:Show()
             if Get() == nil then
                 Warn("Cannot find user (menu)")
                 return false
@@ -114,8 +123,14 @@ local Object = function(id)
                 Warn("User is already in a menu")
                 return false
             end
+
+            if callbacks['press'] == nil then
+                return Error("Cannot have a nil press callback")
+            end
+
+            print(json.encode(data))
     
-            Users.Players[id].interface.menu = {data=data, click=click}
+            Users.Players[id].interface.menu = {data=data, click=callbacks['press'], close=callbacks['close']}
     
             TriggerClientEvent('Sparkling:UI:Menu:Show', Get()['src'], text, data)
         end    

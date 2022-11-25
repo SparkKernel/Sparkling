@@ -2,11 +2,11 @@ local Sparkling = exports['Sparkling']:Spark()
 local Menus = {
     Admin = {
         Data = {
-            ['Ban'] = {"Owner"},
-            ['Unban'] = {"Owner"},
-            ['Kick'] = {"Admin", "Owner"},
-            ['Whitelist'] = {"Admin", "Owner"},
-            ['Unwhitelist'] = {"Admin", "Owner"}
+            ["Ban"] = {"Owner"},
+            ["Unban"] = {"Owner"},
+            ["Kick"] = {"Admin", "Owner"},
+            ["Whitelist"] = {"Admin", "Owner"},
+            ["Unwhitelist"] = {"Admin", "Owner"}
         },
         Funcs = {
             Ban = function(User)
@@ -52,15 +52,28 @@ RegisterNetEvent('Sparkling:UI:Menu:Open:Main', function()
             ['Admin'] = {"Admin", "Owner"},
             ['Inventory'] = {}
         })
-        Menu:Show("Main Menu", function(button)
-            if Menus[button] == nil then return print("cannot find menu") end
+        Menu:Title("Main Menu")
+
+        Menu:Callback(function(button)
+            if Menus[button] == nil then return Warn("Cannot find menu") end
             local NewMenu = User.Interface.Menu:New()
             NewMenu:Buttons(Menus[button].Data)
+
             Menu:Close()
-            NewMenu:Show(button.." Menu", function(btn)
+
+            NewMenu:Title(button.." Menu")
+            
+            NewMenu:Callback(function(btn)
                 if not User:isOnline() then return end
                 Menus[button].Funcs[btn](User)
+            end, function() 
+                if not User:isOnline() then return end
+                Menu:Show()
             end)
-        end)
+
+            NewMenu:Show() 
+        end,nil)
+
+        Menu:Show()
     end
 end)

@@ -18,16 +18,22 @@ window.addEventListener('message', function(event) {
         $('.menu').show()
         item.index -= 1
         const btn = $('.menu .buttons #'+new String(item.index))
+        console.log(btn.text())
         btn.css({"background-color":'#6c6862'})
 
         document.getElementById(new String(item.index)).scrollIntoView()
 
-        const css = $('.menu .buttons #'+new String(item.index-1)).css
+        const next = $('.menu .buttons #'+new String(item.index-1))
+        const down = $('.menu .buttons #'+new String(item.index+1))
+
+        const cssData = {'background-color': '#232829'}
 
         if (item.method == 'up') {
-            css({'background-color': '#234449'})
-        } else {
-            css({'background-color': '#234449'})
+            next.css(cssData)
+        } else if (item.method == 'down') {
+            down.css(cssData)
+        } else if (item.method == 'teleport') {
+            $('.menu .buttons #'+new String(item.oldIndex-1)).css(cssData)
         }
     }
 });

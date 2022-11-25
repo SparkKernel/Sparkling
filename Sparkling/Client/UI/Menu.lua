@@ -1,44 +1,46 @@
 local MenuOpen = false
 local CurrentIndex = 1
-local Indexes = 0
 local Data = {}
 
-RegisterNetEvent("Sparkling:UI:Menu:Show", function(text, data)
+RegisterNetEvent("Sparkling:UI:Menu:Show", function(text, data) -- show meni
     SendNUIMessage({show = true, text=text, object="menu", list=data})
-    Indexes = #data
-    CurrentIndex = #data
-    Data = data
-    MenuOpen = true
+    CurrentIndex = #data Data = data MenuOpen = true
 end)
 
-RegisterNetEvent('Sparkling:UI:Menu:Close', function()
+RegisterNetEvent('Sparkling:UI:Menu:Close', function() -- close menu
     SendNUIMessage({show = false, text=text, object="menu"})
-    MenuOpen = false
-    Data = {}
+    MenuOpen = false Data = {}
 end)
 
-function Move(method)
-    SendNUIMessage({object="menu", index=CurrentIndex, method=method})
-end
+function Move(method, old) SendNUIMessage({object="menu", oldIndex=old, index=CurrentIndex, method=method}) end
 
 Citizen.CreateThread(function()
     while true do
         if MenuOpen  then 
-            if IsControlPressed(1, 177) then -- BACKSPACE
+            if IsControlJustPressed(1, 177) then -- BACKSPACE
                 TriggerServerEvent("Sparkling:UI:Menu:TryClose")
-                Citizen.Wait(50)
             elseif IsControlJustPressed(1, 187) then -- DOWN
-                if CurrentIndex == 1 then print("AT LOWEST")
-                else CurrentIndex = CurrentIndex - 1
+                local old = CurrentIndex
+                if CurrentIndex ~= 1 then
+                    CurrentIndex = CurrentIndex - 1
+                else
+                    CurrentIndex = #Data
+                    Move('teleport', old)
                 end
-                Move('down')
+                Move('down', 0)
             elseif IsControlJustPressed(1, 188) then -- UP
-                if CurrentIndex == Indexes then print("TOP OF MENU") else
+                local old = CurrentIndex
+                if CurrentIndex ~= #Data then
                     CurrentIndex = CurrentIndex + 1
+                    Move('up')
+                else
+                    print("TEXT")
+                    CurrentIndex = 1
+                    Move('teleport', old)
                 end
-                Move('up')
-            elseif IsControlJustPressed(1, 18) then -- UP
-                local PressedIndex = Data[Indexes-CurrentIndex+1]
+                
+            elseif IsControlJustPressed(1, 18) then -- Pressed
+                local PressedIndex = Data[#Data-CurrentIndex+1]
                 TriggerServerEvent("Sparkling:UI:Menu:Click", PressedIndex)
             end
         end
