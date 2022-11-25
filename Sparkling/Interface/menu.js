@@ -18,14 +18,16 @@ window.addEventListener('message', function(event) {
         $('.menu').show()
         item.index -= 1
         const btn = $('.menu .buttons #'+new String(item.index))
-        btn.css({"background-color":'#faebd7'})
+        btn.css({"background-color":'#6c6862'})
 
         document.getElementById(new String(item.index)).scrollIntoView()
 
+        const css = $('.menu .buttons #'+new String(item.index-1)).css
+
         if (item.method == 'up') {
-            $('.menu .buttons #'+new String(item.index-1)).css({'background-color': '#234449'})
+            css({'background-color': '#234449'})
         } else {
-            $('.menu .buttons #'+new String(item.index+1)).css({'background-color': '#234449'})
+            css({'background-color': '#234449'})
         }
     }
 });
