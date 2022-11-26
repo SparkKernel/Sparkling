@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200&family=Montserrat:wght@300&display=swap');
 
 .menu {
-    width: 19vw;
+    width: 18vw;
     top: 50%;
-    left: 10%;
+    left: 9.5%;
     transform: translate(-50%, -50%);    
     
     position: absolute;
@@ -65,6 +65,6 @@
 }
 
 .button:first-child {
-    margin-top: 25px;
+    margin-top: 30px;
     background-color: #6c6862;
 }

@@ -61,7 +61,7 @@ RegisterNetEvent('Sparkling:UI:Menu:Open:Main', function()
 
             Menu:Close()
 
-            NewMenu:Title(button.." Menu")
+            NewMenu:Title(button)
             
             NewMenu:Callback(function(btn)
                 if not User:isOnline() then return end

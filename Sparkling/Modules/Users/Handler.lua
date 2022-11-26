@@ -103,7 +103,7 @@ Users.Funcs.Spawned = function()
     local source = source
     local steam = Users.Utility.GetSteam(source)
     if Users.Players[steam] == nil then return Warn("User does not exist") end
-    if Users.Players[steam] then return Warn("User spawned, but is already registered") end
+    if Users.Players[steam].connecting then return Warn("User spawned, but is already registered") end
 
     Debug("Spawned: "..steam)
 

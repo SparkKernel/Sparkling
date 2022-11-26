@@ -34,7 +34,6 @@ Citizen.CreateThread(function()
                     CurrentIndex = CurrentIndex + 1
                     Move('up')
                 else
-                    print("TEXT")
                     CurrentIndex = 1
                     Move('teleport', old)
                 end
