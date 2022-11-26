@@ -120,7 +120,6 @@ Users.Funcs.Remove = function()
 
     local data = Users.Players[steam]
     Users.FromId[data.id] = nil
-    print(#data)
     for i,v in pairs(NonSaving) do
         data[v] = nil
     end
