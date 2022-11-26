@@ -1,8 +1,7 @@
 .notify {
     position: absolute;
-    bottom: 0px;
-    right: 5px;
-    display:none;
+    bottom: 2vh;
+    left:2vh;
 }
 
 .notification {
@@ -11,7 +10,7 @@
     border-radius: 15px;
 
     width: 20vw;
-    height: 8vh;
+    height: 20vh;
 }
 
 .color {

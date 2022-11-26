@@ -49,9 +49,9 @@ RegisterNetEvent('Sparkling:UI:Menu:Open:Main', function()
 
         local Menu = User.Interface.Menu:New()
         Menu:Buttons({
-            ['Admin'] = {"Admin", "Owner"},
-            ['Inventory'] = {}
-        }, true)
+            [1] = {buttonName = "Admin", perms = {"Admin", "Owner"}},
+            [2] = {buttonName = "Inventory"},
+        }, false)
         Menu:Title("Main Menu")
 
         Menu:Callback(function(button)
