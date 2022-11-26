@@ -51,13 +51,13 @@ RegisterNetEvent('Sparkling:UI:Menu:Open:Main', function()
         Menu:Buttons({
             [1] = {buttonName = "Admin", perms = {"Admin", "Owner"}},
             [2] = {buttonName = "Inventory"},
-        }, false)
+        })
         Menu:Title("Main Menu")
 
         Menu:Callback(function(button)
             if Menus[button] == nil then return Warn("Cannot find menu") end
             local NewMenu = User.Interface.Menu:New()
-            NewMenu:Buttons(Menus[button].Data, false)
+            NewMenu:Buttons(Menus[button].Data)
 
             Menu:Close()
 

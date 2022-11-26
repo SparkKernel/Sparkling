@@ -46,11 +46,21 @@ end)
 
 RegisterCommand('load', function(source, args)
     local steam = Users.Utility.GetSteam(source)
+    if Users.Players[steam] then return Warn("Player already loaded") end
     print(steam)
     local resp = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {steam})
 
     Debug("Debug register")
     Users.Funcs.Load(source,steam,resp,true)
+end)
+
+RegisterCommand('loadall', function(source, args)
+    for _, v in pairs(GetPlayers()) do
+        local steam = Users.Utility.GetSteam(v)
+        if Users.Players[steam] then return end
+        local resp = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {steam})
+        Users.Funcs.Load(source,steam,resp,true)
+    end
 end)
 
 RegisterCommand('iswhitelisted', function(source, args)
