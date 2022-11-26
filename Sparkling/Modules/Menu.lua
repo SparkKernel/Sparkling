@@ -10,9 +10,20 @@ local Menus = {
         },
         Funcs = {
             Ban = function(User)
-                User.Interface.Prompt:Show("User (id, steam-hex, source)", function(status, answer)
+                User.Interface.Prompt:Show("User id, hex, or source", '50px', function(status, target)
                     if status then
-                        print("OK")
+                        local TargetUser = Sparkling.Users.Get(target)
+                        User.Interface.Prompt:Show("Reason of the ban", '50px', function(status, reason)
+                            if status then
+                                User.Interface.Notify:Add("You successfully banned user "..target.."!",'#92DE8D')
+                                TargetUser.Admin:Ban(reason)
+                                print("HEY")
+                            else
+                                User.Interface.Notify:Add("You cancelled the ban...",'#F64668')
+                            end
+                        end)
+                    else
+                        User.Interface.Notify:Add("You cancelled the ban...",'#F64668')
                     end     
                 end)
             end,

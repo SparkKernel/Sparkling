@@ -4,15 +4,15 @@ local Object = function(id)
     function Get() return Users.Players[id] or nil end
 
     local service = {
-        on = function(type,value,isnot,change,now,ban)
+        on = function(tt,value,isnot,change,now,ban)
             local User = Get()
             if User ~= nil then 
-                if User[type] ~= value then Warn(isnot) end
-                if type ~= "ban" then 
-                    User[type] = change 
+                if User[tt] ~= value then Warn(isnot) end
+                if tt == "ban" then 
+                    User[tt] = change 
                     DropPlayer(User["src"], "You've been banned - for the reason: "..ban)
                 else 
-                    User[type] = ban
+                    User[tt] = ban
                 end
             else
                 local data = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})

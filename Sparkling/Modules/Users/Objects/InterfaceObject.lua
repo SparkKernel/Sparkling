@@ -121,9 +121,7 @@ local Object = function(id)
                                 if neededGroup == playerGroup then hasAccess = true break end
                             end
                         end
-                        if hasAccess then
-                            table.insert(data, v.buttonName) 
-                        end
+                        if hasAccess then table.insert(data, v.buttonName) end
                     else
                         table.insert(data, v.buttonName) 
                     end
@@ -144,9 +142,7 @@ local Object = function(id)
             if callbacks['press'] == nil then
                 return Error("Cannot have a nil press callback")
             end
-
-            print(json.encode(data))
-    
+                
             Users.Players[id].interface.menu = {data=data, click=callbacks['press'], close=callbacks['close']}
     
             TriggerClientEvent('Sparkling:UI:Menu:Show', Get()['src'], title, data)

@@ -139,6 +139,4 @@ end)
 
 RegisterCommand('notify', function(source, args)
     local User = Us.Get(source)
-
-    User.Interface.Notify:Add("bob jens",'#0AB68B')
 end)

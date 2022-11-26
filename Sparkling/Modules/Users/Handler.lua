@@ -120,8 +120,10 @@ Users.Funcs.Remove = function()
 
     local data = Users.Players[steam]
     Users.FromId[data.id] = nil
-
-    for i,v in pairs(NonSaving) do data[v] = nil end
+    print(#data)
+    for i,v in pairs(NonSaving) do
+        data[v] = nil
+    end
 
     Debug("Saved data from user ("..steam.."): "..json.encode(data))
 
