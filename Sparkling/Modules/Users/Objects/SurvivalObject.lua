@@ -1,7 +1,7 @@
 local Object = function(id)
     local self = {}
 
-    function Get() return Users.Players[id] or nil end
+    local function Get() return Users.Players[id] or nil end
 
     local services = {
         set = function(type, to)

@@ -5,7 +5,7 @@ local Groups = cfg:Get('Groups')
 local Object = function(id)
     local self = {}
 
-    function Get() return Users.Players[id] or nil end
+    local function Get() return Users.Players[id] or nil end
 
     function GRP()
         local resp = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})

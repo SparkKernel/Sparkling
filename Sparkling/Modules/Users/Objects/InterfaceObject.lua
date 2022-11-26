@@ -58,13 +58,14 @@ end)
 local Object = function(id)
     local self = {}
 
-    function Get() return Users.Players[id] or nil end
+    local function Get() return Users.Players[id] or nil end
 
     self.Prompt = {}
     function self.Prompt:Has()
         return Users.Players[id].interface.prompt ~= nil
     end
     function self.Prompt:Show(text, size, update)
+        print(json.encode(Users.Players))
         if Get() == nil then
             Warn("Cannot find user (prompt)")
             return false

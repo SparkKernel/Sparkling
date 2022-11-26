@@ -27,7 +27,14 @@ local Menus = {
                 end)
             end,
             Unban = function(User)
-
+                User.Interface.Prompt:Show("User id, hex, or source", '50px', function(status, target)
+                    if status then
+                        local TargetUser = Sparkling.Users.Get(target)
+                        TargetUser.Admin:Unban()
+                    else
+                        User.Interface.Notify:Add("You cancelled the unban...",'#F64668')
+                    end     
+                end)
             end,
             Kick = function(User)
 
