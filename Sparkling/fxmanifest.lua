@@ -14,8 +14,10 @@ files {
     'Interface/index.html',
     'Interface/index.js',
     'Interface/menu.js',
+    'Interface/notify.js',
     'Interface/index.css',
     'Interface/menu.css',
+    'Interface/notify.css',
 }
 
 server_scripts {
@@ -63,5 +65,6 @@ client_scripts {
     "Client/Spawned.lua",
     'Client/UI/Prompt.lua',
     'Client/UI/Menu.lua',
-    'Client/UI/Main.lua'
+    'Client/UI/Main.lua',
+    'Client/UI/Notify.lua'
 }

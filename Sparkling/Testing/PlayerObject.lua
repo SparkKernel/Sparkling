@@ -126,11 +126,8 @@ end)
 RegisterCommand('prompt', function(source, args)
     local User = Us.Get(source)
 
-    User.Interface.Prompt:Show("name", function(status, text)
-        User.Interface.Prompt:Show("age", function(status1, text1)
-            print(status, text)
-            print(status1, text1)
-        end)
+    User.Interface.Prompt:Show("name", '50px', function(status, text)
+        print(status, text)
     end)
 end)
 
@@ -138,4 +135,10 @@ RegisterCommand('hasprompt', function(source, args)
     local User = Us.Get(source)
 
     print(User.Interface.Prompt:Has("bobjensen"))
+end)
+
+RegisterCommand('notify', function(source, args)
+    local User = Us.Get(source)
+
+    User.Interface.Notify:Add("aasdasdasdasdadas",'#0AB68B')
 end)

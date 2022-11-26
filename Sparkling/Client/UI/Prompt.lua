@@ -3,9 +3,9 @@ function status(type, data)
     TriggerServerEvent('Sparkling:UI:Prompt:Status', type, data)
 end
 
-RegisterNetEvent("Sparkling:UI:Prompt:Show", function(text)
+RegisterNetEvent("Sparkling:UI:Prompt:Show", function(text, size)
     SetNuiFocus(true, true)
-    SendNUIMessage({show = true, text=text, object="prompt"})
+    SendNUIMessage({show = true, text=text, size=size, object="prompt"})
 end)
 
 RegisterNUICallback('cancel', function(data, cb)

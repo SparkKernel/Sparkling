@@ -20,7 +20,7 @@ $(document).ready(() => {
     $('.submit').click(() => {
         callback('submit', {
             text: $('.input').val()
-        }).then((data) => {
+        }).then(() => {
             $('.input').val('')
             $('.prompt').hide()
         })
@@ -32,7 +32,8 @@ window.addEventListener('message', function(event) {
     if (item.show) {
         if (item.object != "menu") {
             $('.'+item.object).show();
-            $('.header').text(item.text)
+            $('.header3').text(item.text)
+            $('.input').css({'font-size': item.size})
         } else {
             $('.'+item.object).css({
                 'display': 'flex'

@@ -46,14 +46,3 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
     end
 end)
-
---[[
-RegisterNUICallback('cancel', function(data, cb)
-    status(false, "")
-    cb(true)
-end)
-
-RegisterNUICallback('submit', function(data, cb)
-    status(true, data['text'])
-    cb(true)
-end)]]

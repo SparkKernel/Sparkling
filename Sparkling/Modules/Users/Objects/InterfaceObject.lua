@@ -64,7 +64,7 @@ local Object = function(id)
     function self.Prompt:Has()
         return Users.Players[id].interface.prompt ~= nil
     end
-    function self.Prompt:Show(text, update)
+    function self.Prompt:Show(text, size, update)
         if Get() == nil then
             Warn("Cannot find user (prompt)")
             return false
@@ -76,7 +76,7 @@ local Object = function(id)
 
         Users.Players[id].interface.prompt = update
 
-        TriggerClientEvent('Sparkling:UI:Prompt:Show', Get()['src'], text)
+        TriggerClientEvent('Sparkling:UI:Prompt:Show', Get()['src'], text, size)
     end
 
     self.Menu = {}
@@ -160,6 +160,13 @@ local Object = function(id)
         end
 
         return new
+    end
+
+    self.Notify = {}
+    function self.Notify:Add(text, color)
+        if Get() == nil then return Error("Cannot find user (notify)") end
+
+        TriggerClientEvent('Sparkling:UI:Notify:Add', Get()['src'], text, color)
     end
     return self
 end
