@@ -14,8 +14,18 @@ local NonSaving = cfg:Get('NonSaving')
 Users.Funcs.Get = function(source)
     local steam
     if type(source) == "string" then 
-        steam=source
-        if tonumber(source) then steam = Users.FromId[source] end
+        if tonumber(source) then -- is id
+            if not Users.FromId[source] then -- do
+                local resp = MySQL.query.await('SELECT * FROM users WHERE id = ?', {source})
+                local unpack = table.unpack(resp)
+                if unpack == nil then Error("cannot find user by id") return nil end
+                steam = unpack['steam']
+            else 
+                steam = Users.FromId[source]
+            end
+        else
+            steam=source -- if is steam-hex
+        end
     else
         steam = Users.Utility.GetSteam(source)
         if steam == '' then Warn("Cannot find user") end

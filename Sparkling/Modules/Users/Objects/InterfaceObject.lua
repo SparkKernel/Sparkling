@@ -65,7 +65,6 @@ local Object = function(id)
         return Users.Players[id].interface.prompt ~= nil
     end
     function self.Prompt:Show(text, size, update)
-        print(json.encode(Users.Players))
         if Get() == nil then
             Warn("Cannot find user (prompt)")
             return false

@@ -13,6 +13,9 @@ local Menus = {
                 User.Interface.Prompt:Show("User id, hex, or source", '50px', function(status, target)
                     if status then
                         local TargetUser = Sparkling.Users.Get(target)
+                        if TargetUser == nil then
+                            return User.Interface.Notify:Add("Cannot find user",'#F64668')
+                        end
                         User.Interface.Prompt:Show("Reason of the ban", '50px', function(status, reason)
                             if status then
                                 User.Interface.Notify:Add("You successfully banned user "..target.."!",'#92DE8D')

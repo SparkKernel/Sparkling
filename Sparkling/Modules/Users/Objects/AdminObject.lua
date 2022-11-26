@@ -1,3 +1,6 @@
+local cfg = Config:Get('Player')
+local NonSaving = cfg:Get('NonSaving')
+
 local Object = function(id)
     local self = {}
 
@@ -18,10 +21,11 @@ local Object = function(id)
                 local data = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
                 
                 local unpack = table.unpack(data)
-                if not unpack then return Error("Cannot find user in DB") end
+                if unpack == nil then return Error("Cannot find user in DB") end
                 local data = json.decode(unpack['data']) or default
 
-                data[type] = change
+                data[tt] = change
+
                 MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}), id})
                 Debug(now)
             end
