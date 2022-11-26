@@ -12,18 +12,17 @@
     border:10px solid #1c87c9;
 
     width: 30vh;
+    height: 10vh;
 
     display: flex;
-    justify-content: center;
-    align-content: center;
     overflow: hidden;
-    max-height: 10vh;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .text {
     color:white;
     font-family: Montserrat;
     font-size: 30px;
-    word-break:normal;
-    text-align: center;
 }
