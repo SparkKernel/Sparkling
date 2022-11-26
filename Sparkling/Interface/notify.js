@@ -1,18 +1,19 @@
 window.addEventListener('message', function(event) {
     var item = event.data;
-    if (item.text) {
-        const element = $(`<div class="notification">
-        
-            <div class="color"></div>
-            <div class="holder">
-                <div class="text">${item.text}</div>
-            </div>
+    if (item.brow) {
+        console.log(item.brow)
+        const element = $(`
+        <div class="notification">
+            <p class="text">${item.brow}</p>
         </div>`).appendTo('.notify')
 
-        element.find('.color').css({
-            'background-color': item.color
+        element.hide()
+        element.fadeIn('slow')
+
+        element.css({
+            'border': '3px solid ' +item.color
         })
 
-        setTimeout(() => element.remove(), 3000)
+        setTimeout(() => element.fadeOut('slow', () => element.remove()), 3000)
     }
 });

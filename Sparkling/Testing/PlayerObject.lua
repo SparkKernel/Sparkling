@@ -140,5 +140,5 @@ end)
 RegisterCommand('notify', function(source, args)
     local User = Us.Get(source)
 
-    User.Interface.Notify:Add("aasdasdasdasdadas",'#0AB68B')
+    User.Interface.Notify:Add("You cancelled the ban",'#0AB68B')
 end)

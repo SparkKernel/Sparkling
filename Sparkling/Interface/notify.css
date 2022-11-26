@@ -9,34 +9,17 @@
     background-color: rgb(30, 33, 32);
     border-radius: 15px;
 
+    border:10px solid #1c87c9;
+
     width: 16vw;
     height: 8vh;
 }
 
-.color {
-    border-radius: 15px;
-
-    width: 1.5vw;
-    background-color:rgb(255, 15, 15);
-    height: 100%;
-
-    position: relative;
-}
-
-.holder {
-    position: absolute;
-    top:0;
-    width: 90%;
-    right:0;
-    height: 100%;
-}
-
 .text {
-    position: relative;
     color:white;
-    font-family: Fredoka;
+    font-family: Montserrat;
     font-size: 30px;
+    word-break:normal;
     text-align: center;
-    text-align: center;
-    word-break: break-all;
+    margin: 0;
 }
