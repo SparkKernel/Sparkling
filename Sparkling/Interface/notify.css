@@ -1,7 +1,6 @@
 .notify {
     position: absolute;
-    bottom: 2vh;
-    left:2vh;
+    top: 1vh;
 }
 
 .notification {

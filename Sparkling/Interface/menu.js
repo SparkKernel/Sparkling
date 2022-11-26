@@ -26,7 +26,7 @@ window.addEventListener('message', function(event) {
         const next = $('.menu .buttons #'+new String(item.index-1))
         const down = $('.menu .buttons #'+new String(item.index+1))
 
-        const cssData = {'background-color': '#232829'}
+        const cssData = {'background-color': '#222730'}
 
         if (item.method == 'up') {
             next.css(cssData)
