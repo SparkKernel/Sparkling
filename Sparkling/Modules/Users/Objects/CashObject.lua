@@ -14,11 +14,13 @@ local Object = function(id)
     end
 
     function self:Add(amount)
-        if Get() ~= nil then Users.Players[id]['cash'] = Get()['cash'] + amount end
+        if Get() ~= nil then Users.Players[id]['cash'] = Get()['cash'] + amount return true end
+        return false
     end
 
     function self:Set(amount)
-        if Get() ~= nil then Users.Players[id]['cash'] = amount end
+        if Get() ~= nil then Users.Players[id]['cash'] = amount return true end
+        return false
     end
 
     return self

@@ -1,9 +1,9 @@
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
         if IsControlPressed(1, 56) then -- BACKSPACE
             TriggerServerEvent("Sparkling:UI:Menu:Open:Main")
-            Citizen.Wait(50)
+            Wait(50)
         end
-        Citizen.Wait(0)
+        Wait(0)
     end
 end)

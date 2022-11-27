@@ -14,7 +14,7 @@ end)
 
 function Move(method, old) SendNUIMessage({object="menu", oldIndex=old, index=CurrentIndex, method=method}) end
 
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
         if MenuOpen then 
             if IsControlJustPressed(1, 177) then -- BACKSPACE
@@ -43,6 +43,6 @@ Citizen.CreateThread(function()
                 TriggerServerEvent("Sparkling:UI:Menu:Click", PressedIndex)
             end
         end
-        Citizen.Wait(0)
+        Wait(0)
     end
 end)
