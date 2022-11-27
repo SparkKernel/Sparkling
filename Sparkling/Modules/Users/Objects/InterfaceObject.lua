@@ -101,16 +101,10 @@ local Object = function(id)
                     local hasAccess = false
                     for _, neededGroup in pairs(v.perms) do
                         if hasAccess then break end
-                        for _, playerGroup in pairs(playerGroups) do
-                            if neededGroup == playerGroup then hasAccess = true break end
-                        end
+                        for _, playerGroup in pairs(playerGroups) do if neededGroup == playerGroup then hasAccess = true break end end
                     end
-                    if hasAccess then
-                        table.insert(data, v.buttonName) 
-                    end
-                else
-                    table.insert(data, v.buttonName) 
-                end
+                    if hasAccess then table.insert(data, v.buttonName) end
+                else table.insert(data, v.buttonName)  end
             end
         end
 

@@ -9,19 +9,13 @@ local Object = function(id)
 
             if User ~= nil then Users.Players[id].identity[type] = value end
 
-            local data = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
-
-            local unpack = table.unpack(data)
-            if unpack == nil then return Error("Cannot find user in DB") end
-            local data = json.decode(unpack['data'])
-
-            if not data then return Warn("User has no data") end
+            local data, update = GetUpdate(id)
+            if not data then Error("cannot find user") return false end
 
             data['identity'][type] = value
 
-            MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}), id})
-            
-            Debug("Success changing name through db")
+            update(data)
+            return true
         end,
 
         get = function(type)
@@ -29,14 +23,8 @@ local Object = function(id)
 
             if User ~= nil then return User.identity[type] end
 
-            local resp = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
-            local unpack = table.unpack(resp)
-
-            if unpack == nil then return false end
-
-            local data = json.decode(unpack['data'])
-
-            Debug("Got name trough db")
+            local data, update = GetUpdate(id)
+            if not data then return false end
 
             return data.identity[type]
         end
