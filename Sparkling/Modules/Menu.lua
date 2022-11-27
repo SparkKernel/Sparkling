@@ -33,7 +33,11 @@ local Menus = {
                 User.Interface.Prompt:Show("User id, hex, or source", '50px', function(status, target)
                     if status then
                         local TargetUser = Sparkling.Users.Get(target)
+                        if TargetUser == nil then 
+                            return User.Interface.Notify:Add("Cannot find user",'#F64668')
+                        end
                         TargetUser.Admin:Unban()
+                        User.Interface.Notify:Add("You successfully unbanned user "..target.."!",'#92DE8D')
                     else
                         User.Interface.Notify:Add("You cancelled the unban...",'#F64668')
                     end     

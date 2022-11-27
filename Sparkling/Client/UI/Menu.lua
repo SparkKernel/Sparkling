@@ -16,7 +16,7 @@ function Move(method, old) SendNUIMessage({object="menu", oldIndex=old, index=Cu
 
 Citizen.CreateThread(function()
     while true do
-        if MenuOpen  then 
+        if MenuOpen then 
             if IsControlJustPressed(1, 177) then -- BACKSPACE
                 TriggerServerEvent("Sparkling:UI:Menu:TryClose")
             elseif IsControlJustPressed(1, 187) then -- DOWN

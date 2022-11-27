@@ -30,7 +30,7 @@ local Object = function(id)
                 Debug(now)
             end
         end,
-        off = function(type,value,now,nut,find)
+        off = function(tt,value,now,nut,find)
             if Get() ~= nil then Users.Players[id].whitelist = true end
 
             local data = MySQL.query.await('SELECT * FROM users WHERE steam = ?', {id})
@@ -41,18 +41,18 @@ local Object = function(id)
 
             if not data then return Warn(nut) end
 
-            data[type] = value
+            data[tt] = value
 
             MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}), id})
             
             Debug(now)
         end,
-        is = function(type, value)
+        is = function(tt, value)
             local User = Get()
 
             if User ~= nil then
-                if type == 'whitelist' then 
-                    return User[type] 
+                if tt == 'whitelist' then 
+                    return User[tt] 
                 else  
                     return false 
                 end 
@@ -64,7 +64,7 @@ local Object = function(id)
             if unpacked == nil then return false end 
             local data = json.decode(unpacked['data']) or nil
 
-            if data[type] == value then return false end
+            if data[tt] == value then return false end
             return true
         end
     }
