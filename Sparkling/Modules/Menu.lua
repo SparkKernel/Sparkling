@@ -44,10 +44,41 @@ local Menus = {
                 end)
             end,
             Kick = function(User)
-
+                User.Interface.Prompt:Show("User id, hex, or source", '50px', function(status, target)
+                    if status then
+                        local TargetUser = Sparkling.Users.Get(target)
+                        if TargetUser == nil then 
+                            return User.Interface.Notify:Add("Cannot find user",'#F64668')
+                        end
+                        User.Interface.Prompt:Show("Reason for the kick", '50px', function(status, reason)
+                            if status then
+                                if not TargetUser:isOnline() then
+                                    return User.Interface.Notify:Add("User is not online",'#F64668')
+                                end
+                                TargetUser.Admin:Kick(reason)
+                                User.Interface.Notify:Add("You successfully kicked user "..target.."!",'#92DE8D')
+                            else
+                                User.Interface.Notify:Add("You cancelled the kick...",'#F64668')
+                            end
+                        end)
+                    else
+                        User.Interface.Notify:Add("You cancelled the kick...",'#F64668')
+                    end
+                end)
             end,
             Whitelist = function(User)
-
+                User.Interface.Prompt:Show("User id, hex, or source", '50px', function(status, target)
+                    if status then
+                        local TargetUser = Sparkling.Users.Get(target)
+                        if TargetUser == nil then 
+                            return User.Interface.Notify:Add("Cannot find user",'#F64668')
+                        end
+                        TargetUser.Admin:Whitelist()
+                        User.Interface.Notify:Add("You successfully kicked user "..target.."!",'#92DE8D')
+                    else
+                        User.Interface.Notify:Add("You cancelled the whitelist...",'#F64668')
+                    end
+                end)
             end,
             Unwhitelist = function(User)
 

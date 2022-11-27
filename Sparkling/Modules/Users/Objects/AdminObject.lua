@@ -87,6 +87,7 @@ local Object = function(id)
     end
 
     function self:Kick(reason)
+        reason = reason or ''
         local User = Get()
         if User == nil then return Error("User does not exist.") end
         DropPlayer(User['src'], reason)
