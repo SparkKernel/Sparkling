@@ -79,7 +79,7 @@ local Object = function(id)
     end
 
     function self:Whitelist()
-        service.on("whitelist", false, true, "User is already whitelistet", "User is now whitelisted")
+        service.on("whitelist", false, "User is already whitelistet", true, "User is now whitelisted")
     end
 
     function self:Unwhitelist()

@@ -74,7 +74,7 @@ local Menus = {
                             return User.Interface.Notify:Add("Cannot find user",'#F64668')
                         end
                         TargetUser.Admin:Whitelist()
-                        User.Interface.Notify:Add("You successfully kicked user "..target.."!",'#92DE8D')
+                        User.Interface.Notify:Add("You successfully whitelisted user "..target.."!",'#92DE8D')
                     else
                         User.Interface.Notify:Add("You cancelled the whitelist...",'#F64668')
                     end
