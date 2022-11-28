@@ -21,7 +21,7 @@ cfg.NonSaving = { -- ignore (if you don't know what you're doing)
     'interface'
 }
 
-cfg.Default = {
+cfg.Default = { -- defualt data
     ['hp'] = 100,
     ['src'] = 0,
     ['ban'] = 0,

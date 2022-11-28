@@ -21,23 +21,14 @@ CreateThread(function()
                 TriggerServerEvent("Sparkling:UI:Menu:TryClose")
             elseif IsControlJustPressed(1, 187) then -- DOWN
                 local old = CurrentIndex
-                if CurrentIndex ~= 1 then
-                    CurrentIndex = CurrentIndex - 1
-                else
-                    CurrentIndex = #Data
-                    Move('teleport', old)
+                if CurrentIndex ~= 1 then CurrentIndex = CurrentIndex - 1 Move('down', 0) -- down
+                else CurrentIndex = #Data Move('teleport', old) -- teleport
                 end
-                Move('down', 0)
             elseif IsControlJustPressed(1, 188) then -- UP
                 local old = CurrentIndex
-                if CurrentIndex ~= #Data then
-                    CurrentIndex = CurrentIndex + 1
-                    Move('up')
-                else
-                    CurrentIndex = 1
-                    Move('teleport', old)
+                if CurrentIndex ~= #Data then CurrentIndex = CurrentIndex + 1 Move('up', 0) -- up
+                else CurrentIndex = 1 Move('teleport', old) -- teleport
                 end
-                
             elseif IsControlJustPressed(1, 191) then -- Pressed
                 local PressedIndex = Data[#Data-CurrentIndex+1]
                 TriggerServerEvent("Sparkling:UI:Menu:Click", PressedIndex)

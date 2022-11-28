@@ -1,7 +1,6 @@
 window.addEventListener('message', function(event) {
     var item = event.data;
     if (item.brow) {
-        console.log(item.brow)
         const element = $(`
         <div class="notification">
             <p class="text">${item.brow}</p>
@@ -10,9 +9,7 @@ window.addEventListener('message', function(event) {
         element.hide()
         element.fadeIn('slow')
 
-        element.css({
-            'border': '3px solid ' +item.color
-        })
+        element.css({'border': '3px solid ' +item.color}) // change color
 
         setTimeout(() => element.fadeOut('slow', () => element.remove()), 3000)
     }

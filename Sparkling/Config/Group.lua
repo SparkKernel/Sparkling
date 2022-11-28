@@ -1,24 +1,24 @@
 local cfg = {} -- ignore
 
 cfg.Groups = {
-    Owner = {
-        Events = {
-            OnSpawn = function()
+    ['Owner'] = {
+        ['Events'] = {
+            ['OnSpawn'] = function()
                 print("HEY")
             end
         },
-        Permissions = {
+        ['Permissions'] = {
             'kick',
             'ban'
         }
     },
-    Admin = {
-        Events = {
-            OnSpawn = function()
+    ['Admin'] = {
+        ['Events'] = {
+            ['OnSpawn'] = function()
                 print("HEY")
             end
         },
-        Permissions = {
+        ['Permissions'] = {
             'kick',
             'ban'
         }
