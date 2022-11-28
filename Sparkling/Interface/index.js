@@ -19,7 +19,7 @@ window.addEventListener('message', function(event) {
             $('.'+item.object).css({'display': 'flex'})
             $('.header2').text(item.text)
         }
-        console.log(JSON.stringify(item))
+
         if (item.list) {
             $('.buttons').empty()
             var currentIndex = item.list.length

@@ -12,9 +12,7 @@ end)
 
 local function close(src)
     local source = source
-    if src ~= nil then
-        source=src
-    end
+    if src ~= nil then source=src end
     local id = Users.Utility.GetSteam(source)
 
     if Users.Players[id] == nil or Users.Players[id].interface.menu == nil then return print("no menu open") end
@@ -25,9 +23,7 @@ local function close(src)
 
     TriggerClientEvent("Sparkling:UI:Menu:Close", source)
 
-    if menu.close ~= nil then
-        menu.close()
-    end
+    if menu.close ~= nil then menu.close() end
 end
 
 RegisterNetEvent('Sparkling:UI:Menu:TryClose', close)
@@ -42,12 +38,7 @@ RegisterNetEvent('Sparkling:UI:Menu:Click', function(button)
 
     local found = false
 
-    for i,v in pairs(menu.data) do
-        if v == button then
-            found = true
-            break
-        end
-    end
+    for i,v in pairs(menu.data) do if v == button then found = true break end end -- find btn
 
     if not found then return print("Cannot find button") end
 
