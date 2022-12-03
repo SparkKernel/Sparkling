@@ -6,12 +6,12 @@ const invoke = async (cb,args) => {
 
 var connection = null;
 
-const createSQLConnection = (conURI) => {
+const createSQLConnection = (conURI, success, error) => {
     const con = createPool(conURI)
 
     con.getConnection(err => {
-        if (err) return console.log("[SparkDB] Cannot connect to DB ["+err+"]")
-        console.log("[SparkDB] Connected to DB!")
+        if (err) return invoke(error, err)
+        invoke(success, '')
     })
 
     connection = con
@@ -38,5 +38,5 @@ global.exports('query', (sql, params, cb) => {
     })    
 })
 
-global.exports('createConnection', (connectionURI, callback) => createSQLConnection(connectionURI))
+global.exports('createConnection', (connectionURI, suc, err) => createSQLConnection(connectionURI, suc, err))
 

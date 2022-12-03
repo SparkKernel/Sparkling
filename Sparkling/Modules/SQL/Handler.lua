@@ -4,7 +4,15 @@ local SparkSQL = exports.Sparkling
 
 local cfg = Config:Get('Database')
 
-SparkSQL:createConnection(cfg:Get('Info')) -- create connection
+SparkSQL:createConnection(
+    cfg:Get('Info'),
+    function()
+        Success("Connected to DB", 'SparkDB')
+    end,
+    function(err)
+        Error("Couldn't connect to DB ["..err.."]", 'SparkDB')
+    end
+) -- create connection
 
 function SQL.query(query, params, cb)
     SparkSQL:query(query, params, cb)
@@ -17,12 +25,10 @@ function SQL.sync(query, params)
         data = result
     end)    
 
-    CreateThread(function()
-        repeat
-            Wait(50)
-        until
-            data ~= nil
-    end)
+    repeat
+        Wait(50)
+    until
+        data ~= nil
 
     return data
 end
