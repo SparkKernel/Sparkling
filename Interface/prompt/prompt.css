@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200&family=Montserrat:wght@300&display=swap');
 
-@font-face {
-    font-family: Fredoka;
-    font-weight: 500;
-    font-style: normal;
-    src: url("./text.ttf");
-    text-shadow: 0px 2px 0px #000000b6;
-}
-
 .prompt {
     border-radius: 15px;
     position: fixed;

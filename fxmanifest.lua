@@ -9,15 +9,10 @@ server_export 'Spark'
 
 ui_page 'Interface/index.html'
 files {
-    'Interface/font.otf',
-    'Interface/text.ttf',
-    'Interface/index.html',
-    'Interface/index.js',
-    'Interface/menu.js',
-    'Interface/notify.js',
-    'Interface/index.css',
-    'Interface/menu.css',
-    'Interface/notify.css',
+    'Interface/*',
+    'Interface/prompt/*',
+    'Interface/menu/*',
+    'Interface/notify/*',
 }
 
 server_scripts {
@@ -28,7 +23,7 @@ server_scripts {
     
     -- SQL
     'SQL/SQL.js',
-    'Modules/SQL/Handler.lua',
+    'SQL/Handler.lua',
     
     'Sparkling.lua',
 
@@ -44,7 +39,13 @@ server_scripts {
     'Modules/Users/Objects/PlayerObject.lua',
 
     -- PlayerObject's objects?:
-        'Modules/Users/Objects/*',
+        'Modules/Users/Objects/AdminObject.lua',
+        'Modules/Users/Objects/CashObject.lua',
+        'Modules/Users/Objects/GroupObject.lua',
+        'Modules/Users/Objects/IdentityObject.lua',
+        'Modules/Users/Objects/InventoryObject.lua',
+        'Modules/Users/Objects/InterfaceObject.lua',
+        'Modules/Users/Objects/SurvivalObject.lua',
         'Modules/Users/Handler.lua',
         'Modules/Users/Utility.lua',
 

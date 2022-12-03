@@ -1,15 +1,9 @@
-const callback = async (name, data) => {
-    const ReturnData = await fetch(`https://${GetParentResourceName()}/${name}`, {method: 'POST',headers: {'Content-Type': 'application/json; charset=UTF-8',},body: JSON.stringify(data)})
-    return ReturnData.json()
-}
-
-$(document).ready(() => {
+onReady.push(() => {
     $('.cancel').click(() => callback('cancel', {}).then(() => $('.prompt').hide()))
     $('.submit').click(() => {callback('submit', {text: $('.input').val()}).then(() => {$('.input').val(''); $('.prompt').hide()})})
 })
 
-window.addEventListener('message', function(event) {
-    var item = event.data;
+onMessage.push((item) => {
     if (item.show) {
         if (item.object != "menu") {
             $('.'+item.object).show();
@@ -30,4 +24,4 @@ window.addEventListener('message', function(event) {
         if (item.object != "menu") $('.'+item.object).show();
         else $('.'+item.object).css({'display': 'none'})
     }
-});
+})

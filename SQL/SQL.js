@@ -1,4 +1,4 @@
-const {createPool} = require('mysql')
+const {createPool} = require('mysql2')
 
 const invoke = async (cb,args) => {
     setImmediate(() => cb(args))

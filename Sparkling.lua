@@ -1,3 +1,5 @@
+-- Main resource for Sparkling
+
 Sparks = {}
 
 SQL.Execute([[
@@ -7,8 +9,6 @@ SQL.Execute([[
         data LONGTEXT DEFAULT NULL
     );
 ]])
-
---print(SQL.query('SELECT * FROM users WHERE license = ?', {"1"}))
 
 print("[Sparkling] Loaded main module!")
 

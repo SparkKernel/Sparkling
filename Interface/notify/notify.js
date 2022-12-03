@@ -1,5 +1,4 @@
-window.addEventListener('message', function(event) {
-    var item = event.data;
+onMessage.push((item) => {
     if (item.brow) {
         const element = $(`
         <div class="notification">

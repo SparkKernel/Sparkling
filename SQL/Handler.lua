@@ -5,14 +5,14 @@ local SparkSQL = exports.Sparkling
 local cfg = Config:Get('Database')
 
 SparkSQL:createConnection(
-    cfg:Get('Info'),
+    cfg:Get('Info'), -- use info from config
     function()
         Success("Connected to DB", 'SparkDB')
     end,
     function(err)
         Error("Couldn't connect to DB ["..err.."]", 'SparkDB')
     end
-) -- create connection
+)
 
 function SQL.Query(query, params, cb)
     SparkSQL:query(query, params, function(result)

@@ -22,20 +22,20 @@ cfg.NonSaving = { -- ignore (if you don't know what you're doing)
 }
 
 cfg.Default = { -- defualt data
-    ['hp'] = 100,
-    ['src'] = 0,
-    ['ban'] = 0,
-    ['whitelist'] = false,
-    ['cash'] = 420,
-    ['groups'] = {},
-    ['inventory'] = {},
-    ['survival'] = {
-        ['hunger'] = 100,
-        ['thirst'] = 100
+    hp = 100,
+    src = 0,
+    ban = 0,
+    whitelist = false,
+    cash = 420,
+    groups = {},
+    inventory = {},
+    survival = {
+        hunger = 100,
+        thirst = 100
     },
-    ['identity'] = {
-        ['first'] = 'Change',
-        ['last'] = "Your name"
+    identity = {
+        first = 'Change',
+        last = "Your name"
     }
 }
 
