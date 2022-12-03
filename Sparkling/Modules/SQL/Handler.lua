@@ -14,24 +14,28 @@ SparkSQL:createConnection(
     end
 ) -- create connection
 
-function SQL.query(query, params, cb)
-    SparkSQL:query(query, params, cb)
+function SQL.Query(query, params, cb)
+    SparkSQL:query(query, params, function(result)
+        if result['sqlMessage'] then
+            Error("Error occured while trying to execute query ["..tostring(result['sqlMessage']).."]", 'SparkDB')
+            cb(false)
+        else
+            cb(result)
+        end
+    end)
 end
 
-function SQL.sync(query, params)
-    local data = nil
-    SQL.query(query, params, function(result)
-        print("RES "..json.encode(result))
-        data = result
-    end)    
+function SQL.Sync(query, params)
+    local p = promise.new()
+    SQL.Query(query, params, function(result)
+        if result ~= false then
+            p:resolve(result)
+        end
+    end)
 
-    repeat
-        Wait(50)
-    until
-        data ~= nil
-
-    return data
+    return Citizen.Await(p)
 end
 
-local data = SQL.sync('SELECT * FROM users', {})
-print("D:"..tostring(data))
+function SQL.Execute(query)
+    SQL.Query(query, {}, function() end)
+end

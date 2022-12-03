@@ -11,7 +11,7 @@ const createSQLConnection = (conURI, success, error) => {
 
     con.getConnection(err => {
         if (err) return invoke(error, err)
-        invoke(success, '')
+        invoke(success, {})
     })
 
     connection = con
@@ -35,7 +35,9 @@ global.exports('query', (sql, params, cb) => {
 
     execute(sql, params).then((result, fields) => {
         invoke(cb, result)
-    })    
+    }).catch((err) => {
+        invoke(cb, err)
+    })
 })
 
 global.exports('createConnection', (connectionURI, suc, err) => createSQLConnection(connectionURI, suc, err))

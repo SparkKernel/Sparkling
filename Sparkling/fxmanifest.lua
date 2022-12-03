@@ -21,15 +21,16 @@ files {
 }
 
 server_scripts {
-    '@oxmysql/lib/MySQL.lua',
-    'Sparkling.lua',
-    
-    'SQL/SQL.js',
-
     -- Configs
     'Config.lua',
     'Config/*',
     'Testing/Config.lua',
+    
+    -- SQL
+    'SQL/SQL.js',
+    'Modules/SQL/Handler.lua',
+    
+    'Sparkling.lua',
 
     -- Utility
     'Utility/Error.lua',
@@ -39,20 +40,11 @@ server_scripts {
     'Modules/Extensions/EventObject.lua',
     'Modules/Extensions/New.lua',
 
-    -- SQL
-    'Modules/SQL/Handler.lua',
-
     -- PlayerObject
     'Modules/Users/Objects/PlayerObject.lua',
 
     -- PlayerObject's objects?:
-        'Modules/Users/Objects/AdminObject.lua',
-        'Modules/Users/Objects/CashObject.lua',
-        'Modules/Users/Objects/GroupObject.lua',
-        'Modules/Users/Objects/IdentityObject.lua',
-        'Modules/Users/Objects/InventoryObject.lua',
-        'Modules/Users/Objects/InterfaceObject.lua',
-        'Modules/Users/Objects/SurvivalObject.lua',
+        'Modules/Users/Objects/*',
         'Modules/Users/Handler.lua',
         'Modules/Users/Utility.lua',
 

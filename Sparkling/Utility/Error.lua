@@ -1,6 +1,6 @@
 Error = function(reason, name)
     name = name or 'Sparkling'
-    print('\27[31;1m["..name.."] '..reason..'\27[0m')
+    print("\27[31;1m["..name.."] "..reason.."\27[0m")
 end
 
 Debug = function(reason, name)
