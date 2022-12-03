@@ -9,6 +9,7 @@ local standardDefault = cfg:Get('Default')
 local default = standardDefault
 default['connecting'] = true
 default['interface'] = {}
+
 local Errors = cfg:Get('Errors')
 local Messages = cfg:Get('Messages')
 local LoadDelay = cfg:Get('LoadDelay')
