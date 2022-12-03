@@ -15,6 +15,11 @@ local Messages = cfg:Get('Messages')
 local LoadDelay = cfg:Get('LoadDelay')
 local NonSaving = cfg:Get('NonSaving')
 
+local cfg2 = Config:Get('Group')
+
+local Groups = cfg2:Get('Groups')
+
+
 Users.Funcs.Get = function(source)
     local steam
     if type(source) == "string" then 
@@ -113,18 +118,27 @@ Users.Funcs.Load = function(source, steam, db, def)
         Wait(LoadDelay*1000)
         if Users.Players[steam] and Users.Players[steam]['connecting'] == true then DropPlayer(source, Messages['LoadDelay']) end
     else
-        Users.Players[steam]['connecting'] = false
+        Users.Funcs.Spawned(source)
     end
 end
 
-Users.Funcs.Spawned = function()
-    print(json.encode(Users.Players))
+Users.Funcs.Spawned = function(src)
     local source = source
+    if src then source=src end
     local steam = Users.Utility.GetSteam(source)
     if Users.Players[steam] == nil then return Warn("User does not exist") end
     if not Users.Players[steam].connecting then return Warn("User spawned, but is already registered") end
 
-    Debug("Spawned: "..steam)
+    if src == nil then
+        Debug("Spawned: "..steam)
+    else
+        Debug("Debugly spawned user "..steam)
+    end
+
+    for k,v in pairs(Users.Players[steam]['groups']) do
+        if not Groups[v] then break end
+        Groups[v]['Events']['OnSpawn'](PlayerObject(steam))
+    end
 
     Users.Players[steam]['connecting'] = false -- user is now connected, and is spawned (so the user doesn't get kicked)
 end

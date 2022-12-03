@@ -46,6 +46,7 @@ server_scripts {
         'Modules/Users/Objects/SurvivalObject.lua',
         'Modules/Users/Handler.lua',
         'Modules/Users/Utility.lua',
+        'Modules/Users/Online.lua',
 
     -- Testing
     'Testing/PlayerObject.lua',

@@ -21,6 +21,8 @@ cfg.NonSaving = { -- ignore (if you don't know what you're doing)
     'interface'
 }
 
+cfg.DebugLoad = true -- if this is true everytime you reload the resource, it will reload all players.
+
 cfg.Default = { -- defualt data
     hp = 100,
     src = 0,

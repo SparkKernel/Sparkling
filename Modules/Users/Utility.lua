@@ -3,8 +3,8 @@ Users.Utility.GetIdentifier = function(source, id)
     if not source then return '' end
     local identifiers = GetPlayerIdentifiers(source)
     for _, v in pairs(identifiers) do
-        if string.find(v, 'id') then
-            identifier = v:gsub(id+':', "")
+        if string.find(v, id) then
+            identifier = v:gsub(id..':', "")
             break
         end
     end

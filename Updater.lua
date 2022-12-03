@@ -15,7 +15,7 @@ MakeRequest(function(_, result)
 
     local emergincies = table['emergincies']
 
-    if CurrentVersion > version then return Warn("Wait, why is your version higher than the newest? Hm....") end
+    if tonumber(CurrentVersion) > tonumber(version) then return Warn("Wait, why is your version higher than the newest? Hm....") end
 
     for k,v in pairs(emergincies) do
         if tonumber(k) > tonumber(version) then return Warn("A error in our sparkling data file is found, please report this") end
