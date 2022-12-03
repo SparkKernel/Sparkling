@@ -8,7 +8,9 @@ function GetUpdate(id)
     local unpack = table.unpack(data)
     if unpack == nil then return false, false end
     local data = json.decode(unpack['data'])
-    return data, function(ddd) MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(ddd, {indent=true}), id}) end
+    return data, function(changeData)
+        MySQL.query.await('UPDATE users SET data = ? WHERE steam = ?', {json.encode(changeData, {indent=true}), id})
+    end
 end
 
 PlayerObject = function(steam)
