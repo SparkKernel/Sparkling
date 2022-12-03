@@ -10,7 +10,7 @@ SparkSQL:createConnection(
         Success("Connected to DB", 'SparkDB')
     end,
     function(err)
-        Error("Couldn't connect to DB ["..err.."]", 'SparkDB')
+        Error("Couldn't connect to DB [code: "..err.code.."]", 'SparkDB')
     end
 )
 
