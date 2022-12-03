@@ -23,11 +23,12 @@ files {
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'Sparkling.lua',
+    
+    'SQL/SQL.js',
 
     -- Configs
     'Config.lua',
-    'Config/Player.lua',
-    'Config/Group.lua',
+    'Config/*',
     'Testing/Config.lua',
 
     -- Utility
@@ -37,6 +38,9 @@ server_scripts {
     'Modules/Extensions/Handler.lua',
     'Modules/Extensions/EventObject.lua',
     'Modules/Extensions/New.lua',
+
+    -- SQL
+    'Modules/SQL/Handler.lua',
 
     -- PlayerObject
     'Modules/Users/Objects/PlayerObject.lua',
