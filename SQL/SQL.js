@@ -9,9 +9,10 @@ var connection = null;
 const createSQLConnection = (conURI, success, error) => {
     const con = createPool(conURI)
 
-    con.getConnection(err => {
+    con.getConnection((err, conn) => {
         if (err) return invoke(error, err)
         invoke(success, {})
+        con.releaseConnection(conn)
     })
 
     connection = con

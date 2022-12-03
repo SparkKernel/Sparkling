@@ -31,9 +31,7 @@ server_scripts {
     'Utility/Error.lua',
     
     -- Extensions
-    'Modules/Extensions/Handler.lua',
-    'Modules/Extensions/EventObject.lua',
-    'Modules/Extensions/New.lua',
+    'Modules/Extensions/*',
 
     -- PlayerObject
     'Modules/Users/Objects/PlayerObject.lua',
@@ -60,8 +58,5 @@ server_scripts {
 
 client_scripts {
     "Client/Spawned.lua",
-    'Client/UI/Prompt.lua',
-    'Client/UI/Menu.lua',
-    'Client/UI/Main.lua',
-    'Client/UI/Notify.lua'
+    'Client/UI/*'
 }
