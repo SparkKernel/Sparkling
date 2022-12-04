@@ -10,7 +10,7 @@ local Object = function(id)
             if User ~= nil then Users.Players[id].identity[type] = value end
 
             local data, update = GetUpdate(id)
-            if not data then Error("cannot find user") return false end
+            if not data then Error("Cannot find user", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/IdentityObject.lua') return false end
 
             data['identity'][type] = value
 
@@ -42,7 +42,7 @@ local Object = function(id)
         local User = Get()
         local first = self.First:Get()
 
-        if first == false then return Error("Cannot find user in DB") end -- if it can't find user
+        if first == false then return Error("Cannot find user in DB", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/IdentityObject.lua') end -- if it can't find user
 
         local last = self.Last:Get()
         return {

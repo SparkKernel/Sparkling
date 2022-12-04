@@ -21,7 +21,7 @@ local Object = function(id)
         local data = SQL.Sync('SELECT * FROM users WHERE steam = ?', {id})
 
         local unpack = table.unpack(data)
-        if unpack == nil then return Error("Cannot find user in DB") end
+        if unpack == nil then return Error("Cannot find user in DB", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/GroupObject.lua') end
         
         local data = json.decode(unpack['data'])
         if not data then return Warn("User has no data") end
@@ -105,7 +105,7 @@ local Object = function(id)
         end
 
         for i,v in pairs(User['groups']) do
-            if Groups[v] == nil then return Error("User has group that doesn't exist. (group="..v..")") end
+            if Groups[v] == nil then return Error("User has group that doesn't exist!", 'Sparkling', 'group: '..v, 'Modules/Users/Objects/GroupObject.lua') end
             local perms = Groups[v].Permissions
             for i,v in pairs(perms) do if v == perm then return true end end
         end

@@ -100,7 +100,7 @@ RegisterNetEvent('Sparkling:UI:Menu:Open:Main', function()
     local User = Sparkling.Users.Get(source)
 
     if not User.Interface.Menu:Has() then
-        if User == nil then return Error("Cannot find user") end
+        if User == nil then return Error("Cannot find user", 'Sparkling', 'Trying to open Main Menu', 'Modules/Menu.lua') end
 
         local Menu = User.Interface.Menu:New()
         Menu:Buttons({

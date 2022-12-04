@@ -27,7 +27,7 @@ Users.Funcs.Get = function(source)
             if not Users.FromId[source] then -- do
                 local resp = SQL.Sync('SELECT * FROM users WHERE id = ?', {source})
                 local unpack = table.unpack(resp)
-                if unpack == nil then Error("cannot find user by id") return nil end
+                if unpack == nil then Error("Cannot find user by id!", 'Sparkling', 'identifier: '..source, 'Modules/Users/Handler.lua') return nil end
                 steam = unpack['steam']
             else 
                 steam = Users.FromId[source]
@@ -75,7 +75,7 @@ Users.Funcs.Create = function(_, _, def)
 end
 
 Users.Funcs.Load = function(source, steam, db, def)
-    if Users.Players[steam] then return Error("An error occurred, player with steam "..steam.." is already loaded?") end
+    if Users.Players[steam] then return Error("Player is already registered!", 'Sparkling', 'steam: '..steam, 'Modules/Users/Handler.lua') end
 
     local data = {
         ['connecting'] = true,
@@ -124,12 +124,12 @@ end
 
 Users.Funcs.Spawned = function(src)
     local source = source
-    if src then source=src end
+    if tonumber(src) then source=src end
     local steam = Users.Utility.GetSteam(source)
     if Users.Players[steam] == nil then return Warn("User does not exist") end
     if not Users.Players[steam].connecting then return Warn("User spawned, but is already registered") end
 
-    if src == nil then
+    if not tonumber(src) then
         Debug("Spawned: "..steam)
     else
         Debug("Debugly spawned user "..steam)

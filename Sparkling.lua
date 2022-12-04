@@ -10,6 +10,6 @@ SQL.Execute([[
     );
 ]])
 
-print("[Sparkling] Loaded main module!")
+Success("Main module loaded!")
 
 function Spark() return Sparks end

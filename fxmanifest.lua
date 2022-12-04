@@ -16,6 +16,7 @@ files {
 }
 
 server_scripts {
+    'Utility/Error.lua',
     -- Configs
     'Config.lua',
     'Config/*',
@@ -27,9 +28,7 @@ server_scripts {
     
     'Sparkling.lua',
 
-    -- Utility
-    'Utility/Error.lua',
-    
+    -- Utility    
     -- Extensions
     'Modules/Extensions/*',
 

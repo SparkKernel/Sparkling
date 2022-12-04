@@ -85,7 +85,7 @@ local Object = function(id)
         function new:Callback(press, close) callbacks['press'] = press callbacks['close'] = close end
 
         function new:Buttons(d)
-            if Get() == nil then return Error("User is not registered.") end
+            if Get() == nil then return Error("User is not registered", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/InterfaceObject.lua') end
             for i,v in pairs(d) do
                 local playerGroups = Get().groups
                 if v.perms ~= nil then
@@ -110,7 +110,7 @@ local Object = function(id)
             end
 
             if callbacks['press'] == nil then
-                return Error("Cannot have a nil press callback")
+                return Error("Cannot have a nil press callback", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/InterfaceObject.lua')
             end
                 
             Users.Players[id].interface.menu = {data=data, click=callbacks['press'], close=callbacks['close']}
@@ -130,7 +130,7 @@ local Object = function(id)
 
     self.Notify = {}
     function self.Notify:Add(text, color)
-        if Get() == nil then return Error("Cannot find user (notify)") end
+        if Get() == nil then return Error("Cannot find user", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/InterfaceObject.lua') end
 
         TriggerClientEvent('Sparkling:UI:Notify:Add', Get()['src'], text, color)
     end

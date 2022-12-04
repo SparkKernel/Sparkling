@@ -6,20 +6,20 @@ local Object = function(id)
     local services = {
         set = function(type, to)
             local User = Get()
-            if User == nil then return Error("Cannot find user") end
+            if User == nil then return Error("Cannot find user", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/SurvivalObject.lua') end
             if to > 100 then return end
 
             Users.Players[id]['survival'][type] = to
         end,
         get = function(type)
             local User = Get()
-            if User == nil then return Error("Cannot find user") end
+            if User == nil then return Error("Cannot find user", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/SurvivalObject.lua') end
 
             return Users.Players[id]['survival'][type]
         end,
         add = function(type, amount)
             local User = Get()
-            if User == nil then return Error("Cannot find user") end
+            if User == nil then return Error("Cannot find user", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/SurvivalObject.lua') end
 
             if Users.Players[id]['survival'][type]+amount > 100 then
                 Users.Players[id]['survival'][type] = 100
@@ -30,7 +30,7 @@ local Object = function(id)
         end,
         remove = function(type, amount)
             local User = Get()
-            if User == nil then return Error("Cannot find user") end
+            if User == nil then return Error("Cannot find user", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/SurvivalObject.lua') end
 
             if Users.Players[id]['survival'][type]-amount < 0 then 
                 Users.Players[id]['survival'][type] = 0

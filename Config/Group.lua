@@ -15,7 +15,7 @@ cfg.Groups = {
     Admin = {
         Events = {
             OnSpawn = function(User)
-                Debug("A user with role Admin just joined! (steam: "..User.steam.." | id: "..User.id)
+                Debug("A user with role Admin just joined!", 'Sparkling', 'steam: '..User.steam..' | id: '..User.id, 'Config/Group.lua')
             end
         },
         Permissions = {

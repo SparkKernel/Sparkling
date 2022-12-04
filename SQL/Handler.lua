@@ -7,17 +7,17 @@ local cfg = Config:Get('Database')
 SparkSQL:createConnection(
     cfg:Get('Info'), -- use info from config
     function()
-        Success("Connected to DB", 'SparkDB')
+        Success("Connected to DB", 'SparkDB', 'host: '..cfg:Get('Info')['host']..', port: '..cfg:Get('Info')['port'], 'SQL/Handler.lua')
     end,
     function(err)
-        Error("Couldn't connect to DB [code: "..err.code.."]", 'SparkDB')
+        Error("Cannot connect to DB", 'SparkDB', 'code: '..err.code, 'SQL/Handler.lua')
     end
 )
 
 function SQL.Query(query, params, cb)
     SparkSQL:query(query, params, function(result)
         if result['sqlMessage'] then
-            Error("Error occured while trying to execute query ["..tostring(result['sqlMessage']).."]", 'SparkDB')
+            Error("Error occured while trying to execute query", 'SparkDB', 'query: '..tostring(result['sqlMessage']), 'SQL/Handler.lua')
             cb(false)
         else
             cb(result)

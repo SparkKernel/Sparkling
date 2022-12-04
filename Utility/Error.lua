@@ -1,7 +1,9 @@
 local function newDebug(color)
-    return function(reason, name)
+    return function(reason, name, extra, file)
         name = name or 'Sparkling'
-        print("\27["..color.."["..name.."] "..reason.."\27[0m")
+        if extra ~= nil then extra = ' | '..extra..' | ' else extra = '' end
+        if file ~= nil then file = '('..file..')' else file = '' end
+        print("\27["..color.."["..name.."] | "..reason..extra..file.."\27[0m")
     end
 end
 
