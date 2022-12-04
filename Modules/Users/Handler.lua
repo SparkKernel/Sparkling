@@ -25,7 +25,7 @@ Users.Funcs.Get = function(source)
     if type(source) == "string" then 
         if tonumber(source) then -- is id
             if not Users.FromId[source] then -- do
-                local resp = SQL.Sync('SELECT * FROM users WHERE id = ?', {source})
+                local resp = SQL:Sync('SELECT * FROM users WHERE id = ?', {source})
                 local unpack = table.unpack(resp)
                 if unpack == nil then Error("Cannot find user by id!", 'Sparkling', 'identifier: '..source, 'Modules/Users/Handler.lua') return nil end
                 steam = unpack['steam']
@@ -55,7 +55,7 @@ Users.Funcs.Create = function(_, _, def)
 
     def.update(Messages['Checking'])
 
-    local resp = SQL.Sync('SELECT * FROM users WHERE steam = ?', {steam})
+    local resp = SQL:Sync('SELECT * FROM users WHERE steam = ?', {steam})
 
     Debug("A user joined "..steam)
 
@@ -66,8 +66,8 @@ Users.Funcs.Create = function(_, _, def)
         Debug("Creating user "..steam)
         def.update(Messages['Creating'])
 
-        SQL.Sync('INSERT INTO users (steam) VALUES (?)', {steam}) --  insert
-        resp = SQL.Sync('SELECT * FROM users WHERE steam = ?', {steam}) -- get
+        SQL:Sync('INSERT INTO users (steam) VALUES (?)', {steam}) --  insert
+        resp = SQL:Sync('SELECT * FROM users WHERE steam = ?', {steam}) -- get
     end
     Users.Funcs.Load(source, steam, resp, def)
 
@@ -159,7 +159,7 @@ Users.Funcs.Remove = function()
 
     Debug("Saved data from user ("..steam.."): "..json.encode(data))
 
-    SQL.Sync('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}),steam})
+    SQL:Sync('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}),steam})
 
     Users.Players[steam] = nil -- removes the user for good
 end

@@ -14,7 +14,7 @@ SparkSQL:createConnection(
     end
 )
 
-function SQL.Query(query, params, cb)
+function SQL:Query(query, params, cb)
     SparkSQL:query(query, params, function(result)
         if result['sqlMessage'] then
             Error("Error occured while trying to execute query", 'SparkDB', 'query: '..tostring(result['sqlMessage']), 'SQL/Handler.lua')
@@ -25,9 +25,9 @@ function SQL.Query(query, params, cb)
     end)
 end
 
-function SQL.Sync(query, params)
+function SQL:Sync(query, params)
     local p = promise.new()
-    SQL.Query(query, params, function(result)
+    SQL:Query(query, params, function(result)
         if result ~= false then
             p:resolve(result)
         end
@@ -37,5 +37,5 @@ function SQL.Sync(query, params)
 end
 
 function SQL.Execute(query)
-    SQL.Query(query, {}, function() end)
+    SQL:Query(query, {}, function() end)
 end

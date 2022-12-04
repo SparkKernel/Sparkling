@@ -25,6 +25,9 @@ server_scripts {
     -- SQL
     'SQL/SQL.js',
     'SQL/Handler.lua',
+
+    -- Webhooks
+    'Webhooks/Handler.lua',
     
     'Sparkling.lua',
 

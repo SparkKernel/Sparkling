@@ -5,7 +5,7 @@ CreateThread(function()
     if DebugLoad then
         for _, src in ipairs(GetPlayers()) do
             local steam = Users.Utility.GetSteam(src)
-            local resp = SQL.Sync('SELECT * FROM users WHERE steam = ?', {steam})
+            local resp = SQL:Sync('SELECT * FROM users WHERE steam = ?', {steam})
         
             Debug("Automatic load of player "..steam)
             

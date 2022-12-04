@@ -8,7 +8,7 @@ local Object = function(id)
     local function Get() return Users.Players[id] or nil end
 
     function GRP()
-        local resp = SQL.Sync('SELECT * FROM users WHERE steam = ?', {id})
+        local resp = SQL:Sync('SELECT * FROM users WHERE steam = ?', {id})
         if table.unpack(resp) == nil then return false end
 
         local data = json.decode(table.unpack(resp)['data'])
@@ -18,7 +18,7 @@ local Object = function(id)
     end
 
     function Service(dataFunc)
-        local data = SQL.Sync('SELECT * FROM users WHERE steam = ?', {id})
+        local data = SQL:Sync('SELECT * FROM users WHERE steam = ?', {id})
 
         local unpack = table.unpack(data)
         if unpack == nil then return Error("Cannot find user in DB", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/GroupObject.lua') end
@@ -28,7 +28,7 @@ local Object = function(id)
 
         dataFunc(data)
 
-        SQL.Sync('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}), id})
+        SQL:Sync('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}), id})
         
         Debug("Success adding or removing group through db")
     end

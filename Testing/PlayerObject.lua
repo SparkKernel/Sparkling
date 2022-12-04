@@ -47,7 +47,7 @@ end)
 RegisterCommand('load', function(source, args)
     local steam = Users.Utility.GetSteam(source)
     print(steam)
-    local resp = SQL.Sync('SELECT * FROM users WHERE steam = ?', {steam})
+    local resp = SQL:Sync('SELECT * FROM users WHERE steam = ?', {steam})
 
     Debug("Debug register")
     Users.Funcs.Load(source,steam,resp,true)
