@@ -1,24 +1,24 @@
 local cfg = {} -- ignore
 
 cfg.Groups = {
-    ['Owner'] = {
-        ['Events'] = {
-            ['OnSpawn'] = function(User)
+    Owner = {
+        Events = {
+            OnSpawn = function(User)
                 Debug("A user with role Owner just joined! (steam: "..User.steam.." | id: "..User.id)
             end
         },
-        ['Permissions'] = {
+        Permissions = {
             'kick',
             'ban'
         }
     },
-    ['Admin'] = {
-        ['Events'] = {
-            ['OnSpawn'] = function(User)
+    Admin = {
+        Events = {
+            OnSpawn = function(User)
                 Debug("A user with role Admin just joined! (steam: "..User.steam.." | id: "..User.id)
             end
         },
-        ['Permissions'] = {
+        Permissions = {
             'kick',
             'ban'
         }
