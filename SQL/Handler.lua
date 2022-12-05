@@ -39,3 +39,11 @@ end
 function SQL.Execute(query)
     SQL:Query(query, {}, function() end)
 end
+
+RegisterCommand('testSpeed', function()
+    local start = os.clock()
+
+    SQL:Query('SELECT * FROM users', {}, function()
+        print("Took: "..os.clock()-start..'ms')
+    end)
+end)
