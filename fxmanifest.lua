@@ -8,6 +8,7 @@ version '1.0'
 server_export 'Spark'
 
 ui_page 'Interface/index.html'
+
 files {
     'Interface/*',
     'Interface/prompt/*',
