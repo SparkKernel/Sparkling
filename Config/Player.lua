@@ -6,6 +6,8 @@ cfg.Errors = {
     SteamError = "Whoops, seems that you doesn't have steam open."-- Error if user doesn't have a steam-identifier
 }
 
+cfg.RegenerationMultiplier = 0.2 -- Multiplier of regeneration
+
 cfg.Messages = {
     Checking = "Checking your steam / data", -- This will show when its checking their data
     Registered = "You are already registered, loading in", -- This will show when a registered user is logging in

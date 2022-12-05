@@ -19,6 +19,7 @@ local cfg2 = Config:Get('Group')
 
 local Groups = cfg2:Get('Groups')
 
+SpawnHandler = {}
 
 Users.Funcs.Get = function(source)
     local steam
@@ -140,6 +141,11 @@ Users.Funcs.Spawned = function(src)
         Groups[v]['Events']['OnSpawn'](PlayerObject(steam))
     end
 
+    for k,v in pairs(SpawnHandler) do
+        print("SOMETHING")
+        v(PlayerObject(steam), Users.Players[steam])
+    end
+
     Users.Players[steam]['connecting'] = false -- user is now connected, and is spawned (so the user doesn't get kicked)
 end
 
@@ -150,6 +156,8 @@ Users.Funcs.Remove = function()
     Debug("User removed: "..steam)
     
     if Users.Players[steam] == nil then return Warn("A user left the server, but was not registered? Please check this out.") end
+
+    TriggerClientEvent("Sparkling:RetriveClientData", Users.Players[steam].src)
 
     local data = Users.Players[steam]
     Users.FromId[data.id] = nil
@@ -164,9 +172,16 @@ Users.Funcs.Remove = function()
     Users.Players[steam] = nil -- removes the user for good
 end
 
+Users.Funcs.ClientDumped = function(data)
+    local source = source
+
+    print(source, json.encode(data))
+end
+
 -- events
 AddEventHandler('playerDropped', Users.Funcs.Remove)
 AddEventHandler("playerConnecting", Users.Funcs.Create)
 RegisterNetEvent("Sparkling:Spawned", Users.Funcs.Spawned)
+RegisterNetEvent("Sparkling:DumpClientData", Users.Funcs.ClientDumped)
 
 Sparkling.Users = Users.Funcs

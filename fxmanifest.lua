@@ -16,6 +16,12 @@ files {
     'Interface/notify/*',
 }
 
+client_scripts {
+    "Client/Spawned.lua",
+    'Client/UI/*',
+    'Client/Spawn/Handler.lua'
+}
+
 server_scripts {
     'Utility/Error.lua',
     -- Configs
@@ -48,19 +54,18 @@ server_scripts {
         'Modules/Users/Objects/InterfaceObject.lua',
         'Modules/Users/Objects/SurvivalObject.lua',
         'Modules/Users/Handler.lua',
-        'Modules/Users/Utility.lua',
+
         'Modules/Users/Online.lua',
+
+        'Modules/Users/Utility.lua',
 
     -- Testing
     'Testing/PlayerObject.lua',
+
+    "Modules/Users/SpawnHandler.lua",
 
     -- Updater
     'Updater.lua',
 
     'Modules/Menu.lua'
-}
-
-client_scripts {
-    "Client/Spawned.lua",
-    'Client/UI/*'
 }
