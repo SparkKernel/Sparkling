@@ -20,6 +20,7 @@ local cfg2 = Config:Get('Group')
 local Groups = cfg2:Get('Groups')
 
 SpawnHandler = {}
+QuitHandler = nil
 
 Users.Funcs.Get = function(source)
     local steam
@@ -142,7 +143,6 @@ Users.Funcs.Spawned = function(src)
     end
 
     for k,v in pairs(SpawnHandler) do
-        print("SOMETHING")
         v(PlayerObject(steam), Users.Players[steam])
     end
 
@@ -165,6 +165,8 @@ Users.Funcs.Remove = function()
         data[v] = nil
     end
 
+    data = QuitHandler(PlayerObject(steam), Users.Players[steam], data)
+
     Debug("Saved data from user ("..steam.."): "..json.encode(data))
 
     SQL:Sync('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}),steam})
@@ -172,16 +174,9 @@ Users.Funcs.Remove = function()
     Users.Players[steam] = nil -- removes the user for good
 end
 
-Users.Funcs.ClientDumped = function(data)
-    local source = source
-
-    print(source, json.encode(data))
-end
-
 -- events
 AddEventHandler('playerDropped', Users.Funcs.Remove)
 AddEventHandler("playerConnecting", Users.Funcs.Create)
 RegisterNetEvent("Sparkling:Spawned", Users.Funcs.Spawned)
-RegisterNetEvent("Sparkling:DumpClientData", Users.Funcs.ClientDumped)
 
 Sparkling.Users = Users.Funcs

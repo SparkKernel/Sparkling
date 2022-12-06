@@ -33,6 +33,11 @@ cfg.Default = { -- defualt data
     cash = 420,
     groups = {},
     inventory = {},
+    coords = {
+        x = 483.02,
+        y = -124.33,
+        z = 65.32
+    },
     survival = {
         hunger = 100,
         thirst = 100

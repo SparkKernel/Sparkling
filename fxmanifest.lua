@@ -1,4 +1,4 @@
-fx_version 'cerulean'
+fx_version 'adamant'
 game 'gta5'
 
 author 'Fr3ckzDK <github.com/dkfrede>'
@@ -63,6 +63,7 @@ server_scripts {
     'Testing/PlayerObject.lua',
 
     "Modules/Users/SpawnHandler.lua",
+    "Modules/Users/QuitHandler.lua",
 
     -- Updater
     'Updater.lua',
