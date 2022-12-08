@@ -77,7 +77,7 @@ Users.Funcs.Create = function(_, _, def)
 end
 
 Users.Funcs.Load = function(source, steam, db, def)
-    if Users.Players[steam] then return Error("Player is already registered!", 'Sparkling', 'steam: '..steam, 'Modules/Users/Handler.lua') end
+    if Users.Players[steam] then return Debug("Player is already registered!", 'Sparkling', 'steam: '..steam) end
 
     local data = {
         ['connecting'] = true,
@@ -127,8 +127,10 @@ end
 Users.Funcs.Spawned = function(src)
     local source = source
     if tonumber(src) then source=src end
+    
     local steam = Users.Utility.GetSteam(source)
     if Users.Players[steam] == nil then return Warn("User does not exist") end
+    
     local wasConnected = false
     if not Users.Players[steam].connecting then
         wasConnected = true
@@ -147,7 +149,7 @@ Users.Funcs.Spawned = function(src)
             Groups[v]['Events']['OnSpawn'](PlayerObject(steam))
         end
     end
-    
+
     for k,v in pairs(SpawnHandler) do
         v(PlayerObject(steam), Users.Players[steam])
     end
@@ -174,12 +176,11 @@ Users.Funcs.Remove = function()
         data[v] = nil
     end
 
-
     Debug("Saved data from user ("..steam.."): "..json.encode(data))
 
-    SQL:Sync('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}),steam})
-
     Users.Players[steam] = nil -- removes the user for good
+
+    SQL:Sync('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}),steam})
 end
 
 -- events

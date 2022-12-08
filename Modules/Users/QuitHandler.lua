@@ -9,9 +9,7 @@ QuitHandler = function(User, Data, ReturnData)
     local x,y,z = GetEntityCoords(ped)
     local health = GetEntityHealth(ped)
 
-    newReturn['coords']['x'] = x
-    newReturn['coords']['y'] = y
-    newReturn['coords']['z'] = z
+    newReturn['coords'] = x
 
     newReturn['hp'] = health
 

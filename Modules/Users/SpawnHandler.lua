@@ -15,11 +15,12 @@ table.insert(SpawnHandler, function(User, Data)
             health = Data.hp
         }
     )
+
     SetEntityCoords(
         ped,
-        Data.coords.x.x or Data.coords.x,
-        Data.coords.x.y or Data.coords.y,
-        Data.coords.x.z or Data.coords.z,
+        Data.coords.x,
+        Data.coords.y,
+        Data.coords.z,
         false,
         false,
         false
