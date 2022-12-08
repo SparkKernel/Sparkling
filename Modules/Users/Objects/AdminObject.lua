@@ -78,7 +78,7 @@ local Object = function(id)
     end
 
     function self:Kick(reason)
-        local User = Get()
+        local User = Get()  
         reason = reason or ''
         if User == nil then Error("User does not exist.", 'Sparkling', 'No information', 'Modules/Users/Objects/AdminObject.lua') return false end
         DropPlayer(User['src'], reason)

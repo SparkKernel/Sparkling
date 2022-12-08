@@ -81,7 +81,6 @@ local Menus = {
                 end)
             end,
             Unwhitelist = function(User)
-
             end,
         }
     },
@@ -91,6 +90,19 @@ local Menus = {
         },
         Funcs = {
             
+        }
+    },
+    Testing = {
+        Data = {
+            [1] = {buttonName = "Copy Coords"},
+            [2] = {buttonName = "Noclip"},
+        },
+        Funcs = {
+            ['Copy Coords'] = function(User)
+                local x,y,z = User.Position:Get()
+                User.NUI.Clipboard:Copy(x..', '..y..', '..z)
+                User.Interface.Notify:Add("Copied coords to your clipboard!",'#92DE8D')
+            end
         }
     }
 }
@@ -106,6 +118,7 @@ RegisterNetEvent('Sparkling:UI:Menu:Open:Main', function()
         Menu:Buttons({
             [1] = {buttonName = "Admin", perms = {"Admin", "Owner"}},
             [2] = {buttonName = "Inventory"},
+            [3] = {buttonName = "Testing"},
         })
         Menu:Title("Main Menu")
 

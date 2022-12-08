@@ -10,6 +10,7 @@ server_export 'Spark'
 ui_page 'Interface/index.html'
 
 files {
+    'Interface/clipboard.js',
     'Interface/*',
     'Interface/prompt/*',
     'Interface/menu/*',
@@ -19,7 +20,8 @@ files {
 client_scripts {
     "Client/Spawned.lua",
     'Client/UI/*',
-    'Client/Spawn/Handler.lua'
+    'Client/Spawn/Handler.lua',
+    'Client/NUI/Handler.lua'
 }
 
 server_scripts {
@@ -53,6 +55,8 @@ server_scripts {
         'Modules/Users/Objects/InventoryObject.lua',
         'Modules/Users/Objects/InterfaceObject.lua',
         'Modules/Users/Objects/SurvivalObject.lua',
+        'Modules/Users/Objects/PositionObject.lua',
+        'Modules/Users/Objects/NUIObject.lua',
         'Modules/Users/Handler.lua',
 
         'Modules/Users/Online.lua',
