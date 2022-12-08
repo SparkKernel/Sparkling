@@ -40,7 +40,7 @@ RegisterNetEvent('Sparkling:UI:Menu:Click', function(button)
 
     for i,v in pairs(menu.data) do if v == button then found = true break end end -- find btn
 
-    if not found then return print("Cannot find button") end
+    if not found then return Warn("Cannot find button") end
 
     menu.click(button)
 end)

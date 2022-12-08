@@ -102,6 +102,12 @@ local Menus = {
                 local x,y,z = User.Position:Get()
                 User.NUI.Clipboard:Copy(x..', '..y..', '..z)
                 User.Interface.Notify:Add("Copied coords to your clipboard!",'#92DE8D')
+            end,
+            ['Noclip'] = function(User)
+                local User = Users.Players[User.steam]
+                User.noclip = not User.noclip
+
+                TriggerClientEvent("Sparkling:ToggleNoclip", User.src, User.noclip)
             end
         }
     }

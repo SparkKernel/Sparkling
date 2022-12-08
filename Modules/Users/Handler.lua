@@ -9,6 +9,7 @@ local standardDefault = cfg:Get('Default')
 local default = standardDefault
 default['connecting'] = true
 default['interface'] = {}
+default['noclip'] = false
 
 local Errors = cfg:Get('Errors')
 local Messages = cfg:Get('Messages')
@@ -81,7 +82,8 @@ Users.Funcs.Load = function(source, steam, db, def)
 
     local data = {
         ['connecting'] = true,
-        ['interface'] = {}
+        ['interface'] = {},
+        ['noclip'] = false
     }
 
     db = table.unpack(db) -- change it

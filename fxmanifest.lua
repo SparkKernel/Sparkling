@@ -21,6 +21,7 @@ client_scripts {
     "Client/Spawned.lua",
     'Client/UI/*',
     'Client/Spawn/Handler.lua',
+    'Client/Menu/*',
     'Client/NUI/Handler.lua'
 }
 
