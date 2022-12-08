@@ -29,7 +29,7 @@ PlayerObject = function(steam)
     end
 
     -- endpoint
-    if Users.Players[steam] then
+    if Users.Players[steam] and Users.Players[steam].src and Users.Players[steam].quitting == nil then
         self.endpoint = GetPlayerEndpoint(Users.Players[steam].src) or nil
     else
         self.endpoint = nil

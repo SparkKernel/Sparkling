@@ -1,6 +1,6 @@
 local cfg = Config:Get('Player')
 
-QuitHandler = function(User, Data)
+QuitHandler = function(User, Data, ReturnData)
     local source = Data['src']    
     local ped = GetPlayerPed(source)
 
@@ -13,7 +13,7 @@ QuitHandler = function(User, Data)
     newReturn['coords']['y'] = y
     newReturn['coords']['z'] = z
 
-    newReturn['health'] = health
+    newReturn['hp'] = health
 
     return newReturn
 end

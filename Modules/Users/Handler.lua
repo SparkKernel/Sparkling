@@ -20,7 +20,7 @@ local cfg2 = Config:Get('Group')
 local Groups = cfg2:Get('Groups')
 
 SpawnHandler = {}
-QuitHandler = nil
+QuitHandler = nil -- wil be defined in QuitHandler.lua
 
 Users.Funcs.Get = function(source)
     local steam
@@ -129,7 +129,11 @@ Users.Funcs.Spawned = function(src)
     if tonumber(src) then source=src end
     local steam = Users.Utility.GetSteam(source)
     if Users.Players[steam] == nil then return Warn("User does not exist") end
-    if not Users.Players[steam].connecting then return Warn("User spawned, but is already registered") end
+    local wasConnected = false
+    if not Users.Players[steam].connecting then
+        wasConnected = true
+        return Debug("User spawned, but is already registered - user probaly died...")
+    end
 
     if not tonumber(src) then
         Debug("Spawned: "..steam)
@@ -137,11 +141,13 @@ Users.Funcs.Spawned = function(src)
         Debug("Debugly spawned user "..steam)
     end
 
-    for k,v in pairs(Users.Players[steam]['groups']) do
-        if not Groups[v] then break end
-        Groups[v]['Events']['OnSpawn'](PlayerObject(steam))
+    if not wasConnected then
+        for k,v in pairs(Users.Players[steam]['groups']) do
+            if not Groups[v] then break end
+            Groups[v]['Events']['OnSpawn'](PlayerObject(steam))
+        end
     end
-
+    
     for k,v in pairs(SpawnHandler) do
         v(PlayerObject(steam), Users.Players[steam])
     end
@@ -160,12 +166,14 @@ Users.Funcs.Remove = function()
     TriggerClientEvent("Sparkling:RetriveClientData", Users.Players[steam].src)
 
     local data = Users.Players[steam]
+    data = QuitHandler(PlayerObject(steam), Users.Players[steam], data)
+    Users.Players[steam]['quitting'] = true
+
     Users.FromId[data.id] = nil
     for i,v in pairs(NonSaving) do
         data[v] = nil
     end
 
-    data = QuitHandler(PlayerObject(steam), Users.Players[steam], data)
 
     Debug("Saved data from user ("..steam.."): "..json.encode(data))
 

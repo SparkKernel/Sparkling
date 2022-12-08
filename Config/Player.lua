@@ -20,7 +20,8 @@ cfg.NonSaving = { -- ignore (if you don't know what you're doing)
     'connecting',
     'src',
     'id',
-    'interface'
+    'interface',
+    'quitting'
 }
 
 cfg.DebugLoad = true -- if this is true everytime you reload the resource, it will reload all players.
