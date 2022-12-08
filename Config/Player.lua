@@ -36,9 +36,9 @@ cfg.Default = { -- defualt data
     groups = {},
     inventory = {},
     coords = {
-        x = 483.02,
-        y = -124.33,
-        z = 65.32
+        x = 235.62197875977,
+        y = -411.16482543945,
+        z = 48.859375
     },
     survival = {
         hunger = 100,
