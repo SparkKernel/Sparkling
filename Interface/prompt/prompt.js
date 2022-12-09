@@ -12,6 +12,7 @@ onMessage.push((item) => {
         } else {
             $('.'+item.object).css({'display': 'flex'})
             $('.header2').text(item.text)
+            $('.header2').css({color: item.color})
         }
 
         if (item.list) {
@@ -19,6 +20,7 @@ onMessage.push((item) => {
             var currentIndex = item.list.length
             
             item.list.forEach(element => {currentIndex -= 1; $('<div id="'+new String(currentIndex)+'" class="button">'+element+'</div>').appendTo('.buttons');});
+            $('.menu .buttons #'+new String(item.list.length-1)).css({color: item.color})
         }
     } else {
         if (item.object != "menu") $('.'+item.object).show();

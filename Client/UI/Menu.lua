@@ -1,10 +1,12 @@
 local MenuOpen = false
 local CurrentIndex = 1
 local Data = {}
+local CurrentColor = '#EF5064'
 
-RegisterNetEvent("Sparkling:UI:Menu:Show", function(text, data) -- show meni
-    SendNUIMessage({show = true, text=text, object="menu", list=data})
+RegisterNetEvent("Sparkling:UI:Menu:Show", function(text, data, color) -- show meni
+    SendNUIMessage({show = true, text=text, object="menu", list=data, color=color})
     CurrentIndex = #data Data = data MenuOpen = true
+    CurrentColor = color
 end)
 
 RegisterNetEvent('Sparkling:UI:Menu:Close', function() -- close menu
@@ -12,7 +14,7 @@ RegisterNetEvent('Sparkling:UI:Menu:Close', function() -- close menu
     MenuOpen = false Data = {}
 end)
 
-function Move(method, old) SendNUIMessage({object="menu", oldIndex=old, index=CurrentIndex, method=method}) end
+function Move(method, old) SendNUIMessage({object="menu", oldIndex=old, index=CurrentIndex, method=method, color=CurrentColor}) end
 
 CreateThread(function()
     while true do

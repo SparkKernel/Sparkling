@@ -75,14 +75,23 @@ local Object = function(id)
         if Get() == nil then return false end
         return Users.Players[id].interface.menu ~= nil
     end
+    function self.Menu:Close()
+        local User = Get()
+        if User == nil then return print("Cannot find user") end
+
+        close(User['src'])
+    end
     function self.Menu:New()
         local new = {}
         local title = 'Basic'
         local callbacks = {}
         local data = {}
 
+        local color = '#EF5064'
+
         function new:Title(t) title = t end
         function new:Callback(press, close) callbacks['press'] = press callbacks['close'] = close end
+        function new:SetColor(c) color = c end
 
         function new:Buttons(d)
             if Get() == nil then return Error("User is not registered", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/InterfaceObject.lua') end
@@ -115,7 +124,7 @@ local Object = function(id)
                 
             Users.Players[id].interface.menu = {data=data, click=callbacks['press'], close=callbacks['close']}
     
-            TriggerClientEvent('Sparkling:UI:Menu:Show', Get()['src'], title, data)
+            TriggerClientEvent('Sparkling:UI:Menu:Show', Get()['src'], title, data, color)
         end    
 
         function new:Close()

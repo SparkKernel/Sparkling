@@ -4,7 +4,7 @@ onMessage.push((item) => {
         item.index -= 1
         const btn = $('.menu .buttons #'+new String(item.index))
 
-        btn.css({"color":'#EF5064'})
+        btn.css({"color": item.color})
 
         document.getElementById(new String(item.index)).scrollIntoView()
 
