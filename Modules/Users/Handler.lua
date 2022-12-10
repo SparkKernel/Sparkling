@@ -23,17 +23,27 @@ local Groups = cfg2:Get('Groups')
 SpawnHandler = {}
 QuitHandler = nil -- wil be defined in QuitHandler.lua
 
-Users.Funcs.Get = function(source)
+Users.Funcs.Get = function(source, cb)
+    local callback = false
+    if cb ~= nil then callback = true end
     local steam
     if type(source) == "string" then 
         if tonumber(source) then -- is id
-            if not Users.FromId[source] then -- do
+            if not Users.FromId[source] and not callback then -- do
                 local resp = SQL:Sync('SELECT * FROM users WHERE id = ?', {source})
                 local unpack = table.unpack(resp)
                 if unpack == nil then Error("Cannot find user by id!", 'Sparkling', 'identifier: '..source, 'Modules/Users/Handler.lua') return nil end
                 steam = unpack['steam']
-            else 
+            elseif Users.FromId[source] and not callback then
                 steam = Users.FromId[source]
+            else
+                return SQL:Query('SELECT * FROM users WHERE id = ?', {source}, function(resp)
+                    local unpack = table.unpack(resp)
+                    if unpack == nil then Error("Cannot find user by id!", 'Sparkling', 'identifier: '..source, 'Modules/Users/Handler.lua') return nil end
+                    steam = unpack['steam']
+
+                    cb(PlayerObject(steam, true))
+                end)
             end
         else
             steam=source -- if is steam-hex
@@ -43,7 +53,7 @@ Users.Funcs.Get = function(source)
         if steam == '' then Warn("Cannot find user") end
     end
 
-    return PlayerObject(steam)
+    return PlayerObject(steam, callback)
 end
 
 Users.Funcs.Create = function(_, _, def)

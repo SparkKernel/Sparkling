@@ -13,7 +13,7 @@ function GetUpdate(id)
     end
 end
 
-PlayerObject = function(steam)
+PlayerObject = function(steam, callback)
     local self = {}
     
     self.steam = steam
@@ -39,7 +39,7 @@ PlayerObject = function(steam)
         return Users.Players[steam] ~= nil -- should work (not tested)
     end
 
-    for i,v in pairs(Registered) do self[v['name']] = v['object'](steam) end -- make all objects
+    for i,v in pairs(Registered) do self[v['name']] = v['object'](steam, callback) end -- make all objects
 
     return self
 end

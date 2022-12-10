@@ -22,7 +22,7 @@ cfg.NonSaving = { -- ignore (if you don't know what you're doing)
     'id',
     'interface',
     'quitting',
-    'noclip'
+    'noclip',
 }
 
 cfg.DebugLoad = true -- if this is true everytime you reload the resource, it will reload all players.
