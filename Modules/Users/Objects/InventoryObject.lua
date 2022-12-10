@@ -37,11 +37,24 @@ local Object = function(id)
         local User = Get()
         if User == nil then
             local data = GetUpdate(id)
-
+            if data == false then return Debug("Cannot find user") end
             return data.inventory
         else
             return User.inventory
         end
+    end
+
+    function self:Has(item, amount)
+        local Items = self:Get()
+        if not Items[item] then
+            return false
+        end
+
+        if Items[item] < amount then
+            return false
+        end
+
+        return true
     end
 
     function self:Can(item, amount)
