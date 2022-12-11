@@ -6,7 +6,9 @@ Sparkling.Users.Get('2', function(User)
 end)
 
 RegisterCommand('test', function(src)
-    print(SparkClient['GetWeapons'])
+    SparkClient:Run(src, 'Test', function(resp)
+        print(resp)
+    end)
 end)
 
 RegisterCommand('test123', function(src, args)

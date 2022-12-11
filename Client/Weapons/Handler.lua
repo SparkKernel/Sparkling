@@ -1,3 +1,5 @@
-TriggerServerEvent('Sparkling:AddClientFunction', 'GetWeapons', function()
-    print("HEY")
+RegisterCallback('Test', function()
+    print("HEy")
+
+    return true
 end)

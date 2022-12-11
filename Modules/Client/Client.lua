@@ -1,9 +1,15 @@
 SparkClient = {}
+local Ids = {}
 
-RegisterNetEvent("Sparkling:AddClientFunction", function(name, func)
-    local source = source
-    func(source)
-    if SparkClient[name] ~= nil then return end
+function SparkClient:Run(source, name, func, ...)
+    local id = tostring(math.random(1000000, 9999999))
+    Ids[id] = func
 
-    SparkClient[name] = func
+    TriggerClientEvent('Sparkling:TriggerClientCallback', source, name, id, ...)
+end
+
+RegisterNetEvent('Sparkling:ReturnClientCallback', function(id, resp)
+    if Ids[id] == nil then return print("Cannot find id") end
+
+    Ids[id](resp)
 end)

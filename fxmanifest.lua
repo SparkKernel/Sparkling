@@ -20,6 +20,7 @@ files {
 shared_script 'Shared/*'
 
 client_scripts {
+    'Client/Callback/*',
     'Client/Weapons/*',
     "Client/Spawned.lua",
     'Client/UI/*',
