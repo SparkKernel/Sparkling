@@ -23,7 +23,7 @@ local Groups = cfg2:Get('Groups')
 SpawnHandler = {}
 QuitHandler = nil -- wil be defined in QuitHandler.lua
 
-Users.Funcs.Get = function(source, cb)
+function Users.Funcs:Get(source, cb)
     local callback = false
     if cb ~= nil then callback = true end
     local steam
@@ -176,8 +176,6 @@ Users.Funcs.Remove = function()
     Debug("User removed: "..steam)
     
     if Users.Players[steam] == nil then return Warn("A user left the server, but was not registered? Please check this out.") end
-
-    TriggerClientEvent("Sparkling:RetriveClientData", Users.Players[steam].src)
 
     local data = Users.Players[steam]
     data = QuitHandler(PlayerObject(steam), Users.Players[steam], data)

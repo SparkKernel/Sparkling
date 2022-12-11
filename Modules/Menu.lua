@@ -12,7 +12,7 @@ local Menus = {
             Ban = function(User)
                 User.Interface.Prompt:Show("User id, hex, or source", '50px', function(status, target)
                     if status then
-                        local TargetUser = Sparkling.Users.Get(target)
+                        local TargetUser = Sparkling.Users:Get(target)
                         if TargetUser == nil then
                             return User.Interface.Notify:Add("Cannot find user",'#F64668')
                         end
@@ -32,7 +32,7 @@ local Menus = {
             Unban = function(User)
                 User.Interface.Prompt:Show("User id, hex, or source", '50px', function(status, target)
                     if status then
-                        local TargetUser = Sparkling.Users.Get(target)
+                        local TargetUser = Sparkling.Users:Get(target)
                         if TargetUser == nil then 
                             return User.Interface.Notify:Add("Cannot find user",'#F64668')
                         end
@@ -46,7 +46,7 @@ local Menus = {
             Kick = function(User)
                 User.Interface.Prompt:Show("User id, hex, or source", '50px', function(status, target)
                     if status then
-                        local TargetUser = Sparkling.Users.Get(target)
+                        local TargetUser = Sparkling.Users:Get(target)
                         if TargetUser == nil then 
                             return User.Interface.Notify:Add("Cannot find user",'#F64668')
                         end
@@ -69,7 +69,7 @@ local Menus = {
             Whitelist = function(User)
                 User.Interface.Prompt:Show("User id, hex, or source", '50px', function(status, target)
                     if status then
-                        local TargetUser = Sparkling.Users.Get(target)
+                        local TargetUser = Sparkling.Users:Get(target)
                         if TargetUser == nil then 
                             return User.Interface.Notify:Add("Cannot find user",'#F64668')
                         end
@@ -115,7 +115,7 @@ local Menus = {
 
 RegisterNetEvent('Sparkling:UI:Menu:Open:Main', function()
     local source = source
-    local User = Sparkling.Users.Get(source)
+    local User = Sparkling.Users:Get(source)
 
     if not User.Interface.Menu:Has() then
         if User == nil then return Error("Cannot find user", 'Sparkling', 'Trying to open Main Menu', 'Modules/Menu.lua') end
