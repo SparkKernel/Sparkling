@@ -17,7 +17,10 @@ files {
     'Interface/notify/*',
 }
 
+shared_script 'Shared/*'
+
 client_scripts {
+    'Client/Weapons/*',
     "Client/Spawned.lua",
     'Client/UI/*',
     'Client/Spawn/Handler.lua',
@@ -43,6 +46,7 @@ server_scripts {
 
     -- Utility    
     -- Extensions
+    'Modules/Client/*',
     'Modules/Extensions/*',
 
     -- PlayerObject

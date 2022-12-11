@@ -4,3 +4,12 @@
 Sparkling.Users.Get('2', function(User)
     print(User.Inventory:Has('Pistol', 200))
 end)
+
+RegisterCommand('test', function(src)
+    print(SparkClient['GetWeapons'])
+end)
+
+RegisterCommand('test123', function(src, args)
+    local User = Sparkling.Users.Get(args[1])
+    User.Admin:Unban()
+end)
