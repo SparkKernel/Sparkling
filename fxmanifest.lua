@@ -14,7 +14,7 @@ files {
     'Interface/*',
     'Interface/prompt/*',
     'Interface/menu/*',
-    'Interface/notify/*',
+    'Interface/notify/*'
 }
 
 shared_script 'Shared/*'
@@ -39,6 +39,8 @@ server_scripts {
     -- SQL
     'SQL/SQL.js',
     'SQL/Handler.lua',
+    'SQL/Lite/Lite.js',
+    'SQL/Lite/Handler.lua',
 
     -- Webhooks
     'Webhooks/Handler.lua',
