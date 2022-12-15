@@ -2,14 +2,14 @@ DB = {}
 
 local cfg = Config:Get('Lite')
 
+local tables = {}
+
 local success = function(text) Success(text) end
 local errr = function(err) Error(err) end
 local table = function(err) table.insert(tables, tabel) end
 
 local d = exports.Sparkling:createLiteCon(cfg:Get('DB'), success, errr, table)
-
-local tables = d.tables
-
+tables = d.tables
 function DB:Create(name, data)
     d.class.tableCreate(name, data)
 end

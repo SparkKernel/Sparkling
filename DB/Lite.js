@@ -2,6 +2,8 @@ const fs = require('fs')
 const root = GetResourcePath(GetCurrentResourceName());
 const path = `${root}/DB/Data`
 
+const invoke = async (cb,args) => setImmediate(() => cb(args))
+
 class Connection {
     constructor(file, success, error, addTable) {
         this.file = file
@@ -9,10 +11,15 @@ class Connection {
         this.success = success
         this.error = error
         this.addTable = addTable
-
+        this.queue = false
 
         this.invoke = (type, text) => invoke(this[type], text)
+        setInterval(() => {
+            if (this.queue) this.dump()
+            this.queue = false
+        }, 3000)
         this.dump = () => fs.writeFileSync(this.path, JSON.stringify(this.data))
+        
         this.tableExists = name => {return this.data.registered[name] != null}
         this.tableGetAll = () => {
             var table = []
@@ -22,10 +29,11 @@ class Connection {
 
         this.tableCreate = (name, data) => {
             if (this.tableExists(name)) return this.invoke('error', 'Table does already exist')
+
             this.data.registered[name] = data
             this.data.data[name] = []
             this.invoke('addTable', name)
-            this.dump()
+            this.queue = true
         }
 
         this.tableGet = (name, red) => {
@@ -50,7 +58,7 @@ class Connection {
             if (!keys) return
             for (const [key] of Object.entries(data)) if (!keys.includes(key)) return console.log("Key is not found")
             this.data.data[table].push(data)
-            setTimeout(() => this.dump(), 20)
+            this.queue = true
         }
 
         this.devGetData = (table, identifiers, value, dataFunc, isBreaking) => {
@@ -92,9 +100,9 @@ class Connection {
             if (!this.checkKeys(table, identifiers)) return
             this.devGetData(table, identifiers, null, (data, e, index) => {
                 this.data.data[table].splice(index-1, index)
-                this.dump()
                 return e
             }, true)
+            this.queue = true
         }
 
         this.update = (table, identifiers, changes) => {
@@ -107,6 +115,7 @@ class Connection {
                 }
                 return e, 0
             }, true)
+            this.queue = true
         }
 
         if (fs.existsSync(this.path)) {

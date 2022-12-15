@@ -2,7 +2,7 @@
 
 Sparks = {}
 
-DB.CreateIfNotExists('users', {
+DB:CreateIfNotExists('users', {
     "id",
     "steam",
     "data"
