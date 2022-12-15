@@ -1,4 +1,4 @@
-Lite = {}
+DB = {}
 
 local cfg = Config:Get('Lite')
 
@@ -10,11 +10,11 @@ local d = exports.Sparkling:createLiteCon(cfg:Get('DB'), success, errr, table)
 
 local tables = d.tables
 
-function Lite:Create(name, data)
+function DB:Create(name, data)
     d.class.tableCreate(name, data)
 end
 
-function Lite:CreateIfNotExists(name, data)
+function DB:CreateIfNotExists(name, data)
     if not d.class.tableExists(name) then
         d.class.tableCreate(name, data)
         return true
@@ -22,11 +22,11 @@ function Lite:CreateIfNotExists(name, data)
     end
 end
 
-function Lite:Exists(name)
+function DB:Exists(name)
     return d.class.tableExists(name)
 end
 
-function Lite:Get(table)
+function DB:Get(table)
     local found = false
     for i,v in pairs(tables) do
         if v == table then

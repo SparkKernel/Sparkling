@@ -37,10 +37,8 @@ server_scripts {
     'Testing/Config.lua',
     
     -- SQL
-    'SQL/SQL.js',
-    'SQL/Handler.lua',
-    'SQL/Lite/Lite.js',
-    'SQL/Lite/Handler.lua',
+    'DB/Lite.js',
+    'DB/Handler.lua',
 
     -- Webhooks
     'Webhooks/Handler.lua',

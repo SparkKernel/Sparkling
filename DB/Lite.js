@@ -1,6 +1,6 @@
 const fs = require('fs')
 const root = GetResourcePath(GetCurrentResourceName());
-const path = `${root}/SQL/Lite/Data`
+const path = `${root}/DB/Data`
 
 class Connection {
     constructor(file, success, error, addTable) {
@@ -38,8 +38,8 @@ class Connection {
             const tableData = this.tableGet(table, 'registered')
 
             for (const [key] of Object.entries(data)) if (!tableData.includes(key)) {
-              this.invoke('error', 'Key '+key+' is not found! But is sent!')
-              return false
+                this.invoke('error', 'Key '+key+' is not found! But is sent!')
+                return false
             }
             return tableData
         }
