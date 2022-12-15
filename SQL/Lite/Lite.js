@@ -10,41 +10,37 @@ class Connection {
         this.error = error
         this.addTable = addTable
 
+
         this.invoke = (type, text) => invoke(this[type], text)
         this.dump = () => fs.writeFileSync(this.path, JSON.stringify(this.data))
-        this.tableExists = (name) => {return this.data.registered[name] != null}
+        this.tableExists = name => {return this.data.registered[name] != null}
         this.tableGetAll = () => {
             var table = []
-            for (const [key] of Object.entries(this.data.registered)) {
-                table.push(key)
-            }
+            for (const [key] of Object.entries(this.data.registered)) table.push(key)
             return table
         }
 
         this.tableCreate = (name, data) => {
-            if (this.tableExists(name)) {return this.invoke('error', 'Table does already exist')}
+            if (this.tableExists(name)) return this.invoke('error', 'Table does already exist')
             this.data.registered[name] = data
             this.data.data[name] = []
-            this.invoke(this.addTable, name)
+            this.invoke('addTable', name)
             this.dump()
         }
 
         this.tableGet = (name, red) => {
-            if (!this.tableExists(name)) {return this.invoke('error', 'Table does not already exist')}
+            if (!this.tableExists(name)) return this.invoke('error', 'Table does not already exist')
             return this.data[red][name]
         }
-    
+
         this.checkKeys = (table, data) => {
-            if (!this.tableExists(table)) {return this.invoke('error', 'Table does not already exist')}
+            if (!this.tableExists(table)) return this.invoke('error', 'Table does not already exist')
             const tableData = this.tableGet(table, 'registered')
-                    
-            for (const [key] of Object.entries(data)) {
-                if (!tableData.includes(key)) {
-                    this.invoke('error', 'Key '+key+' is not found! But is sent!')
-                    return false
-                }
+
+            for (const [key] of Object.entries(data)) if (!tableData.includes(key)) {
+              this.invoke('error', 'Key '+key+' is not found! But is sent!')
+              return false
             }
-    
             return tableData
         }
 
@@ -58,7 +54,7 @@ class Connection {
         }
 
         this.devGetData = (table, identifiers, value, dataFunc, isBreaking) => {
-            if (!this.checkKeys(table, identifiers)) {return}
+            if (!this.checkKeys(table, identifiers)) return
             const entries = Object.entries(identifiers)
             const [key,val] = entries[0]
             var data = value
@@ -82,7 +78,7 @@ class Connection {
             if (data != null) return data
             else return null
         }
-    
+
         this.getAllDataWhere = (table, identifiers) => {
             const data = this.devGetData(table, identifiers, [], (data, e) => {
                 data.push(e)
@@ -91,7 +87,7 @@ class Connection {
             if (data.length == 0) return null
             else return data
         }
-    
+
         this.removeOnce = (table, identifiers) => {
             if (!this.checkKeys(table, identifiers)) return
             this.devGetData(table, identifiers, null, (data, e, index) => {
@@ -106,11 +102,8 @@ class Connection {
             this.devGetData(table, identifiers, null, (data, e) => {
                 const tableData = this.tableGet(table, 'registered')
                 for (const [key, value] of Object.entries(changes)) {
-                    if (tableData.includes(key)) {
-                        e[key] = value
-                    } else {
-                        this.invoke('error', 'Cannot find updated key ' + key)
-                    }
+                    if (tableData.includes(key)) e[key] = value
+                    else this.invoke('error', 'Cannot find updated key ' + key)
                 }
                 return e, 0
             }, true)
@@ -124,10 +117,8 @@ class Connection {
                 "registered": {},
                 "data": {}
             }
-            fs.writeFile(this.path, JSON.stringify(this.data), (err) => {
-                if (err) {
-                    return this.invoke('error', 'Cannot write to file '+this.file+', please fix this.')
-                }
+            fs.writeFile(this.path, JSON.stringify(this.data), err => {
+                if (err) return this.invoke('error', 'Cannot write to file '+this.file+', please fix this.')
                 this.invoke('success', 'Created DB! Now ready for use')
             })
         }

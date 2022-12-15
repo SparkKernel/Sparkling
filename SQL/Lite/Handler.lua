@@ -14,6 +14,14 @@ function Lite:Create(name, data)
     d.class.tableCreate(name, data)
 end
 
+function Lite:CreateIfNotExists(name, data)
+    if not d.class.tableExists(name) then
+        d.class.tableCreate(name, data)
+        return true
+    else return false
+    end
+end
+
 function Lite:Exists(name)
     return d.class.tableExists(name)
 end
@@ -35,16 +43,5 @@ function Lite:Get(table)
     function r:InsertData(data) d.class.insertData(table, data) end
     function r:Remove(identifiers) d.class.removeOnce(table, identifiers) end
 
-
     return r
-end
-
-local test = Lite:Get('bob123123')
-if test:Exists() then
-    for i=1,100 do
-        test:InsertData({
-            steam = "bob",
-            id = "test"
-        })
-    end
 end

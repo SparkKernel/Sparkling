@@ -1,5 +1,5 @@
 local cfg = {} -- ignore
 
-cfg.DB = 'test'
+cfg.DB = 'data'
 
 Config:Add('Lite', cfg) -- ignore
