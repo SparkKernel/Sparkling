@@ -19,6 +19,22 @@ class Connection {
             this.queue = false
         }, 3000)
         this.dump = () => fs.writeFileSync(this.path, JSON.stringify(this.data))
+
+        if (fs.existsSync(this.path)) {
+            this.data = JSON.parse(fs.readFileSync(this.path))
+            this.invoke('success', 'Connected, already read before!')
+        } else {
+            this.data = {
+                "registered": {},
+                "data": {}
+            }
+            fs.writeFile(this.path, JSON.stringify(this.data), err => {
+                if (err) return this.invoke('error', 'Cannot write to file '+this.file+', please fix this.')
+                this.invoke('success', 'Created DB! Now ready for use')
+            })
+        }
+
+        this.dump()
         
         this.tableExists = name => {return this.data.registered[name] != null}
         this.tableGetAll = () => {
@@ -118,24 +134,32 @@ class Connection {
             this.queue = true
         }
 
-        if (fs.existsSync(this.path)) {
-            this.data = JSON.parse(fs.readFileSync(this.path))
-            this.invoke('success', 'Connected, already read before!')
-        } else {
-            this.data = {
-                "registered": {},
-                "data": {}
+        this.maxValue = (table, op) => {
+            const tableData = this.tableGet(table, 'registered')
+            if (!tableData.includes(op)) {
+                console.log("cannot find op")
+                return 0
             }
-            fs.writeFile(this.path, JSON.stringify(this.data), err => {
-                if (err) return this.invoke('error', 'Cannot write to file '+this.file+', please fix this.')
-                this.invoke('success', 'Created DB! Now ready for use')
-            })
+            const allData = this.tableGet(table, 'data')
+            var currentBest = null
+            for (const e of allData) {
+                if (e[op] > currentBest) {
+                    currentBest = e[op]
+                }
+            }
+
+            return currentBest
         }
     }
 }
 
-global.exports('createLiteCon', (file, success, error, addTable) => {
+global.exports('createLiteCon', (file, success, error, addTable, tables) => {
     const connection = new Connection(file, success, error, addTable)
+    for (const [key, val] of Object.entries(tables)) {
+        if (!connection.tableExists(key)) {
+            connection.tableCreate(key, val)
+        }
+    }
     return {
         tables: connection.tableGetAll(), 
         class: connection

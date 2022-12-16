@@ -23,6 +23,8 @@ local Groups = cfg2:Get('Groups')
 SpawnHandler = {}
 QuitHandler = nil -- wil be defined in QuitHandler.lua
 
+UserDB = DB:Get('users')
+
 function Users.Funcs:Get(source, cb)
     local callback = false
     if cb ~= nil then callback = true end
@@ -30,20 +32,17 @@ function Users.Funcs:Get(source, cb)
     if type(source) == "string" then 
         if tonumber(source) then -- is id
             if not Users.FromId[source] and not callback then -- do
-                local resp = SQL:Sync('SELECT * FROM users WHERE id = ?', {source})
-                local unpack = table.unpack(resp)
-                if unpack == nil then Error("Cannot find user by id!", 'Sparkling', 'identifier: '..source, 'Modules/Users/Handler.lua') return nil end
-                steam = unpack['steam']
+                local resp = UserDB:GetData({id = source})
+                if resp == nil then Error("Cannot find user by id!", 'Sparkling', 'identifier: '..source, 'Modules/Users/Handler.lua') return nil end
+                steam = resp['steam']
             elseif Users.FromId[source] and not callback then
                 steam = Users.FromId[source]
             else
-                return SQL:Query('SELECT * FROM users WHERE id = ?', {source}, function(resp)
-                    local unpack = table.unpack(resp)
-                    if unpack == nil then Error("Cannot find user by id!", 'Sparkling', 'identifier: '..source, 'Modules/Users/Handler.lua') return nil end
-                    steam = unpack['steam']
+                local resp = UserDB:GetData({id = source})
+                if resp == nil then Error("Cannot find user by id!", 'Sparkling', 'identifier: '..source, 'Modules/Users/Handler.lua') return nil end
+                steam = resp['steam']
 
-                    cb(PlayerObject(steam, true))
-                end)
+                cb(PlayerObject(steam, true))
             end
         else
             steam=source -- if is steam-hex
@@ -68,19 +67,23 @@ Users.Funcs.Create = function(_, _, def)
 
     def.update(Messages['Checking'])
 
-    local resp = SQL:Sync('SELECT * FROM users WHERE steam = ?', {steam})
+    local resp = UserDB:GetData({steam = steam})
 
     Debug("A user joined "..steam)
 
-    if table.unpack(resp) ~= nil then
+    if resp ~= nil then
         def.update(Messages['Registered'])
         Debug("User already registered")
     else
         Debug("Creating user "..steam)
         def.update(Messages['Creating'])
 
-        SQL:Sync('INSERT INTO users (steam) VALUES (?)', {steam}) --  insert
-        resp = SQL:Sync('SELECT * FROM users WHERE steam = ?', {steam}) -- get
+        UserDB:InsertData({
+            steam = steam,
+            id = UserDB:GetMaxValue('id') or 1,
+            data = nil
+        })
+        resp = UserDB:GetData({steam = steam}) -- get
     end
     Users.Funcs.Load(source, steam, resp, def)
 
@@ -95,8 +98,6 @@ Users.Funcs.Load = function(source, steam, db, def)
         ['interface'] = {},
         ['noclip'] = false
     }
-
-    db = table.unpack(db) -- change it
     
     if db ~= nil then
         local CurrentData = json.decode(db['data'])
@@ -190,7 +191,12 @@ Users.Funcs.Remove = function()
 
     Users.Players[steam] = nil -- removes the user for good
 
-    SQL:Sync('UPDATE users SET data = ? WHERE steam = ?', {json.encode(data, {indent=true}),steam})
+    UserDB:Update({
+        steam = steam
+    },
+    {
+        data = json.encode(data, {indent=true})
+    })
 end
 
 -- events

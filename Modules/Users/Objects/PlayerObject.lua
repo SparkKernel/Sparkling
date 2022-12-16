@@ -4,12 +4,15 @@ local Registered = {}
 function PlayerObjects:Add(tb) table.insert(Registered, tb) end
 
 function GetUpdate(id)
-    local data = SQL:Sync('SELECT * FROM users WHERE steam = ?', {id})
-    local unpack = table.unpack(data)
-    if unpack == nil then return false, false end
-    local data = json.decode(unpack['data'])
+    local data = UserDB:GetData({steam = id})
+    if data == nil then return false, false end
+    data = data['data']
     return data, function(changeData)
-        SQL:Sync('UPDATE users SET data = ? WHERE steam = ?', {json.encode(changeData, {indent=true}), id})
+        UserDB:Update({
+            steam = id
+        }, {
+            data = json.encode(changeData, {indent=true})
+        })
     end
 end
 
@@ -23,7 +26,7 @@ PlayerObject = function(steam, callback)
         self.id = Users.Players[steam].id
     else
         -- if (user) is not online, it will grab the id from the db
-        local resp = table.unpack(SQL:Sync('SELECT * FROM users WHERE steam = ?', {steam}))
+        local resp = UserDB:GetData({steam = steam})
         if resp == nil then self.id = nil
         else self.id = resp['id'] end
     end
