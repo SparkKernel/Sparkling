@@ -47,13 +47,13 @@ server_scripts {
 
     -- Utility    
     -- Extensions
-    'Modules/Client/*',
     'Modules/Extensions/*',
 
     -- PlayerObject
     'Modules/Users/Objects/PlayerObject.lua',
 
     -- PlayerObject's objects?:
+        'Modules/Users/Objects/ClientObject.lua',
         'Modules/Users/Objects/AdminObject.lua',
         'Modules/Users/Objects/CashObject.lua',
         'Modules/Users/Objects/GroupObject.lua',
@@ -63,6 +63,7 @@ server_scripts {
         'Modules/Users/Objects/SurvivalObject.lua',
         'Modules/Users/Objects/PositionObject.lua',
         'Modules/Users/Objects/NUIObject.lua',
+        'Modules/Users/Objects/WeaponObject.lua',
         'Modules/Users/Handler.lua',
 
         'Modules/Users/Online.lua',
