@@ -26,6 +26,13 @@ function DB:Exists(name)
     return d.class.tableExists(name)
 end
 
+AddEventHandler('onResourceStop', function(name)
+    if GetCurrentResourceName() == name then
+        d.class.dump()
+    end
+end)
+
+
 function DB:Get(table)
     local found = false
     for i,v in pairs(tables) do
@@ -43,7 +50,10 @@ function DB:Get(table)
     function r:GetMaxValue(operator) return d.class.maxValue(table, operator) end
     function r:InsertData(data) d.class.insertData(table, data) end
     function r:Remove(identifiers) d.class.removeOnce(table, identifiers) end
-    function r:Update(identifiers, to) d.class.update(table, identifiers, to) end
+    function r:Update(identifiers, to, fast)
+        fast = fast or false
+        d.class.update(table, identifiers, to, fast)
+    end
 
     return r
 end

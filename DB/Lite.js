@@ -19,6 +19,7 @@ class Connection {
             this.queue = false
         }, 3000)
         this.dump = () => fs.writeFileSync(this.path, JSON.stringify(this.data))
+        
 
         if (fs.existsSync(this.path)) {
             this.data = JSON.parse(fs.readFileSync(this.path))
@@ -121,7 +122,7 @@ class Connection {
             this.queue = true
         }
 
-        this.update = (table, identifiers, changes) => {
+        this.update = (table, identifiers, changes, fast) => {
             if (!this.checkKeys(table, identifiers)) return
             this.devGetData(table, identifiers, null, (data, e) => {
                 const tableData = this.tableGet(table, 'registered')
@@ -132,6 +133,7 @@ class Connection {
                 return e, 0
             }, true)
             this.queue = true
+            if (fast) this.dump()
         }
 
         this.maxValue = (table, op) => {

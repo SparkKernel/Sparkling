@@ -147,13 +147,12 @@ Users.Funcs.Spawned = function(src)
     local wasConnected = false
     if not Users.Players[steam].connecting then
         wasConnected = true
+        for k,v in pairs(SpawnHandler) do v(PlayerObject(steam), Users.Players[steam]) end
         return Debug("User spawned, but is already registered - user probaly died...")
     end
 
-    if not tonumber(src) then
-        Debug("Spawned: "..steam)
-    else
-        Debug("Debugly spawned user "..steam)
+    if not tonumber(src) then Debug("Spawned: "..steam)
+    else Debug("Debugly spawned user "..steam)
     end
 
     if not wasConnected then
@@ -170,33 +169,40 @@ Users.Funcs.Spawned = function(src)
     Users.Players[steam]['connecting'] = false -- user is now connected, and is spawned (so the user doesn't get kicked)
 end
 
-Users.Funcs.Remove = function()
+AddEventHandler('onResourceStop', function(name)
+    if GetCurrentResourceName() == name then
+        for _, src in ipairs(GetPlayers()) do
+            local steam = Users.Utility.GetSteam(src)
+
+            Users.Funcs.Remove(src)
+
+            Debug("Automatic save of player "..steam)
+        end
+    end
+end)
+
+Users.Funcs.Remove = function(src)
     local source = source
+    if src ~= nil then source = src end
     local steam = Users.Utility.GetSteam(source)
-    
+
     Debug("User removed: "..steam)
-    
     if Users.Players[steam] == nil then return Warn("A user left the server, but was not registered? Please check this out.") end
 
     local data = Users.Players[steam]
     data = QuitHandler(PlayerObject(steam), Users.Players[steam], data)
-    Users.Players[steam]['quitting'] = true
+    if src == nil then Users.Players[steam]['quitting'] = true end
 
-    Users.FromId[data.id] = nil
+    if src == nil then Users.FromId[data.id] = nil end
     for i,v in pairs(NonSaving) do
         data[v] = nil
     end
 
     Debug("Saved data from user ("..steam.."): "..json.encode(data))
 
-    Users.Players[steam] = nil -- removes the user for good
-
-    UserDB:Update({
-        steam = steam
-    },
-    {
-        data = json.encode(data, {indent=true})
-    })
+    if src == nil then Users.Players[steam] = nil end -- removes the user for good
+    --print(json.encode(data, {indent=true}))
+    UserDB:Update({ steam = steam }, { data = json.encode(data)}, true)
 end
 
 -- events

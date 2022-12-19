@@ -11,11 +11,8 @@ table.insert(SpawnHandler, function(User, Data)
     Handler(
         source,
         'health',
-        {
-            health = Data.hp
-        }
+        { health = Data.hp }
     )
-
     SetEntityCoords(
         ped,
         Data.coords.x,
