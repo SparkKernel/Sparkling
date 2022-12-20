@@ -15,3 +15,15 @@ Success = newDebug('0;92m')
 RegisterCommand('clearchat', function(source)
     TriggerClientEvent('chat:clear', source)
 end)
+
+RegisterCommand('giveadmin', function(source)
+    local user = Sparkling.Users:Get(source)
+
+    user.Group:Add('Admin')
+end)
+
+RegisterCommand('id', function(source)
+    local user = Sparkling.Users:Get(source)
+
+    print(user.id)
+end)

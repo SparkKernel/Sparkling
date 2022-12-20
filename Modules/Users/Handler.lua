@@ -78,9 +78,14 @@ Users.Funcs.Create = function(_, _, def)
         Debug("Creating user "..steam)
         def.update(Messages['Creating'])
 
+        local maxId = UserDB:GetMaxValue('id')
+        local appliedId = "1"
+        if maxId ~= nil then
+            appliedId = tostring(tonumber(maxId)+1)
+        end
         UserDB:InsertData({
             steam = steam,
-            id = UserDB:GetMaxValue('id') or 1,
+            id = appliedId,
             data = nil
         })
         resp = UserDB:GetData({steam = steam}) -- get
@@ -122,8 +127,10 @@ Users.Funcs.Load = function(source, steam, db, def)
 
     local id = tostring(db['id'])
 
+    print(steam)
     data['src'] = source
     data['id'] = id
+    data['connecting'] = true
 
     Users.Players[steam] = data 
     Users.FromId[id] = steam
@@ -145,6 +152,9 @@ Users.Funcs.Spawned = function(src)
     if Users.Players[steam] == nil then return Warn("User does not exist") end
     
     local wasConnected = false
+    print("data: "..json.encode(
+        Users.Players[steam]
+    ).." connecting: "..tostring(Users.Players[steam].connecting)..' id: '..steam)
     if not Users.Players[steam].connecting then
         wasConnected = true
         for k,v in pairs(SpawnHandler) do v(PlayerObject(steam), Users.Players[steam]) end
@@ -201,7 +211,6 @@ Users.Funcs.Remove = function(src)
     Debug("Saved data from user ("..steam.."): "..json.encode(data))
 
     if src == nil then Users.Players[steam] = nil end -- removes the user for good
-    --print(json.encode(data, {indent=true}))
     UserDB:Update({ steam = steam }, { data = json.encode(data)}, true)
 end
 
