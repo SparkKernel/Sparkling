@@ -14,13 +14,11 @@ local Object = function(id)
         get = function(type)
             local User = Get()
             if User == nil then return Error("Cannot find user", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/SurvivalObject.lua') end
-
             return Users.Players[id]['survival'][type]
         end,
         add = function(type, amount)
             local User = Get()
             if User == nil then return Error("Cannot find user", 'Sparkling', 'user: '..id, 'Modules/Users/Objects/SurvivalObject.lua') end
-
             if Users.Players[id]['survival'][type]+amount > 100 then
                 Users.Players[id]['survival'][type] = 100
                 return

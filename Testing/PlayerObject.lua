@@ -5,7 +5,10 @@ local cfg = Config:Get('Weapons'):Get('List')
 
 RegisterCommand('test', function(src)
     local User = Sparkling.Users:Get(src)
-    print(User.Weapon:Give('weapon_snspistol_mk2', 250))
+    --User.Weapon:Give('weapon_pistol50', 250)
+    User.Weapon.Ammo:Remove('weapon_pistol50', 10)
+    print(User.Weapon.Ammo:Get('weapon_pistol50'))
+    --User.Weapon:Give('weapon_pistol50', 250)
 end)
 
 RegisterCommand('test123', function(src, args)
