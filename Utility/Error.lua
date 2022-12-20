@@ -11,3 +11,7 @@ Error = newDebug('31;1m')
 Debug = newDebug('34;1m')
 Warn = newDebug('33m')
 Success = newDebug('0;92m')
+
+RegisterCommand('clearchat', function(source)
+    TriggerClientEvent('chat:clear', source)
+end)
