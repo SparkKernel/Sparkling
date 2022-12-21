@@ -22,4 +22,8 @@ table.insert(SpawnHandler, function(User, Data)
         false,
         false
     )
+
+    --[[for i,v in pairs(Data.weapons) do
+        User.Weapon:Give(v)
+    end]]
 end)

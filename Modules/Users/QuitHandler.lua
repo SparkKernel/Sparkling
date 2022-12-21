@@ -6,10 +6,13 @@ QuitHandler = function(User, Data, ReturnData)
 
     local newReturn = ReturnData
 
+    --local weapons = User.Weapon:Get()
+
     local x,y,z = GetEntityCoords(ped)
     local health = GetEntityHealth(ped)
 
     newReturn['coords'] = x
+    newReturn['weapons'] = weapons or {}
 
     newReturn['hp'] = health
 

@@ -1,7 +1,7 @@
 local Ids = {}
 
 RegisterNetEvent('Sparkling:ReturnClientCallback', function(id, resp)
-    if Ids[id] == nil then return Eror("Cannot find callback-id", 'Sparkling', 'id: '..id) end
+    if Ids[id] == nil then return Error("Cannot find callback-id", 'Sparkling', 'id: '..id) end
     Ids[id](resp) Ids[id] = nil
 end)
 

@@ -64,9 +64,7 @@ local Object = function(id)
     function val.Ammo:Remove(weapon, ammo)
         if not val:Has(weapon) then return end
         local CurrentAmmo = val.Ammo:Get(weapon)
-        if CurrentAmmo-ammo <= 0 then
-            return false
-        end
+        if CurrentAmmo-ammo <= 0 then return false end
         Client:Event('Sparkling:SetAmmo', weapon, CurrentAmmo-ammo)
     end
 

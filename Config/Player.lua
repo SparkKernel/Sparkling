@@ -35,6 +35,7 @@ cfg.Default = { -- defualt data
     cash = 420,
     groups = {},
     inventory = {},
+    weapons = {},
     coords = {
         x = 235.62197875977,
         y = -411.16482543945,
