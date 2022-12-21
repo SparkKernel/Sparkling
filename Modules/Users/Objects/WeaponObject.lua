@@ -40,6 +40,19 @@ local Object = function(id)
         Client:Event('Sparkling:RemoveWeapon', weapon, ammo)
     end
 
+    function val:Current()
+        if Get() == nil then return end
+
+        local weapon = nil
+
+        Client:Callback('GetCurrentWeapon', function(resp)
+            if not resp then weapon = false return end
+            weapon = resp
+        end)
+        while weapon == nil do Citizen.Wait(1) end
+        return weapon
+    end
+
     val.Ammo = {}
     function val.Ammo:Get(weapon)
         if Get() == nil then return 0 end

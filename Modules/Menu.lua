@@ -97,6 +97,8 @@ local Menus = {
             [1] = {buttonName = "Copy Coords"},
             [2] = {buttonName = "Noclip"},
             [3] = {buttonName = "Spawn Car"},
+            [4] = {buttonName = "Give Weapon"},
+            [5] = {buttonName = "Refill Ammo"},
         },
         Funcs = {
             ['Copy Coords'] = function(User)
@@ -119,6 +121,19 @@ local Menus = {
                         User.Interface.Notify:Add("Whoops, no car for you :)",'#F64668')
                     end 
                 end)
+            end,
+            ['Give Weapon'] = function(User)
+                User.Interface.Prompt:Show("Please enter the weapon name", '50px', function(status, weapon)
+                    if status then
+                        User.Weapon:Give('weapon_'..weapon, 250)
+                        User.Interface.Notify:Add("Here is your new "..weapon.."!",'#92DE8D')
+                    else
+                        User.Interface.Notify:Add("Whoops, no weapon for you :)",'#F64668')
+                    end 
+                end)
+            end,
+            ['Refill Ammo'] = function(User)
+                User.Weapon.Ammo:Set(User.Weapon:Current(), 250)
             end
         }
     }

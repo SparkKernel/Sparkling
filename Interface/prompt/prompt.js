@@ -1,6 +1,19 @@
+const submit = () => {
+    callback('submit', {text: $('.input').val()}).then(() => {$('.input').val(''); $('.prompt').hide()})
+}
+
+const cancel = () => {
+    callback('cancel', {}).then(() => {$('.prompt').hide(); $('.input').val('')})
+}
+
 onReady.push(() => {
-    $('.cancel').click(() => callback('cancel', {}).then(() => $('.prompt').hide()))
-    $('.submit').click(() => {callback('submit', {text: $('.input').val()}).then(() => {$('.input').val(''); $('.prompt').hide()})})
+    $('.cancel').click(cancel)
+    $('.submit').click(submit)
+
+    $(document).keyup(e => {
+        if (e.key === "Escape") cancel() 
+        
+    });
 })
 
 onMessage.push((item) => {
@@ -9,6 +22,13 @@ onMessage.push((item) => {
             $('.'+item.object).show();
             $('.header3').text(item.text)
             $('.input').css({'font-size': item.size})
+            $('.input').focus()
+            $('.input').keypress(e => { 
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    submit()
+                }
+            });
         } else {
             $('.'+item.object).css({'display': 'flex'})
             $('.header2').text(item.text)
