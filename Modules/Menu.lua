@@ -96,6 +96,7 @@ local Menus = {
         Data = {
             [1] = {buttonName = "Copy Coords"},
             [2] = {buttonName = "Noclip"},
+            [3] = {buttonName = "Spawn Car"},
         },
         Funcs = {
             ['Copy Coords'] = function(User)
@@ -108,6 +109,16 @@ local Menus = {
                 User.noclip = not User.noclip
 
                 TriggerClientEvent("Sparkling:ToggleNoclip", User.src, User.noclip)
+            end,
+            ['Spawn Car'] = function(User)
+                User.Interface.Prompt:Show("Please write the car-code", '50px', function(status, car)
+                    if status then
+                        User.Client:Event('Sparkling:SpawnCar', car)
+                        User.Interface.Notify:Add("Here is your new "..car.."!",'#92DE8D')
+                    else
+                        User.Interface.Notify:Add("Whoops, no car for you :)",'#F64668')
+                    end 
+                end)
             end
         }
     }

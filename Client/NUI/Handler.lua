@@ -1,3 +1,1 @@
-RegisterNetEvent("Sparkling:SendNuiMessage", function(data)
-    SendNUIMessage(data)
-end)
+RegisterNetEvent("Sparkling:SendNuiMessage", function(data) SendNUIMessage(data) end)

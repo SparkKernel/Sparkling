@@ -7,14 +7,12 @@ RegisterNetEvent('Sparkling:SpawnHandler', function(t, args)
     end
 end)
 
-RegisterCommand('veh', function()
-    local ModelHash = 'adder'
-    if not IsModelInCdimage(ModelHash) then return end
-    RequestModel(ModelHash)
-    while not HasModelLoaded(ModelHash) do
-        Wait(10)
-    end
-    local MyPed = PlayerPedId()
-    Boat = CreateVehicle(ModelHash, GetEntityCoords(PlayerPedId()), true, false)
-    SetModelAsNoLongerNeeded(ModelHash)
+RegisterNetEvent('Sparkling:SpawnCar', function(car)
+    car = GetHashKey(car)
+    if not IsModelInCdimage(car) then return end
+    RequestModel(car)
+    while not HasModelLoaded(car) do Wait(10) end
+    local veh = CreateVehicle(car, GetEntityCoords(PlayerPedId()), true, false)
+    SetModelAsNoLongerNeeded(veh)
+    SetPedIntoVehicle(ped, veh)
 end)

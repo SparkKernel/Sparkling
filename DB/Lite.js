@@ -97,9 +97,7 @@ class Connection {
         }
 
         this.getDataWhere = (table, identifiers) => {
-            const data = this.devGetData(table, identifiers, null, (_, e) => {
-                return e
-            }, true)
+            const data = this.devGetData(table, identifiers, null, (_, e) => {return e}, true)
             if (data != null) return data
             else return null
         }
@@ -138,16 +136,12 @@ class Connection {
 
         this.maxValue = (table, op) => {
             const tableData = this.tableGet(table, 'registered')
-            if (!tableData.includes(op)) {
-                console.log("cannot find op")
-                return 0
-            }
+            if (!tableData.includes(op)) return 0
+            
             const allData = this.tableGet(table, 'data')
             var currentBest = null
             for (const e of allData) {
-                if (e[op] > currentBest) {
-                    currentBest = e[op]
-                }
+                if (e[op] > currentBest) currentBest = e[op]
             }
             return currentBest
         }
@@ -157,9 +151,7 @@ class Connection {
 global.exports('createLiteCon', (file, success, error, addTable, tables) => {
     const connection = new Connection(file, success, error, addTable)
     for (const [key, val] of Object.entries(tables)) {
-        if (!connection.tableExists(key)) {
-            connection.tableCreate(key, val)
-        }
+        if (!connection.tableExists(key)) connection.tableCreate(key, val)
     }
     return {
         tables: connection.tableGetAll(), 
