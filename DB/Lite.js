@@ -149,7 +149,6 @@ class Connection {
                     currentBest = e[op]
                 }
             }
-
             return currentBest
         }
     }
