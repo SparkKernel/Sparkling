@@ -83,6 +83,8 @@ Users.Funcs.Create = function(_, _, def)
         if maxId ~= nil then
             appliedId = tostring(tonumber(maxId)+1)
         end
+        print("APPLIED ID: "..appliedId)
+        print("TO STEAM: "..steam)
         UserDB:InsertData({
             steam = steam,
             id = appliedId,
@@ -90,6 +92,7 @@ Users.Funcs.Create = function(_, _, def)
         })
         resp = UserDB:GetData({steam = steam}) -- get
     end
+    print("CREATE SOURCE: "..source)
     Users.Funcs.Load(source, steam, resp, def)
 
     def.done()
@@ -103,6 +106,8 @@ Users.Funcs.Load = function(source, steam, db, def)
         ['interface'] = {},
         ['noclip'] = false
     }
+
+    print("DB: "..json.encode(db))
     
     if db ~= nil then
         local CurrentData = json.decode(db['data'])
@@ -127,11 +132,13 @@ Users.Funcs.Load = function(source, steam, db, def)
 
     local id = tostring(db['id'])
 
-    print(steam)
+    print("LOAD STEAM "..steam)
+    print("LOAD SOURCE "..source)
+    print("LOAD DATA:" ..json.encode(data))
+    prinT("DEFAULT "..json.encode(default))
     data['src'] = source
     data['id'] = id
     data['connecting'] = true
-
     Users.Players[steam] = data 
     Users.FromId[id] = steam
 
@@ -149,16 +156,19 @@ Users.Funcs.Spawned = function(src)
     if tonumber(src) then source=src end
     
     local steam = Users.Utility.GetSteam(source)
-    if Users.Players[steam] == nil then return Warn("User does not exist") end
     
+    Users.Players[steam].src = source
+    
+    if Users.Players[steam] == nil then return Warn("User does not exist") end
+    print("ALL USERS (SPAWN) "..json.encode(Users.Players))
     local wasConnected = false
-    print("data: "..json.encode(
+    print("SPAWN DATA: "..json.encode(
         Users.Players[steam]
-    ).." connecting: "..tostring(Users.Players[steam].connecting)..' id: '..steam)
+    ).."\nSPAWN CONNECTING DATA: "..tostring(Users.Players[steam].connecting)..'\nSPAWN USER DATA: '..steam..'\nSTEAM TYPE '..type(steam))
     if not Users.Players[steam].connecting then
         wasConnected = true
         for k,v in pairs(SpawnHandler) do v(PlayerObject(steam), Users.Players[steam]) end
-        return Debug("User spawned, but is already registered - user probaly died...")
+        return Debug("User spawned, but is already registered - user probaly died...", "Sparkling", "user: "..steam)
     end
 
     if not tonumber(src) then Debug("Spawned: "..steam)
@@ -193,7 +203,7 @@ end)
 
 Users.Funcs.Remove = function(src)
     local source = source
-    if src ~= nil then source = src end
+    if tonumber(src) then source = src end
     local steam = Users.Utility.GetSteam(source)
 
     Debug("User removed: "..steam)

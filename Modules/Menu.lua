@@ -21,11 +21,11 @@ local Menus = {
                                 User.Interface.Notify:Add("You successfully banned user "..target.."!",'#92DE8D')
                                 TargetUser.Admin:Ban(reason)
                             else
-                                User.Interface.Notify:Add("You cancelled the ban...",'#F64668')
+                                User.Interface.Notify:Add("You cancelled the ban.",'#F64668')
                             end
                         end)
                     else
-                        User.Interface.Notify:Add("You cancelled the ban...",'#F64668')
+                        User.Interface.Notify:Add("You cancelled the ban.",'#F64668')
                     end     
                 end)
             end,
@@ -39,7 +39,7 @@ local Menus = {
                         TargetUser.Admin:Unban()
                         User.Interface.Notify:Add("You successfully unbanned user "..target.."!",'#92DE8D')
                     else
-                        User.Interface.Notify:Add("You cancelled the unban...",'#F64668')
+                        User.Interface.Notify:Add("You cancelled the unban.",'#F64668')
                     end     
                 end)
             end,
@@ -58,11 +58,11 @@ local Menus = {
                                 TargetUser.Admin:Kick(reason)
                                 User.Interface.Notify:Add("You successfully kicked user "..target.."!",'#92DE8D')
                             else
-                                User.Interface.Notify:Add("You cancelled the kick...",'#F64668')
+                                User.Interface.Notify:Add("You cancelled the kick.",'#F64668')
                             end
                         end)
                     else
-                        User.Interface.Notify:Add("You cancelled the kick...",'#F64668')
+                        User.Interface.Notify:Add("You cancelled the kick.",'#F64668')
                     end
                 end)
             end,
@@ -76,7 +76,7 @@ local Menus = {
                         TargetUser.Admin:Whitelist()
                         User.Interface.Notify:Add("You successfully whitelisted user "..target.."!",'#92DE8D')
                     else
-                        User.Interface.Notify:Add("You cancelled the whitelist...",'#F64668')
+                        User.Interface.Notify:Add("You cancelled the whitelist.",'#F64668')
                     end
                 end)
             end,
@@ -99,6 +99,8 @@ local Menus = {
             [3] = {buttonName = "Spawn Car"},
             [4] = {buttonName = "Give Weapon"},
             [5] = {buttonName = "Refill Ammo"},
+            [6] = {buttonName = "Repair Vehicle"},
+            [7] = {buttonName = "Delete Vehicle"}
         },
         Funcs = {
             ['Copy Coords'] = function(User)
@@ -134,6 +136,20 @@ local Menus = {
             end,
             ['Refill Ammo'] = function(User)
                 User.Weapon.Ammo:Set(User.Weapon:Current(), 250)
+            end,
+            ['Repair Vehicle'] = function(User)
+                if GetVehiclePedIsIn(ped, false) then
+                    local response = User.Client:Callback('Repair')
+                    print(response)
+                    if response then
+                        User.Interface.Notify:Add("You repaired your vehicle.",'#92DE8D')
+                    else
+                        User.Interface.Notify:Add("You need to be in a vehicle!",'#F64668')
+                    end
+                end
+            end,
+            ['Delete Vehicle'] = function(User)
+                DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(User.src), false))
             end
         }
     }
